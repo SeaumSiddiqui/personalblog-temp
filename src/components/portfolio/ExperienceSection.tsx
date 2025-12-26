@@ -19,14 +19,15 @@ export const ExperienceSection: React.FC<ExperienceSectionProps> = ({ isDarkMode
   const experiences: Experience[] = [
     {
       company: 'QCharity BD',
-      position: 'Full-Stack Developer',
+      position: 'Full-Stack Developer (Freelance)',
       duration: '2025 — Present',
       description: 'Built and launched a charity management portal for QCharity BD that helps the team manage donations, beneficiaries, and day-to-day operations more efficiently.',
       achievements: [
-        // 'Built complete full-stack application from scratch with modern architecture',
-        // 'Implemented secure authentication and role-based access control using Keycloak',
-        // 'Designed and deployed scalable database schema for charity operations',
-        // 'Live and actively used at qcharitybd.com'
+        'Built a custom platform to replace manual spreadsheets for donor, orphan, and operational records',
+        'Integrated Keycloak authentication with role-based access for staff and administrators',
+        'Developed a document workflow for uploading files, tracking applications, and managing approvals',
+        'Created a dashboard to track sponsorship payments and record status in real time',
+        'Handled deployment at qcharitybd.com and provided ongoing technical support to staff'
       ],
       technologies: ['Spring Boot', 'React', 'PostgreSQL', 'Docker', 'AWS'],
       link: 'https://qcharitybd.com'
