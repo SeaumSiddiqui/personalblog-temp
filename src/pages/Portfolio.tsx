@@ -2,7 +2,6 @@ import React, { useState, useEffect } from 'react';
 import { useTheme } from '../hooks/useTheme';
 import { useAuth } from '../hooks/useAuth';
 import { ThemeToggle } from '../components/ThemeToggle';
-import { SocialLinks } from '../components/SocialLinks';
 import { LoadingSpinner } from '../components/LoadingSpinner';
 import { PortfolioNavigation } from '../components/portfolio/PortfolioNavigation';
 import { HeroSection } from '../components/portfolio/HeroSection';
@@ -17,23 +16,18 @@ import { ScrollControls } from '../components/portfolio/ScrollControls';
 export const Portfolio: React.FC = () => {
   const { isDarkMode, toggleTheme } = useTheme();
   const { loading: authLoading } = useAuth();
-  const [isVisible, setIsVisible] = useState(false);
-  const [activeSection, setActiveSection] = useState('hero');
+  const [activeSection, setActiveSection] = useState('about');
   const [showScrollTop, setShowScrollTop] = useState(false);
-  const [imageTransition, setImageTransition] = useState(false);
   const [isContactModalOpen, setIsContactModalOpen] = useState(false);
+  const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
 
   useEffect(() => {
-    setIsVisible(true);
-    
-    // Handle scroll events
     const handleScroll = () => {
       setShowScrollTop(window.scrollY > 500);
-      
-      // Update active section based on scroll position (excluding contact since it's now a modal)
-      const sections = ['hero', 'about', 'skills', 'projects', 'experience'];
+
+      const sections = ['about', 'experience', 'projects'];
       const scrollPosition = window.scrollY + 100;
-      
+
       for (const section of sections) {
         const element = document.getElementById(section);
         if (element) {
@@ -46,18 +40,18 @@ export const Portfolio: React.FC = () => {
       }
     };
 
-    window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
+    const handleMouseMove = (e: MouseEvent) => {
+      setMousePosition({ x: e.clientX, y: e.clientY });
+    };
 
-  // Handle image transition when theme changes
-  useEffect(() => {
-    setImageTransition(true);
-    const timer = setTimeout(() => {
-      setImageTransition(false);
-    }, 500);
-    return () => clearTimeout(timer);
-  }, [isDarkMode]);
+    window.addEventListener('scroll', handleScroll);
+    window.addEventListener('mousemove', handleMouseMove);
+
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+      window.removeEventListener('mousemove', handleMouseMove);
+    };
+  }, []);
 
   const scrollToSection = (sectionId: string) => {
     const element = document.getElementById(sectionId);
@@ -81,9 +75,9 @@ export const Portfolio: React.FC = () => {
   if (authLoading) {
     return (
       <div className={`min-h-screen flex items-center justify-center transition-colors duration-300 ${
-        isDarkMode 
-          ? 'bg-gradient-to-br from-black via-gray-900 to-gray-800' 
-          : 'bg-gradient-to-br from-gray-100 via-gray-200 to-gray-300'
+        isDarkMode
+          ? 'bg-dark-bg'
+          : 'bg-light-bg'
       }`}>
         <LoadingSpinner isDarkMode={isDarkMode} />
       </div>
@@ -92,68 +86,79 @@ export const Portfolio: React.FC = () => {
 
   return (
     <div className={`min-h-screen transition-colors duration-300 ${
-      isDarkMode 
-        ? 'bg-gradient-to-br from-black via-gray-900 to-gray-800' 
-        : 'bg-gradient-to-br from-gray-100 via-gray-200 to-gray-300'
-    }`} style={{
-      fontFamily: '"Courier New", monospace',
-      imageRendering: 'pixelated'
-    }}>
-      {/* Navigation */}
-      <PortfolioNavigation 
-        isDarkMode={isDarkMode}
-        activeSection={activeSection}
-        scrollToSection={scrollToSection}
-        openContactModal={openContactModal}
+      isDarkMode
+        ? 'bg-dark-bg'
+        : 'bg-light-bg'
+    }`}>
+      {/* Subtle gradient spotlight effect */}
+      <div
+        className="fixed inset-0 pointer-events-none transition-opacity duration-300"
+        style={{
+          background: `radial-gradient(600px circle at ${mousePosition.x}px ${mousePosition.y}px, ${
+            isDarkMode
+              ? 'rgba(124, 58, 237, 0.06)'
+              : 'rgba(124, 58, 237, 0.03)'
+          }, transparent 80%)`
+        }}
       />
 
-      {/* Fixed Social Links and Theme Toggle */}
-      <div className="fixed right-6 top-1/2 transform -translate-y-1/2 z-50 flex flex-col items-center space-y-6">
-        <SocialLinks layout="vertical" size="medium" />
-        <ThemeToggle isDarkMode={isDarkMode} onToggle={toggleTheme} />
+      <div className="relative z-10">
+        {/* Side Navigation */}
+        <PortfolioNavigation
+          isDarkMode={isDarkMode}
+          activeSection={activeSection}
+          scrollToSection={scrollToSection}
+        />
+
+        {/* Theme Toggle - Top Right */}
+        <div className="fixed right-6 top-6 z-50">
+          <ThemeToggle isDarkMode={isDarkMode} onToggle={toggleTheme} />
+        </div>
+
+        {/* Main Content */}
+        <div className="lg:ml-0">
+          <div className="mx-auto min-h-screen max-w-screen-xl px-6 py-12 md:px-12 md:py-20 lg:px-24 lg:py-0">
+            <div className="lg:flex lg:justify-between lg:gap-4">
+              {/* Left Column - Hero/Sticky */}
+              <header className="lg:sticky lg:top-0 lg:flex lg:max-h-screen lg:w-1/2 lg:flex-col lg:justify-between lg:py-24">
+                <HeroSection
+                  isDarkMode={isDarkMode}
+                  scrollToSection={scrollToSection}
+                  openContactModal={openContactModal}
+                />
+              </header>
+
+              {/* Right Column - Scrollable Content */}
+              <main className="pt-24 lg:w-1/2 lg:py-24">
+                <SkillsSection isDarkMode={isDarkMode} />
+                <ExperienceSection isDarkMode={isDarkMode} />
+                <ProjectsSection isDarkMode={isDarkMode} />
+                <EducationSection isDarkMode={isDarkMode} />
+
+                {/* Footer text */}
+                <PortfolioFooter
+                  isDarkMode={isDarkMode}
+                  openContactModal={openContactModal}
+                />
+              </main>
+            </div>
+          </div>
+        </div>
+
+        {/* Scroll Controls */}
+        <ScrollControls
+          isDarkMode={isDarkMode}
+          showScrollTop={showScrollTop}
+          scrollToTop={scrollToTop}
+        />
+
+        {/* Contact Modal */}
+        <ContactModal
+          isDarkMode={isDarkMode}
+          isOpen={isContactModalOpen}
+          onClose={closeContactModal}
+        />
       </div>
-
-      {/* Hero Section with Integrated Stats */}
-      <HeroSection 
-        isDarkMode={isDarkMode}
-        isVisible={isVisible}
-        imageTransition={imageTransition}
-        scrollToSection={scrollToSection}
-        openContactModal={openContactModal}
-      />
-
-      {/* Skills Section */}
-      <SkillsSection isDarkMode={isDarkMode} />
-
-      {/* Experience Section */}
-      {/* <ExperienceSection isDarkMode={isDarkMode} /> */}
-
-      {/* Projects Section */}
-      <ProjectsSection isDarkMode={isDarkMode} />
-
-      {/* Education Section */}
-      <EducationSection isDarkMode={isDarkMode} />
-
-      {/* Footer */}
-      <PortfolioFooter 
-        isDarkMode={isDarkMode}
-        scrollToSection={scrollToSection}
-        openContactModal={openContactModal}
-      />
-
-      {/* Scroll Controls */}
-      <ScrollControls 
-        isDarkMode={isDarkMode}
-        showScrollTop={showScrollTop}
-        scrollToTop={scrollToTop}
-      />
-
-      {/* Contact Modal */}
-      <ContactModal 
-        isDarkMode={isDarkMode}
-        isOpen={isContactModalOpen}
-        onClose={closeContactModal}
-      />
     </div>
   );
 };
