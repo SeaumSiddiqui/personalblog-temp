@@ -104,13 +104,7 @@ export const Portfolio: React.FC = () => {
       />
 
       <div className="relative z-10">
-        <PortfolioNavigation
-          isDarkMode={isDarkMode}
-          activeSection={activeSection}
-          scrollToSection={scrollToSection}
-        />
-
-        <div className="fixed left-6 top-1/2 transform -translate-y-1/2 z-50 flex flex-col items-center space-y-6">
+        <div className="fixed right-6 top-1/2 transform -translate-y-1/2 z-50 flex flex-col items-center space-y-6">
           <SocialLinks layout="vertical" size="medium" />
           <ThemeToggle isDarkMode={isDarkMode} onToggle={toggleTheme} />
         </div>
@@ -124,6 +118,12 @@ export const Portfolio: React.FC = () => {
                     isDarkMode={isDarkMode}
                     scrollToSection={scrollToSection}
                     openContactModal={openContactModal}
+                  />
+
+                  <PortfolioNavigation
+                    isDarkMode={isDarkMode}
+                    activeSection={activeSection}
+                    scrollToSection={scrollToSection}
                   />
 
                   <div className="mt-12 hidden lg:block">
