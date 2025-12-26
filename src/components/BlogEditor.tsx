@@ -66,22 +66,6 @@ export const BlogEditor: React.FC<BlogEditorProps> = ({
   const fileInputRef = useRef<HTMLInputElement>(null);
   const bannerInputRef = useRef<HTMLInputElement>(null);
 
-  // Auto-resize textarea while preserving scroll position
-  useEffect(() => {
-    const textarea = textareaRef.current;
-    if (textarea) {
-      const scrollPos = textarea.scrollTop;
-      const cursorPos = textarea.selectionStart;
-
-      textarea.style.height = 'auto';
-      textarea.style.height = `${textarea.scrollHeight}px`;
-
-      // Restore scroll position to prevent jumping
-      requestAnimationFrame(() => {
-        textarea.scrollTop = scrollPos;
-      });
-    }
-  }, [editorData.content]);
 
   const insertText = useCallback((before: string, after: string = '', placeholder: string = '', selectText: boolean = false) => {
     const textarea = textareaRef.current;
@@ -733,8 +717,8 @@ export const BlogEditor: React.FC<BlogEditorProps> = ({
                 : 'bg-white/70 border-gray-200'
             }`}>
               {/* Fixed Toolbar */}
-              <div className={`sticky top-20 z-30 backdrop-blur-md border-b transition-colors duration-300 ${
-                isDarkMode ? 'bg-gray-800/90 border-gray-700' : 'bg-white/90 border-gray-200'
+              <div className={`sticky top-20 z-30 border-b transition-colors duration-300 ${
+                isDarkMode ? 'bg-gray-800 border-gray-700' : 'bg-white border-gray-200'
               }`}>
                 <div className="p-4">
                   <div className="flex items-center justify-between flex-wrap gap-4">
@@ -795,7 +779,7 @@ export const BlogEditor: React.FC<BlogEditorProps> = ({
                   onChange={(e) => setEditorData(prev => ({ ...prev, content: e.target.value }))}
                   onKeyDown={handleKeyDown}
                   placeholder="Start writing your blog post in Markdown..."
-                  className={`w-full min-h-[600px] resize-none border-none outline-none font-mono text-sm leading-relaxed ${
+                  className={`w-full h-[600px] resize-none border-none outline-none font-mono text-sm leading-relaxed overflow-y-auto ${
                     isDarkMode
                       ? 'bg-transparent text-gray-100 placeholder-gray-500'
                       : 'bg-transparent text-gray-900 placeholder-gray-500'
