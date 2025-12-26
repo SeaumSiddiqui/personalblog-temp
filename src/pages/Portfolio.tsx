@@ -7,10 +7,10 @@ import { LoadingSpinner } from '../components/LoadingSpinner';
 import { PortfolioNavigation } from '../components/portfolio/PortfolioNavigation';
 import { HeroSection } from '../components/portfolio/HeroSection';
 import { SidebarContent } from '../components/portfolio/SidebarContent';
-import { SkillsSection } from '../components/portfolio/SkillsSection';
+import { ProfileImage } from '../components/portfolio/ProfileImage';
 import { ProjectsSection } from '../components/portfolio/ProjectsSection';
 import { ExperienceSection } from '../components/portfolio/ExperienceSection';
-import { EducationSection } from '../components/portfolio/EducationSection';
+import { BlogSection } from '../components/portfolio/BlogSection';
 import { ContactModal } from '../components/portfolio/ContactModal';
 import { PortfolioFooter } from '../components/portfolio/PortfolioFooter';
 import { ScrollControls } from '../components/portfolio/ScrollControls';
@@ -18,7 +18,7 @@ import { ScrollControls } from '../components/portfolio/ScrollControls';
 export const Portfolio: React.FC = () => {
   const { isDarkMode, toggleTheme } = useTheme();
   const { loading: authLoading } = useAuth();
-  const [activeSection, setActiveSection] = useState('about');
+  const [activeSection, setActiveSection] = useState('experience');
   const [showScrollTop, setShowScrollTop] = useState(false);
   const [isContactModalOpen, setIsContactModalOpen] = useState(false);
   const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
@@ -27,7 +27,7 @@ export const Portfolio: React.FC = () => {
     const handleScroll = () => {
       setShowScrollTop(window.scrollY > 500);
 
-      const sections = ['about', 'experience', 'projects'];
+      const sections = ['experience', 'projects', 'blogs'];
       const scrollPosition = window.scrollY + 100;
 
       for (const section of sections) {
@@ -111,7 +111,7 @@ export const Portfolio: React.FC = () => {
 
         <div className="lg:ml-0">
           <div className="mx-auto min-h-screen max-w-screen-2xl px-6 py-12 md:px-12 md:py-20 lg:px-32 lg:py-0">
-            <div className="lg:flex lg:justify-between lg:gap-8">
+            <div className="lg:flex lg:justify-between lg:gap-16">
               <header className="lg:sticky lg:top-0 lg:flex lg:max-h-screen lg:w-1/2 lg:flex-col lg:justify-between lg:py-24">
                 <div>
                   <HeroSection
@@ -133,10 +133,12 @@ export const Portfolio: React.FC = () => {
               </header>
 
               <main className="pt-24 lg:w-1/2 lg:py-24">
-                <SkillsSection isDarkMode={isDarkMode} />
+                <ProfileImage isDarkMode={isDarkMode} />
                 <ExperienceSection isDarkMode={isDarkMode} />
+                <div className="mb-16" />
                 <ProjectsSection isDarkMode={isDarkMode} />
-                <EducationSection isDarkMode={isDarkMode} />
+                <div className="mb-16" />
+                <BlogSection isDarkMode={isDarkMode} />
 
                 <PortfolioFooter
                   isDarkMode={isDarkMode}
