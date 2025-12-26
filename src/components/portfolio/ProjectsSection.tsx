@@ -1,6 +1,7 @@
 import React from 'react';
 import { ExternalLink } from 'lucide-react';
-import projectThumbnail from '../../assets/thumbnails/projects/personalblog.png';
+import blogThumbnail from '../../assets/thumbnails/projects/personalblog.png';
+import qcharitybdThumbnail from '../../assets/thumbnails/projects/qcharitybd.png';
 
 interface Project {
   title: string;
@@ -20,14 +21,14 @@ export const ProjectsSection: React.FC<ProjectsSectionProps> = ({ isDarkMode }) 
       title: 'QCharity BD Portal',
       description: 'A comprehensive charity management platform for QCharity BD that streamlines donations, beneficiary management, and day-to-day operations. Features document workflow, payment tracking, and role-based access control.',
       technologies: ['Spring Boot', 'React', 'PostgreSQL', 'Docker', 'AWS', 'Keycloak'],
-      image: projectThumbnail,
+      image: qcharitybdThumbnail,
       link: 'https://qcharitybd.com'
     },
     {
       title: 'Blog Writing Platform',
       description: 'A full-stack blog management system with authentication, role-based access control, and modern UI. Features markdown editor, image uploads, and responsive design with a clean, elegant interface.',
       technologies: ['Spring Boot', 'React', 'TypeScript', 'PostgreSQL', 'Keycloak', 'Docker'],
-      image: projectThumbnail
+      image: blogThumbnail
     }
   ];
 
