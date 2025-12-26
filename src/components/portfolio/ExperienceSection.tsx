@@ -20,13 +20,13 @@ export const ExperienceSection: React.FC<ExperienceSectionProps> = ({ isDarkMode
     {
       company: 'QCharity BD',
       position: 'Full-Stack Developer',
-      duration: '2022 — Present',
-      description: 'Developed and deployed a comprehensive charity management portal for QCharity BD, enabling efficient management of donations, beneficiaries, and charitable activities.',
+      duration: '2025 — Present',
+      description: 'Built and launched a charity management portal for QCharity BD that helps the team manage donations, beneficiaries, and day-to-day operations more efficiently.',
       achievements: [
-        'Built complete full-stack application from scratch with modern architecture',
-        'Implemented secure authentication and role-based access control',
-        'Designed and deployed scalable database schema for charity operations',
-        'Live and actively used at qcharitybd.com'
+        // 'Built complete full-stack application from scratch with modern architecture',
+        // 'Implemented secure authentication and role-based access control using Keycloak',
+        // 'Designed and deployed scalable database schema for charity operations',
+        // 'Live and actively used at qcharitybd.com'
       ],
       technologies: ['Spring Boot', 'React', 'PostgreSQL', 'Docker', 'AWS'],
       link: 'https://qcharitybd.com'
