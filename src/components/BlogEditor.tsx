@@ -711,13 +711,13 @@ export const BlogEditor: React.FC<BlogEditorProps> = ({
         }`}>
           {/* Editor Panel */}
           <div className="transition-all duration-300 w-full">
-            <div className={`rounded-xl shadow-sm border transition-colors duration-300 ${
+            <div className={`rounded-xl shadow-sm border transition-colors duration-300 overflow-hidden ${
               isDarkMode
                 ? 'bg-gray-800/50 border-gray-700'
                 : 'bg-white/70 border-gray-200'
             }`}>
               {/* Fixed Toolbar */}
-              <div className={`sticky top-20 z-30 border-b transition-colors duration-300 ${
+              <div className={`sticky top-20 z-30 border-b transition-colors duration-300 rounded-t-xl ${
                 isDarkMode ? 'bg-gray-800 border-gray-700' : 'bg-white border-gray-200'
               }`}>
                 <div className="p-4">
@@ -779,7 +779,7 @@ export const BlogEditor: React.FC<BlogEditorProps> = ({
                   onChange={(e) => setEditorData(prev => ({ ...prev, content: e.target.value }))}
                   onKeyDown={handleKeyDown}
                   placeholder="Start writing your blog post in Markdown..."
-                  className={`w-full h-[600px] resize-none border-none outline-none font-mono text-sm leading-relaxed overflow-y-auto ${
+                  className={`w-full h-[700px] resize-none border-none outline-none font-mono text-sm leading-relaxed overflow-y-auto custom-scrollbar ${
                     isDarkMode
                       ? 'bg-transparent text-gray-100 placeholder-gray-500'
                       : 'bg-transparent text-gray-900 placeholder-gray-500'
@@ -806,7 +806,7 @@ export const BlogEditor: React.FC<BlogEditorProps> = ({
                     Live Preview
                   </h3>
                 </div>
-                <div className="p-6 max-h-[800px] overflow-y-auto">
+                <div className="p-6 h-[700px] overflow-y-auto custom-scrollbar">
                   <MarkdownPreview 
                     content={editorData.content}
                     title={editorData.title}
