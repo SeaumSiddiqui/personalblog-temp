@@ -66,12 +66,20 @@ export const BlogEditor: React.FC<BlogEditorProps> = ({
   const fileInputRef = useRef<HTMLInputElement>(null);
   const bannerInputRef = useRef<HTMLInputElement>(null);
 
-  // Auto-resize textarea
+  // Auto-resize textarea while preserving scroll position
   useEffect(() => {
     const textarea = textareaRef.current;
     if (textarea) {
+      const scrollPos = textarea.scrollTop;
+      const cursorPos = textarea.selectionStart;
+
       textarea.style.height = 'auto';
       textarea.style.height = `${textarea.scrollHeight}px`;
+
+      // Restore scroll position to prevent jumping
+      requestAnimationFrame(() => {
+        textarea.scrollTop = scrollPos;
+      });
     }
   }, [editorData.content]);
 
@@ -718,9 +726,7 @@ export const BlogEditor: React.FC<BlogEditorProps> = ({
           showPreview ? 'grid-cols-1 lg:grid-cols-2' : 'grid-cols-1'
         }`}>
           {/* Editor Panel */}
-          <div className={`transition-all duration-300 ${
-            showPreview ? '' : 'max-w-5xl mx-auto'
-          }`}>
+          <div className="transition-all duration-300 w-full">
             <div className={`rounded-xl shadow-sm border transition-colors duration-300 ${
               isDarkMode
                 ? 'bg-gray-800/50 border-gray-700'
