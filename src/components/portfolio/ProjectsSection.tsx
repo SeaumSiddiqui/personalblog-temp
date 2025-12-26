@@ -1,5 +1,5 @@
 import React from 'react';
-import projectThumbnail from '../../assets/thumbnails/projects/image.png';
+import projectThumbnail from '../../assets/thumbnails/projects/personalblog.png';
 
 interface Project {
   title: string;
