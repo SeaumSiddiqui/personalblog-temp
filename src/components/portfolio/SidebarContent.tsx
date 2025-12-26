@@ -69,7 +69,7 @@ export const SidebarContent: React.FC<SidebarContentProps> = ({ isDarkMode }) =>
   ];
 
   return (
-    <div className="relative w-full overflow-hidden">
+    <div className="relative w-full overflow-hidden mt-8">
       <div
         className={`transition-all duration-700 ease-in-out ${
           showStacks ? 'opacity-0 -translate-y-8' : 'opacity-100 translate-y-0'

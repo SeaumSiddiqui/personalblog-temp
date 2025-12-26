@@ -1,37 +1,24 @@
 import React from 'react';
-import {
-  SiSpringboot,
-  SiOpenjdk,
-  SiSpring,
-  SiPostgresql,
-  SiMongodb,
-  SiRedis,
-  SiAmazonaws,
-  SiDocker,
-  SiKubernetes,
-  SiGit,
-  SiApachemaven,
-  SiJunit5
-} from 'react-icons/si';
+import { SiNextdotjs, SiTailwindcss, SiNodedotjs } from 'react-icons/si';
+import { ExternalLink } from 'lucide-react';
 
 interface SkillsSectionProps {
   isDarkMode: boolean;
 }
 
+interface Skill {
+  name: string;
+  version?: string;
+  icon: React.ComponentType<any>;
+  url?: string;
+}
+
 export const SkillsSection: React.FC<SkillsSectionProps> = ({ isDarkMode }) => {
-  const skills = [
-    'Spring Boot',
-    'Java',
-    'Spring Security',
-    'PostgreSQL',
-    'MongoDB',
-    'Redis',
-    'AWS',
-    'Docker',
-    'Kubernetes',
-    'Git',
-    'Maven',
-    'JUnit'
+  const skills: Skill[] = [
+    { name: 'Next.JS', version: 'Version 15+', icon: SiNextdotjs, url: 'https://nextjs.org' },
+    { name: 'Tailwind CSS', icon: SiTailwindcss, url: 'https://tailwindcss.com' },
+    { name: 'ShadCN/UI', icon: () => <div className="w-6 h-6 flex items-center justify-center font-bold">S</div>, url: 'https://ui.shadcn.com' },
+    { name: 'Node.JS', version: 'Version 20.17.0', icon: SiNodedotjs, url: 'https://nodejs.org' }
   ];
 
   return (
@@ -73,20 +60,49 @@ export const SkillsSection: React.FC<SkillsSectionProps> = ({ isDarkMode }) => {
           }`}>
             Technologies I work with
           </h3>
-          <ul className="flex flex-wrap gap-2">
-            {skills.map((skill, index) => (
-              <li
-                key={index}
-                className={`px-3 py-1 text-xs rounded-full transition-all duration-300 ${
-                  isDarkMode
-                    ? 'bg-primary-900/30 text-primary-300 hover:bg-primary-900/50'
-                    : 'bg-primary-100 text-primary-700 hover:bg-primary-200'
-                }`}
-              >
-                {skill}
-              </li>
-            ))}
-          </ul>
+          <div className="grid grid-cols-2 gap-3">
+            {skills.map((skill, index) => {
+              const Icon = skill.icon;
+              return (
+                <a
+                  key={index}
+                  href={skill.url}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className={`group flex items-center gap-3 p-4 rounded-xl transition-all duration-300 ${
+                    isDarkMode
+                      ? 'bg-slate-900/80 hover:bg-slate-800/80'
+                      : 'bg-slate-100/80 hover:bg-slate-200/80'
+                  }`}
+                >
+                  <div className={`p-2 rounded-lg ${
+                    isDarkMode ? 'bg-primary-500/20' : 'bg-primary-500/10'
+                  }`}>
+                    <Icon className={`w-6 h-6 ${
+                      isDarkMode ? 'text-primary-400' : 'text-primary-600'
+                    }`} />
+                  </div>
+                  <div className="flex-1">
+                    <div className={`font-medium ${
+                      isDarkMode ? 'text-slate-100' : 'text-slate-900'
+                    }`}>
+                      {skill.name}
+                    </div>
+                    {skill.version && (
+                      <div className={`text-xs ${
+                        isDarkMode ? 'text-slate-400' : 'text-slate-600'
+                      }`}>
+                        {skill.version}
+                      </div>
+                    )}
+                  </div>
+                  <ExternalLink className={`w-4 h-4 opacity-0 group-hover:opacity-100 transition-opacity ${
+                    isDarkMode ? 'text-slate-400' : 'text-slate-600'
+                  }`} />
+                </a>
+              );
+            })}
+          </div>
         </div>
       </div>
     </section>
