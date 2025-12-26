@@ -18,23 +18,14 @@ export const PortfolioNavigation: React.FC<PortfolioNavigationProps> = ({
   ];
 
   return (
-    <nav className="hidden lg:block fixed left-12 top-1/2 -translate-y-1/2 z-40">
+    <nav className="hidden lg:block fixed right-12 top-1/2 -translate-y-1/2 z-40">
       <ul className="space-y-6">
         {navItems.map((item) => (
           <li key={item.id}>
             <button
               onClick={() => scrollToSection(item.id)}
-              className="group flex items-center space-x-4"
+              className="group flex items-center justify-end space-x-4"
             >
-              <span
-                className={`h-px transition-all duration-300 ${
-                  activeSection === item.id
-                    ? 'w-16 bg-primary-500'
-                    : isDarkMode
-                    ? 'w-8 bg-dark-text-secondary group-hover:w-16 group-hover:bg-primary-400'
-                    : 'w-8 bg-light-text-secondary group-hover:w-16 group-hover:bg-primary-500'
-                }`}
-              />
               <span
                 className={`text-xs font-bold uppercase tracking-widest transition-colors duration-300 ${
                   activeSection === item.id
@@ -46,6 +37,15 @@ export const PortfolioNavigation: React.FC<PortfolioNavigationProps> = ({
               >
                 {item.label}
               </span>
+              <span
+                className={`h-px transition-all duration-300 ${
+                  activeSection === item.id
+                    ? 'w-16 bg-primary-500'
+                    : isDarkMode
+                    ? 'w-8 bg-dark-text-secondary group-hover:w-16 group-hover:bg-primary-400'
+                    : 'w-8 bg-light-text-secondary group-hover:w-16 group-hover:bg-primary-500'
+                }`}
+              />
             </button>
           </li>
         ))}

@@ -2,9 +2,11 @@ import React, { useState, useEffect } from 'react';
 import { useTheme } from '../hooks/useTheme';
 import { useAuth } from '../hooks/useAuth';
 import { ThemeToggle } from '../components/ThemeToggle';
+import { SocialLinks } from '../components/SocialLinks';
 import { LoadingSpinner } from '../components/LoadingSpinner';
 import { PortfolioNavigation } from '../components/portfolio/PortfolioNavigation';
 import { HeroSection } from '../components/portfolio/HeroSection';
+import { SidebarContent } from '../components/portfolio/SidebarContent';
 import { SkillsSection } from '../components/portfolio/SkillsSection';
 import { ProjectsSection } from '../components/portfolio/ProjectsSection';
 import { ExperienceSection } from '../components/portfolio/ExperienceSection';
@@ -90,52 +92,52 @@ export const Portfolio: React.FC = () => {
         ? 'bg-dark-bg'
         : 'bg-light-bg'
     }`}>
-      {/* Subtle gradient spotlight effect */}
       <div
         className="fixed inset-0 pointer-events-none transition-opacity duration-300"
         style={{
           background: `radial-gradient(600px circle at ${mousePosition.x}px ${mousePosition.y}px, ${
             isDarkMode
-              ? 'rgba(124, 58, 237, 0.06)'
-              : 'rgba(124, 58, 237, 0.03)'
+              ? 'rgba(183, 148, 246, 0.08)'
+              : 'rgba(183, 148, 246, 0.04)'
           }, transparent 80%)`
         }}
       />
 
       <div className="relative z-10">
-        {/* Side Navigation */}
         <PortfolioNavigation
           isDarkMode={isDarkMode}
           activeSection={activeSection}
           scrollToSection={scrollToSection}
         />
 
-        {/* Theme Toggle - Top Right */}
-        <div className="fixed right-6 top-6 z-50">
+        <div className="fixed left-6 top-1/2 transform -translate-y-1/2 z-50 flex flex-col items-center space-y-6">
+          <SocialLinks layout="vertical" size="medium" />
           <ThemeToggle isDarkMode={isDarkMode} onToggle={toggleTheme} />
         </div>
 
-        {/* Main Content */}
         <div className="lg:ml-0">
-          <div className="mx-auto min-h-screen max-w-screen-xl px-6 py-12 md:px-12 md:py-20 lg:px-24 lg:py-0">
-            <div className="lg:flex lg:justify-between lg:gap-4">
-              {/* Left Column - Hero/Sticky */}
+          <div className="mx-auto min-h-screen max-w-screen-2xl px-6 py-12 md:px-12 md:py-20 lg:px-32 lg:py-0">
+            <div className="lg:flex lg:justify-between lg:gap-8">
               <header className="lg:sticky lg:top-0 lg:flex lg:max-h-screen lg:w-1/2 lg:flex-col lg:justify-between lg:py-24">
-                <HeroSection
-                  isDarkMode={isDarkMode}
-                  scrollToSection={scrollToSection}
-                  openContactModal={openContactModal}
-                />
+                <div>
+                  <HeroSection
+                    isDarkMode={isDarkMode}
+                    scrollToSection={scrollToSection}
+                    openContactModal={openContactModal}
+                  />
+
+                  <div className="mt-12 hidden lg:block">
+                    <SidebarContent isDarkMode={isDarkMode} />
+                  </div>
+                </div>
               </header>
 
-              {/* Right Column - Scrollable Content */}
               <main className="pt-24 lg:w-1/2 lg:py-24">
                 <SkillsSection isDarkMode={isDarkMode} />
                 <ExperienceSection isDarkMode={isDarkMode} />
                 <ProjectsSection isDarkMode={isDarkMode} />
                 <EducationSection isDarkMode={isDarkMode} />
 
-                {/* Footer text */}
                 <PortfolioFooter
                   isDarkMode={isDarkMode}
                   openContactModal={openContactModal}
@@ -145,14 +147,12 @@ export const Portfolio: React.FC = () => {
           </div>
         </div>
 
-        {/* Scroll Controls */}
         <ScrollControls
           isDarkMode={isDarkMode}
           showScrollTop={showScrollTop}
           scrollToTop={scrollToTop}
         />
 
-        {/* Contact Modal */}
         <ContactModal
           isDarkMode={isDarkMode}
           isOpen={isContactModalOpen}
