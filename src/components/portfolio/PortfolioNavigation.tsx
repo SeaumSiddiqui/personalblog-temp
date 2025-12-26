@@ -12,6 +12,7 @@ export const PortfolioNavigation: React.FC<PortfolioNavigationProps> = ({
   scrollToSection
 }) => {
   const navItems = [
+    { id: 'about', label: 'About' },
     { id: 'experience', label: 'Experience' },
     { id: 'projects', label: 'Projects' },
     { id: 'blogs', label: 'Blog' }

@@ -8,7 +8,7 @@ interface ProfileImageProps {
 export const ProfileImage: React.FC<ProfileImageProps> = ({ isDarkMode }) => {
   return (
     <div className="mb-16 flex justify-center">
-      <div className="relative w-64 h-64">
+      <div className="relative w-80 h-72">
         <div className={`absolute inset-0 rounded-2xl transition-opacity duration-700 ${
           isDarkMode ? 'opacity-100' : 'opacity-0'
         }`}>

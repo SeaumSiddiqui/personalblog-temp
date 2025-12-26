@@ -18,7 +18,7 @@ import { ScrollControls } from '../components/portfolio/ScrollControls';
 export const Portfolio: React.FC = () => {
   const { isDarkMode, toggleTheme } = useTheme();
   const { loading: authLoading } = useAuth();
-  const [activeSection, setActiveSection] = useState('experience');
+  const [activeSection, setActiveSection] = useState('about');
   const [showScrollTop, setShowScrollTop] = useState(false);
   const [isContactModalOpen, setIsContactModalOpen] = useState(false);
   const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
@@ -27,7 +27,7 @@ export const Portfolio: React.FC = () => {
     const handleScroll = () => {
       setShowScrollTop(window.scrollY > 500);
 
-      const sections = ['experience', 'projects', 'blogs'];
+      const sections = ['about', 'experience', 'projects', 'blogs'];
       const scrollPosition = window.scrollY + 100;
 
       for (const section of sections) {
@@ -133,7 +133,9 @@ export const Portfolio: React.FC = () => {
               </header>
 
               <main className="pt-24 lg:w-1/2 lg:py-24">
-                <ProfileImage isDarkMode={isDarkMode} />
+                <div id="about">
+                  <ProfileImage isDarkMode={isDarkMode} />
+                </div>
                 <ExperienceSection isDarkMode={isDarkMode} />
                 <div className="mb-16" />
                 <ProjectsSection isDarkMode={isDarkMode} />

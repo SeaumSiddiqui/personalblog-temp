@@ -18,16 +18,18 @@ interface ExperienceSectionProps {
 export const ExperienceSection: React.FC<ExperienceSectionProps> = ({ isDarkMode }) => {
   const experiences: Experience[] = [
     {
-      company: 'State University',
-      position: 'Computer Science Student',
+      company: 'QCharity BD',
+      position: 'Full-Stack Developer',
       duration: '2022 — Present',
-      description: 'Pursuing Bachelor of Science in Computer Science with focus on software engineering and system design.',
+      description: 'Developed and deployed a comprehensive charity management portal for QCharity BD, enabling efficient management of donations, beneficiaries, and charitable activities.',
       achievements: [
-        'Maintaining GPA of 3.6+/4.0',
-        'Built multiple full-stack projects including blog platform with authentication',
-        'Active participant in coding competitions and hackathons'
+        'Built complete full-stack application from scratch with modern architecture',
+        'Implemented secure authentication and role-based access control',
+        'Designed and deployed scalable database schema for charity operations',
+        'Live and actively used at qcharitybd.com'
       ],
-      technologies: ['Spring Boot', 'React', 'PostgreSQL', 'Docker', 'AWS']
+      technologies: ['Spring Boot', 'React', 'PostgreSQL', 'Docker', 'AWS'],
+      link: 'https://qcharitybd.com'
     }
   ];
 

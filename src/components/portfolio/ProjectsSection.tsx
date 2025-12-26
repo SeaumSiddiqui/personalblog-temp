@@ -1,14 +1,11 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
-import { ExternalLink, Github } from 'lucide-react';
+import projectThumbnail from '../../assets/thumbnails/projects/image.png';
 
 interface Project {
   title: string;
   description: string;
   technologies: string[];
   image: string;
-  liveUrl?: string;
-  githubUrl?: string;
 }
 
 interface ProjectsSectionProps {
@@ -21,9 +18,7 @@ export const ProjectsSection: React.FC<ProjectsSectionProps> = ({ isDarkMode }) 
       title: 'Blog Writing Platform',
       description: 'A full-stack blog management system with authentication, role-based access control, and modern UI. Features markdown editor, image uploads, and responsive design with a clean, elegant interface.',
       technologies: ['Spring Boot', 'React', 'TypeScript', 'PostgreSQL', 'Keycloak', 'Docker'],
-      image: 'https://objectstorage.ap-mumbai-1.oraclecloud.com/n/bmihpqq11x49/b/blog-image-bucket-20241130-2238/o/1493409d-629e-4061-925e-956342cf8898_Screenshot%20%2818%29.png',
-      liveUrl: '/blogs',
-      githubUrl: 'https://github.com/seaum-siddiqui/blog-platform'
+      image: projectThumbnail
     }
   ];
 
@@ -55,23 +50,11 @@ export const ProjectsSection: React.FC<ProjectsSectionProps> = ({ isDarkMode }) 
 
             <div className="z-10 sm:col-span-5">
               <h3 className="font-semibold leading-snug">
-                {project.liveUrl ? (
-                  <Link to={project.liveUrl}>
-                    <span className={`inline-flex items-baseline text-base font-medium leading-tight transition-colors duration-300 group-hover:text-primary-500 ${
-                      isDarkMode ? 'text-dark-text' : 'text-light-text'
-                    }`}>
-                      <span className="absolute -inset-x-4 -inset-y-2.5 hidden rounded md:-inset-x-6 md:-inset-y-4 lg:block" />
-                      <span>{project.title}</span>
-                      <ExternalLink className="ml-2 w-4 h-4 inline-block transition-transform group-hover:translate-x-1 group-hover:-translate-y-1" />
-                    </span>
-                  </Link>
-                ) : (
-                  <span className={`inline-flex items-baseline text-base font-medium leading-tight ${
-                    isDarkMode ? 'text-dark-text' : 'text-light-text'
-                  }`}>
-                    {project.title}
-                  </span>
-                )}
+                <span className={`inline-flex items-baseline text-base font-medium leading-tight transition-colors duration-300 group-hover:text-primary-500 ${
+                  isDarkMode ? 'text-dark-text' : 'text-light-text'
+                }`}>
+                  {project.title}
+                </span>
               </h3>
 
               <p className={`mt-2 text-sm leading-relaxed transition-colors duration-300 ${
@@ -94,58 +77,11 @@ export const ProjectsSection: React.FC<ProjectsSectionProps> = ({ isDarkMode }) 
                   </li>
                 ))}
               </ul>
-
-              <div className="mt-4 flex items-center space-x-4">
-                {project.liveUrl && (
-                  <Link
-                    to={project.liveUrl}
-                    className={`inline-flex items-center space-x-1 text-sm transition-colors duration-300 ${
-                      isDarkMode
-                        ? 'text-dark-text-secondary hover:text-primary-400'
-                        : 'text-light-text-secondary hover:text-primary-600'
-                    }`}
-                  >
-                    <ExternalLink className="w-4 h-4" />
-                    <span>View Project</span>
-                  </Link>
-                )}
-
-                {project.githubUrl && (
-                  <a
-                    href={project.githubUrl}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className={`inline-flex items-center space-x-1 text-sm transition-colors duration-300 ${
-                      isDarkMode
-                        ? 'text-dark-text-secondary hover:text-primary-400'
-                        : 'text-light-text-secondary hover:text-primary-600'
-                    }`}
-                  >
-                    <Github className="w-4 h-4" />
-                    <span>Source Code</span>
-                  </a>
-                )}
-              </div>
             </div>
           </div>
         ))}
       </div>
 
-      <div className="mt-12">
-        <a
-          href="https://github.com/seaum-siddiqui"
-          target="_blank"
-          rel="noopener noreferrer"
-          className={`group inline-flex items-center text-sm font-semibold transition-colors duration-300 ${
-            isDarkMode
-              ? 'text-primary-400 hover:text-primary-300'
-              : 'text-primary-600 hover:text-primary-700'
-          }`}
-        >
-          <span>View More on GitHub</span>
-          <ExternalLink className="ml-2 w-4 h-4 transition-transform group-hover:translate-x-1 group-hover:-translate-y-1" />
-        </a>
-      </div>
     </section>
   );
 };
