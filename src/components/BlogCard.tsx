@@ -162,16 +162,16 @@ export const BlogCard: React.FC<BlogCardProps> = ({ post, viewMode, onDelete }) 
 
   if (viewMode === 'list') {
     return (
-      <div className="group p-6 rounded-xl shadow-sm border transition-all duration-300 hover:shadow-md hover:scale-[1.01] bg-light-card border-light-border hover:shadow-primary-500/10 dark:bg-dark-card dark:border-dark-border dark:hover:shadow-primary-500/20">
+      <div className="group p-6 rounded-xl shadow-md border transition-all duration-300 hover:shadow-xl hover:scale-[1.01] hover:border-primary-400/50 bg-light-card border-light-border hover:shadow-primary-500/20 dark:bg-dark-card dark:border-dark-border dark:hover:border-primary-500/50 dark:hover:shadow-primary-500/30">
         <div className="flex gap-6">
           {/* Banner Image */}
           {post.coverURL && (
-            <div className="flex-shrink-0">
+            <div className="flex-shrink-0 overflow-hidden rounded-lg">
               <Link to={`/post/${post.id}`}>
                 <img
                   src={post.coverURL}
                   alt={post.title}
-                  className="w-48 h-32 object-cover rounded-lg border border-light-border dark:border-dark-border group-hover:scale-105 transition-transform duration-300"
+                  className="w-48 h-32 object-cover rounded-lg border border-light-border dark:border-dark-border group-hover:scale-110 transition-transform duration-500"
                 />
               </Link>
             </div>
@@ -267,7 +267,7 @@ export const BlogCard: React.FC<BlogCardProps> = ({ post, viewMode, onDelete }) 
   }
 
   return (
-    <div className="group rounded-xl shadow-sm border transition-all duration-300 hover:shadow-lg hover:scale-[1.02] hover:shadow-primary-500/10 bg-light-card border-light-border dark:bg-dark-card dark:border-dark-border dark:hover:shadow-primary-500/20 h-fit overflow-hidden">
+    <div className="group rounded-xl shadow-md border transition-all duration-300 hover:shadow-xl hover:scale-[1.03] hover:border-primary-400/50 hover:shadow-primary-500/20 bg-light-card border-light-border dark:bg-dark-card dark:border-dark-border dark:hover:border-primary-500/50 dark:hover:shadow-primary-500/30 h-fit overflow-hidden">
       <div className="h-full flex flex-col">
         {/* Banner Image */}
         {post.coverURL && (
@@ -279,7 +279,7 @@ export const BlogCard: React.FC<BlogCardProps> = ({ post, viewMode, onDelete }) 
                 className="w-full h-48 object-cover group-hover:scale-110 transition-transform duration-500"
               />
             </Link>
-            <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+            <div className="absolute inset-0 bg-gradient-to-t from-primary-900/30 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
           </div>
         )}
         
