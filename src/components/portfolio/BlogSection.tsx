@@ -9,20 +9,20 @@ interface BlogSectionProps {
 export const BlogSection: React.FC<BlogSectionProps> = ({ isDarkMode }) => {
   const recentPosts = [
     {
-      title: 'Building Scalable Microservices',
-      excerpt: 'Best practices for designing and implementing microservices architecture',
-      date: '2024'
+      title: 'Spring Boot: Export Excel File from MySQL Database with User Selected Fields',
+      //excerpt: 'Optimizing Spring Boot applications for production environments',
+      date: '2025'
     },
     {
-      title: 'Spring Boot Performance Tips',
-      excerpt: 'Optimizing Spring Boot applications for production environments',
-      date: '2024'
+      title: 'Storing Bengali Enum Values in Database with JPA Converters',
+      //excerpt: 'Best practices for designing and implementing microservices architecture',
+      date: '2025'
     },
-    {
-      title: 'Database Design Patterns',
-      excerpt: 'Common patterns and anti-patterns in database schema design',
-      date: '2024'
-    }
+    // {
+    //   title: 'Database Design Patterns',
+    //   excerpt: 'Common patterns and anti-patterns in database schema design',
+    //   date: '2024'
+    // }
   ];
 
   return (
