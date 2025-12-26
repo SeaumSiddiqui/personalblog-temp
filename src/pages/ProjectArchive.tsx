@@ -26,37 +26,16 @@ export const ProjectArchive: React.FC = () => {
       technologies: ['Spring Boot', 'React', 'PostgreSQL', 'Docker', 'AWS', 'Keycloak'],
       image: projectThumbnail,
       link: 'https://qcharitybd.com',
-      year: '2024'
+      year: '2025'
     },
     {
       title: 'Blog Writing Platform',
       description: 'A full-stack blog management system with authentication, role-based access control, and modern UI. Features markdown editor, image uploads, and responsive design with a clean, elegant interface.',
       technologies: ['Spring Boot', 'React', 'TypeScript', 'PostgreSQL', 'Keycloak', 'Docker'],
       image: projectThumbnail,
-      link: 'https://seaumsiddiqui.com',
-      year: '2024'
+      link: 'https://seaumsiddiqui.com/blogs',
+      year: '2025'
     },
-    {
-      title: 'E-Commerce Platform',
-      description: 'A scalable e-commerce solution with inventory management, order processing, and payment integration. Built with microservices architecture for high availability.',
-      technologies: ['Node.js', 'Express', 'MongoDB', 'Redis', 'Stripe'],
-      image: projectThumbnail,
-      year: '2023'
-    },
-    {
-      title: 'Real-Time Chat Application',
-      description: 'A real-time messaging platform with WebSocket support, group chats, and media sharing capabilities. Includes end-to-end encryption for secure communication.',
-      technologies: ['Socket.io', 'React', 'Node.js', 'MongoDB', 'WebRTC'],
-      image: projectThumbnail,
-      year: '2023'
-    },
-    {
-      title: 'Task Management System',
-      description: 'A collaborative task management tool with kanban boards, sprint planning, and team analytics. Integrates with popular development tools.',
-      technologies: ['Vue.js', 'Django', 'PostgreSQL', 'Celery', 'Redis'],
-      image: projectThumbnail,
-      year: '2022'
-    }
   ];
 
   const toggleExpand = (index: number) => {
