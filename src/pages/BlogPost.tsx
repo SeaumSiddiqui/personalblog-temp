@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useParams, Link, useNavigate } from 'react-router-dom';
+import { Helmet } from 'react-helmet-async';
 import { useTheme } from '../hooks/useTheme';
 import { useAuth } from '../hooks/useAuth';
 import { BlogPost as BlogPostType } from '../types/blog';
@@ -189,6 +190,31 @@ export const BlogPost: React.FC = () => {
         ? 'bg-dark-bg'
         : 'bg-light-bg'
     }`}>
+      <Helmet>
+        <title>{post.title} | Seaum Siddiqui</title>
+        <meta name="description" content={post.description || `Read ${post.title} by ${post.author}`} />
+        <meta name="author" content={post.author} />
+
+        <meta property="og:type" content="article" />
+        <meta property="og:title" content={post.title} />
+        <meta property="og:description" content={post.description || `Read ${post.title} by ${post.author}`} />
+        <meta property="og:url" content={currentUrl} />
+        {post.coverURL && <meta property="og:image" content={post.coverURL} />}
+        <meta property="og:site_name" content="Seaum Siddiqui" />
+        <meta property="article:author" content={post.author} />
+        <meta property="article:published_time" content={post.createdAt} />
+        {post.lastModifiedAt && <meta property="article:modified_time" content={post.lastModifiedAt} />}
+        {post.tags && post.tags.map((tag, index) => (
+          <meta key={index} property="article:tag" content={tag} />
+        ))}
+
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta name="twitter:site" content="@SeaumSiddiqui" />
+        <meta name="twitter:creator" content="@SeaumSiddiqui" />
+        <meta name="twitter:title" content={post.title} />
+        <meta name="twitter:description" content={post.description || `Read ${post.title} by ${post.author}`} />
+        {post.coverURL && <meta name="twitter:image" content={post.coverURL} />}
+      </Helmet>
       {/* Floating Theme Toggle */}
       <div className="fixed right-6 top-1/2 transform -translate-y-1/2 z-50">
         <ThemeToggle isDarkMode={isDarkMode} onToggle={toggleTheme} />
