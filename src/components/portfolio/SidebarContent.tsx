@@ -2,10 +2,12 @@ import React, { useEffect, useState } from 'react';
 import { Briefcase, Users, Award } from 'lucide-react';
 import { ExternalLink } from 'lucide-react';
 import {
-  SiNextdotjs,
-  SiTailwindcss,
-  SiNodedotjs,
-  SiSpringboot
+  SiOpenjdk,
+  SiSpringboot,
+  SiMysql,
+  SiDocker,
+  SiGithub,
+  SiApachemaven
 } from 'react-icons/si';
 
 interface SidebarContentProps {
@@ -42,10 +44,12 @@ export const SidebarContent: React.FC<SidebarContentProps> = ({ isDarkMode }) =>
   }, []);
 
   const techs: Tech[] = [
-    { name: 'Next.JS', icon: SiNextdotjs },
-    { name: 'Tailwind CSS', icon: SiTailwindcss },
-    { name: 'ShadCN/UI', icon: SiSpringboot },
-    { name: 'Node.JS', icon: SiNodedotjs }
+    { name: 'Java', icon: SiOpenjdk },
+    { name: 'Spring Boot', icon: SiSpringboot },
+    { name: 'MySQL', icon: SiMysql },
+    { name: 'Docker', icon: SiDocker },
+    { name: 'GitHub', icon: SiGithub },
+    { name: 'Maven', icon: SiApachemaven }
   ];
 
   const stats: Stat[] = [
@@ -66,21 +70,21 @@ export const SidebarContent: React.FC<SidebarContentProps> = ({ isDarkMode }) =>
           {stats.map((stat, index) => (
             <div
               key={index}
-              className={`p-4 rounded-xl transition-all duration-300 ${
+              className={`p-3 rounded-lg transition-all duration-300 ${
                 isDarkMode
-                  ? 'bg-slate-900/90'
-                  : 'bg-slate-200/90'
+                  ? 'bg-black/60 border border-slate-800'
+                  : 'bg-white/60 border border-slate-300'
               }`}
             >
               <div className="flex items-center gap-2 mb-1">
-                <div className={`p-1.5 rounded-lg ${
+                <div className={`p-1 rounded ${
                   isDarkMode ? 'bg-primary-500/20' : 'bg-primary-500/10'
                 }`}>
-                  {index === 0 && <Briefcase className={`w-4 h-4 ${isDarkMode ? 'text-primary-400' : 'text-primary-600'}`} />}
-                  {index === 1 && <Users className={`w-4 h-4 ${isDarkMode ? 'text-primary-400' : 'text-primary-600'}`} />}
-                  {index === 2 && <Award className={`w-4 h-4 ${isDarkMode ? 'text-primary-400' : 'text-primary-600'}`} />}
+                  {index === 0 && <Briefcase className={`w-3.5 h-3.5 ${isDarkMode ? 'text-primary-400' : 'text-primary-600'}`} />}
+                  {index === 1 && <Users className={`w-3.5 h-3.5 ${isDarkMode ? 'text-primary-400' : 'text-primary-600'}`} />}
+                  {index === 2 && <Award className={`w-3.5 h-3.5 ${isDarkMode ? 'text-primary-400' : 'text-primary-600'}`} />}
                 </div>
-                <div className={`text-2xl font-bold ${
+                <div className={`text-xl font-bold ${
                   isDarkMode ? 'text-slate-100' : 'text-slate-900'
                 }`}>
                   {stat.value}
@@ -102,49 +106,34 @@ export const SidebarContent: React.FC<SidebarContentProps> = ({ isDarkMode }) =>
         }`}
         style={{ position: showStacks ? 'relative' : 'absolute', top: showStacks ? 0 : 0 }}
       >
-        <div className="grid grid-cols-2 gap-3">
-          {techs.slice(0, 4).map((tech, index) => (
+        <div className="grid grid-cols-3 gap-2">
+          {techs.map((tech, index) => (
             <a
               key={index}
               href="#"
-              className={`group flex items-center gap-3 p-4 rounded-xl transition-all duration-300 ${
+              className={`group flex flex-col items-center gap-2 p-3 rounded-lg transition-all duration-300 ${
                 isDarkMode
-                  ? 'bg-slate-900/90 hover:bg-slate-800/90'
-                  : 'bg-slate-200/90 hover:bg-slate-300/90'
+                  ? 'bg-black/60 border border-slate-800 hover:bg-black/80'
+                  : 'bg-white/60 border border-slate-300 hover:bg-white/80'
               }`}
             >
               <div className={`p-2 rounded-lg ${
                 isDarkMode ? 'bg-primary-500/20' : 'bg-primary-500/10'
               }`}>
-                {index === 2 ? (
-                  <div className={`w-5 h-5 flex items-center justify-center font-bold text-xs ${
-                    isDarkMode ? 'text-primary-400' : 'text-primary-600'
-                  }`}>
-                    S
-                  </div>
-                ) : (
-                  <tech.icon className={`w-5 h-5 ${
-                    isDarkMode ? 'text-primary-400' : 'text-primary-600'
-                  }`} />
-                )}
+                <tech.icon className={`w-5 h-5 ${
+                  isDarkMode ? 'text-primary-400' : 'text-primary-600'
+                }`} />
               </div>
-              <div className="flex-1">
-                <div className={`text-sm font-medium ${
-                  isDarkMode ? 'text-slate-100' : 'text-slate-900'
+              <div className="flex items-center gap-1">
+                <div className={`text-xs font-medium text-center ${
+                  isDarkMode ? 'text-slate-300' : 'text-slate-700'
                 }`}>
                   {tech.name}
                 </div>
-                {(index === 0 || index === 3) && (
-                  <div className={`text-xs ${
-                    isDarkMode ? 'text-slate-400' : 'text-slate-600'
-                  }`}>
-                    Version {index === 0 ? '15+' : '20.17.0'}
-                  </div>
-                )}
+                <ExternalLink className={`w-3 h-3 opacity-0 group-hover:opacity-100 transition-opacity ${
+                  isDarkMode ? 'text-slate-400' : 'text-slate-600'
+                }`} />
               </div>
-              <ExternalLink className={`w-4 h-4 opacity-0 group-hover:opacity-100 transition-opacity ${
-                isDarkMode ? 'text-slate-400' : 'text-slate-600'
-              }`} />
             </a>
           ))}
         </div>
