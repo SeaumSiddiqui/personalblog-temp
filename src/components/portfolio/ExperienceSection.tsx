@@ -58,17 +58,29 @@ export const ExperienceSection: React.FC<ExperienceSectionProps> = ({ isDarkMode
 
             <div className="z-10 sm:col-span-6">
               <h3 className="font-semibold leading-snug">
-                <div>
+                {exp.link ? (
+                  <a
+                    href={exp.link}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="group/link"
+                  >
+                    <span className={`inline-flex items-baseline text-base font-medium leading-tight transition-colors duration-300 group-hover:text-primary-500 ${
+                      isDarkMode ? 'text-dark-text' : 'text-light-text'
+                    }`}>
+                      <span className="absolute -inset-x-4 -inset-y-2.5 hidden rounded md:-inset-x-6 md:-inset-y-4 lg:block" />
+                      <span>{exp.position} · {exp.company}</span>
+                      <ExternalLink className="ml-2 w-4 h-4 inline-block transition-transform group-hover:translate-x-1 group-hover:-translate-y-1" />
+                    </span>
+                  </a>
+                ) : (
                   <span className={`inline-flex items-baseline text-base font-medium leading-tight transition-colors duration-300 group-hover:text-primary-500 ${
                     isDarkMode ? 'text-dark-text' : 'text-light-text'
                   }`}>
                     <span className="absolute -inset-x-4 -inset-y-2.5 hidden rounded md:-inset-x-6 md:-inset-y-4 lg:block" />
                     <span>{exp.position} · {exp.company}</span>
-                    {exp.link && (
-                      <ExternalLink className="ml-2 w-4 h-4 inline-block transition-transform group-hover:translate-x-1 group-hover:-translate-y-1" />
-                    )}
                   </span>
-                </div>
+                )}
               </h3>
 
               <p className={`mt-2 text-sm leading-relaxed transition-colors duration-300 ${

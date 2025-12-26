@@ -29,12 +29,20 @@ export const Portfolio: React.FC = () => {
 
       const sections = ['about', 'experience', 'projects', 'blogs'];
       const scrollPosition = window.scrollY + 100;
+      const windowHeight = window.innerHeight;
+      const documentHeight = document.documentElement.scrollHeight;
 
-      for (const section of sections) {
+      if (scrollPosition + windowHeight >= documentHeight - 50) {
+        setActiveSection('blogs');
+        return;
+      }
+
+      for (let i = sections.length - 1; i >= 0; i--) {
+        const section = sections[i];
         const element = document.getElementById(section);
         if (element) {
-          const { offsetTop, offsetHeight } = element;
-          if (scrollPosition >= offsetTop && scrollPosition < offsetTop + offsetHeight) {
+          const { offsetTop } = element;
+          if (scrollPosition >= offsetTop) {
             setActiveSection(section);
             break;
           }
