@@ -64,43 +64,22 @@ export const fetchBlogMetadata = async (url: string): Promise<BlogMetadata> => {
   }
 
   try {
-    const response = await fetch(url);
-    const html = await response.text();
+    const apiUrl = `${import.meta.env.VITE_SUPABASE_URL}/functions/v1/fetch-blog-metadata`;
 
-    const parser = new DOMParser();
-    const doc = parser.parseFromString(html, 'text/html');
+    const response = await fetch(apiUrl, {
+      method: 'POST',
+      headers: {
+        'Authorization': `Bearer ${import.meta.env.VITE_SUPABASE_ANON_KEY}`,
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ url }),
+    });
 
-    const getMetaContent = (name: string, property?: string): string | null => {
-      let element = doc.querySelector(`meta[name="${name}"]`);
-      if (!element && property) {
-        element = doc.querySelector(`meta[property="${property}"]`);
-      }
-      return element?.getAttribute('content') || null;
-    };
+    if (!response.ok) {
+      throw new Error(`Edge function returned ${response.status}`);
+    }
 
-    const title =
-      getMetaContent('og:title', 'og:title') ||
-      getMetaContent('twitter:title', 'twitter:title') ||
-      doc.querySelector('title')?.textContent ||
-      'Untitled';
-
-    const description =
-      getMetaContent('og:description', 'og:description') ||
-      getMetaContent('twitter:description', 'twitter:description') ||
-      getMetaContent('description') ||
-      '';
-
-    const image =
-      getMetaContent('og:image', 'og:image') ||
-      getMetaContent('twitter:image', 'twitter:image') ||
-      '';
-
-    const metadata: BlogMetadata = {
-      title: title.trim(),
-      description: description.trim(),
-      image: image.trim(),
-      url,
-    };
+    const metadata: BlogMetadata = await response.json();
 
     setCachedMetadata(url, metadata);
     return metadata;
