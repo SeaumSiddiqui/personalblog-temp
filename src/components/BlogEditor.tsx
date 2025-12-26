@@ -469,9 +469,9 @@ export const BlogEditor: React.FC<BlogEditorProps> = ({
 
   return (
     <div className={`min-h-screen transition-colors duration-300 ${
-      isDarkMode 
-        ? 'bg-gradient-to-br from-[#29323c] via-[#3a4550] to-[#485563]' 
-        : 'bg-gradient-to-br from-[#fdfbfb] via-[#f4f6f7] to-[#ebedee]'
+      isDarkMode
+        ? 'bg-dark-bg'
+        : 'bg-light-bg'
     }`}>
       {/* Floating Theme Toggle */}
       <div className="fixed right-6 top-1/2 transform -translate-y-1/2 z-50">
@@ -480,7 +480,7 @@ export const BlogEditor: React.FC<BlogEditorProps> = ({
 
       {/* Header */}
       <header className={`sticky top-0 z-40 backdrop-blur-md border-b transition-colors duration-300 ${
-        isDarkMode ? 'bg-gray-900/80 border-gray-700' : 'bg-white/80 border-gray-200'
+        isDarkMode ? 'bg-dark-card/80 border-dark-border' : 'bg-light-card/80 border-light-border'
       }`}>
         <div className="flex items-center justify-between h-16 px-6">
           {/* Left-aligned elements */}
@@ -489,14 +489,14 @@ export const BlogEditor: React.FC<BlogEditorProps> = ({
               to="/blogs"
               className={`flex items-center space-x-2 px-3 py-2 rounded-lg transition-colors duration-200 ${
                 isDarkMode
-                  ? 'hover:bg-gray-700 text-gray-300'
-                  : 'hover:bg-gray-100 text-gray-600'
+                  ? 'hover:bg-dark-border text-dark-text'
+                  : 'hover:bg-light-border text-light-text'
               }`}
             >
               <ArrowLeft className="w-4 h-4" />
               <span>Back</span>
             </Link>
-            <h1 className="text-2xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
+            <h1 className="text-2xl font-bold bg-gradient-to-r from-primary-500 to-primary-400 bg-clip-text text-transparent">
               {isEditing ? 'Edit Blog' : 'Create Blog'}
             </h1>
           </div>
@@ -507,20 +507,20 @@ export const BlogEditor: React.FC<BlogEditorProps> = ({
               onClick={() => setShowPreview(!showPreview)}
               className={`flex items-center space-x-2 px-4 py-2 rounded-lg transition-colors duration-200 ${
                 showPreview
-                  ? 'bg-blue-500 text-white'
+                  ? 'bg-primary-400 text-white dark:bg-primary-500'
                   : isDarkMode
-                  ? 'bg-gray-700 text-gray-300 hover:bg-gray-600'
-                  : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
+                  ? 'bg-dark-border text-dark-text hover:bg-dark-border/70'
+                  : 'bg-light-border text-light-text hover:bg-light-border/70'
               }`}
             >
               {showPreview ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}
               <span>{showPreview ? 'Hide Preview' : 'Show Preview'}</span>
             </button>
-            
+
             <button
               onClick={handleSave}
               disabled={isLoading}
-              className="flex items-center space-x-2 px-4 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition-colors duration-200 disabled:opacity-50 disabled:cursor-not-allowed"
+              className="flex items-center space-x-2 px-4 py-2 bg-primary-400 text-white rounded-lg hover:bg-primary-500 transition-colors duration-200 disabled:opacity-50 disabled:cursor-not-allowed dark:bg-primary-500 dark:hover:bg-primary-600"
             >
               <Save className="w-4 h-4" />
               <span>{isLoading ? 'Saving...' : 'Save'}</span>
@@ -552,8 +552,8 @@ export const BlogEditor: React.FC<BlogEditorProps> = ({
         {/* Blog Meta Information */}
         <div className={`mb-6 p-6 rounded-xl shadow-sm border transition-colors duration-300 ${
           isDarkMode
-            ? 'bg-gray-800/50 border-gray-700'
-            : 'bg-white/70 border-gray-200'
+            ? 'bg-dark-card border-dark-border'
+            : 'bg-light-card border-light-border'
         }`}>
           {/* Banner Image Section */}
           <div className="mb-6">
