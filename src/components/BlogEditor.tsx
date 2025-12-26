@@ -717,7 +717,7 @@ export const BlogEditor: React.FC<BlogEditorProps> = ({
                 : 'bg-white/70 border-gray-200'
             }`}>
               {/* Fixed Toolbar */}
-              <div className={`sticky top-24 z-30 border-b transition-colors duration-300 flex-shrink-0 ${
+              <div className={`sticky top-0 border-b transition-colors duration-300 flex-shrink-0 ${
                 isDarkMode ? 'bg-gray-800 border-gray-700' : 'bg-white border-gray-200'
               }`}>
                 <div className="p-4">
@@ -791,7 +791,7 @@ export const BlogEditor: React.FC<BlogEditorProps> = ({
 
           {/* Preview Panel */}
           {showPreview && (
-            <div className="lg:sticky lg:top-24 lg:h-fit">
+            <div>
               <div className={`rounded-xl shadow-sm border transition-colors duration-300 flex flex-col h-[820px] ${
                 isDarkMode
                   ? 'bg-gray-800/50 border-gray-700'
@@ -806,7 +806,7 @@ export const BlogEditor: React.FC<BlogEditorProps> = ({
                     Live Preview
                   </h3>
                 </div>
-                <div className="flex-1 overflow-y-auto custom-scrollbar p-6 pr-4">
+                <div className="flex-1 overflow-y-auto overflow-x-hidden custom-scrollbar p-6 pr-4">
                   <MarkdownPreview 
                     content={editorData.content}
                     title={editorData.title}
