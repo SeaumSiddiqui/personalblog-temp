@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { ExternalLink, ChevronDown, ChevronUp, ArrowLeft } from 'lucide-react';
 import { ThemeToggle } from '../components/ThemeToggle';
+import { SocialLinks } from '../components/SocialLinks';
 import { Link } from 'react-router-dom';
 import { useThemeContext } from '../context/ThemeContext';
 import projectThumbnail from '../assets/thumbnails/projects/personalblog.png';
@@ -66,32 +67,34 @@ export const ProjectArchive: React.FC = () => {
     <div className={`min-h-screen transition-colors duration-300 ${
       isDarkMode ? 'bg-dark-bg' : 'bg-light-bg'
     }`}>
+      <div className="fixed right-6 top-1/2 transform -translate-y-1/2 z-50 flex flex-col items-center space-y-6">
+        <SocialLinks layout="vertical" size="medium" />
+        <ThemeToggle isDarkMode={isDarkMode} onToggle={toggleTheme} />
+      </div>
+
       <div className="max-w-6xl mx-auto px-6 py-12 lg:px-12 lg:py-20">
-        <div className="flex items-start justify-between mb-12">
-          <div>
-            <Link
-              to="/"
-              className={`inline-flex items-center text-sm mb-4 transition-colors duration-300 ${
-                isDarkMode
-                  ? 'text-primary-400 hover:text-primary-300'
-                  : 'text-primary-600 hover:text-primary-700'
-              }`}
-            >
-              <ArrowLeft className="w-4 h-4 mr-2" />
-              Back to Portfolio
-            </Link>
-            <h1 className={`text-4xl font-bold mb-4 transition-colors duration-300 ${
-              isDarkMode ? 'text-dark-text' : 'text-light-text'
-            }`}>
-              All Projects
-            </h1>
-            <p className={`text-lg transition-colors duration-300 ${
-              isDarkMode ? 'text-dark-text-secondary' : 'text-light-text-secondary'
-            }`}>
-              A comprehensive collection of my work
-            </p>
-          </div>
-          <ThemeToggle isDarkMode={isDarkMode} onToggle={toggleTheme} />
+        <div className="mb-12">
+          <Link
+            to="/"
+            className={`inline-flex items-center text-sm mb-4 transition-colors duration-300 ${
+              isDarkMode
+                ? 'text-primary-400 hover:text-primary-300'
+                : 'text-primary-600 hover:text-primary-700'
+            }`}
+          >
+            <ArrowLeft className="w-4 h-4 mr-2" />
+            Back to Portfolio
+          </Link>
+          <h1 className={`text-4xl font-bold mb-4 transition-colors duration-300 ${
+            isDarkMode ? 'text-dark-text' : 'text-light-text'
+          }`}>
+            All Projects
+          </h1>
+          <p className={`text-lg transition-colors duration-300 ${
+            isDarkMode ? 'text-dark-text-secondary' : 'text-light-text-secondary'
+          }`}>
+            A comprehensive collection of my work
+          </p>
         </div>
 
         <div className="space-y-4">
