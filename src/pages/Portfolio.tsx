@@ -125,10 +125,10 @@ export const Portfolio: React.FC = () => {
                     activeSection={activeSection}
                     scrollToSection={scrollToSection}
                   />
+                </div>
 
-                  <div className="mt-12 hidden lg:block">
-                    <SidebarContent isDarkMode={isDarkMode} />
-                  </div>
+                <div className="hidden lg:block">
+                  <SidebarContent isDarkMode={isDarkMode} />
                 </div>
               </header>
 
