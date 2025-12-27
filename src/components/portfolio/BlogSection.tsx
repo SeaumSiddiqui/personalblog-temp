@@ -43,7 +43,7 @@ export const BlogSection: React.FC<BlogSectionProps> = ({ isDarkMode }) => {
       </div>
 
       <div>
-        <div className="space-y-8">
+        <div className="space-y-4">
           {blogPosts.map((post, index) => (
             <div
               key={index}
@@ -53,51 +53,42 @@ export const BlogSection: React.FC<BlogSectionProps> = ({ isDarkMode }) => {
                 href={post.url}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="absolute -inset-x-4 -inset-y-4 z-0 hidden rounded-lg transition motion-reduce:transition-none lg:-inset-x-6 lg:block lg:group-hover:bg-primary-900/10 lg:group-hover:shadow-lg lg:group-hover:drop-shadow-lg"
+                className="absolute -inset-x-4 -inset-y-4 z-0 hidden rounded-lg transition motion-reduce:transition-none lg:-inset-x-6 lg:block lg:group-hover:bg-white/5 lg:group-hover:shadow-lg lg:group-hover:drop-shadow-lg"
               />
 
-              <header className="z-10 mb-2 mt-1 text-xs font-semibold uppercase tracking-wide text-light-text-secondary dark:text-dark-text-secondary sm:col-span-2">
-                {post.date}
-              </header>
-
-              <div className="z-10 sm:col-span-6">
-                <div className="flex gap-4">
-                  {post.image && (
-                    <div className="relative w-24 h-24 flex-shrink-0 rounded-lg overflow-hidden border border-light-border dark:border-dark-border">
-                      <img
-                        src={post.image}
-                        alt={post.title}
-                        className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-110"
-                        loading="lazy"
-                      />
-                    </div>
-                  )}
-                  <div className="flex-1 min-w-0">
-                    <h3 className="font-semibold leading-snug">
-                      <a
-                        href={post.url}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="group/link"
-                      >
-                        <span className={`inline-flex items-baseline text-base font-medium leading-tight transition-colors duration-300 group-hover:text-primary-500 ${
-                          isDarkMode ? 'text-dark-text' : 'text-light-text'
-                        }`}>
-                          <span className="absolute -inset-x-4 -inset-y-2.5 hidden rounded md:-inset-x-6 md:-inset-y-4 lg:block" />
-                          <span className="line-clamp-2">{post.title}</span>
-                          <ExternalLink className="ml-2 w-4 h-4 inline-block flex-shrink-0 transition-transform group-hover:translate-x-1 group-hover:-translate-y-1" />
-                        </span>
-                      </a>
-                    </h3>
-                    {post.description && (
-                      <p className={`mt-2 text-sm line-clamp-2 transition-colors duration-300 ${
-                        isDarkMode ? 'text-dark-text-secondary' : 'text-light-text-secondary'
-                      }`}>
-                        {post.description}
-                      </p>
-                    )}
+              <div className="z-10 sm:col-span-3">
+                {post.image && (
+                  <div className="relative w-full aspect-video rounded overflow-hidden border border-light-border/20 dark:border-dark-border/20">
+                    <img
+                      src={post.image}
+                      alt={post.title}
+                      className="w-full h-full object-cover"
+                      loading="lazy"
+                    />
                   </div>
-                </div>
+                )}
+              </div>
+
+              <div className="z-10 sm:col-span-5 flex flex-col justify-center">
+                <header className="mb-2 text-xs font-semibold uppercase tracking-wide text-light-text-secondary dark:text-dark-text-secondary">
+                  {post.date}
+                </header>
+                <h3 className="font-semibold leading-snug">
+                  <a
+                    href={post.url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="group/link"
+                  >
+                    <span className={`inline-flex items-baseline text-base font-medium leading-tight transition-colors duration-300 group-hover:text-primary-500 ${
+                      isDarkMode ? 'text-dark-text' : 'text-light-text'
+                    }`}>
+                      <span className="absolute -inset-x-4 -inset-y-2.5 hidden rounded md:-inset-x-6 md:-inset-y-4 lg:block" />
+                      <span>{post.title}</span>
+                      <ExternalLink className="ml-2 w-4 h-4 inline-block flex-shrink-0 transition-transform group-hover:translate-x-1 group-hover:-translate-y-1" />
+                    </span>
+                  </a>
+                </h3>
               </div>
             </div>
           ))}
