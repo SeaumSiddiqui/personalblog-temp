@@ -8,7 +8,7 @@ interface PortfolioFooterProps {
 
 export const PortfolioFooter: React.FC<PortfolioFooterProps> = ({ isDarkMode }) => {
   return (
-    <footer className="mt-24 mb-24">
+    <footer className="mt-24">
       <p
         className={`text-sm text-right transition-colors duration-300 ${
           isDarkMode ? 'text-dark-text-secondary' : 'text-light-text-secondary'
