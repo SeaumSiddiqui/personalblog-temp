@@ -149,13 +149,13 @@ export const Portfolio: React.FC = () => {
                 <ProjectsSection isDarkMode={isDarkMode} />
                 <div className="mb-16" />
                 <BlogSection isDarkMode={isDarkMode} />
-
-                <PortfolioFooter
-                  isDarkMode={isDarkMode}
-                  openContactModal={openContactModal}
-                />
               </main>
             </div>
+
+            <PortfolioFooter
+              isDarkMode={isDarkMode}
+              openContactModal={openContactModal}
+            />
           </div>
         </div>
 
