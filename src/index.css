@@ -108,6 +108,43 @@
   background: rgba(107, 114, 128, 0.6);
 }
 
+/* Default browser scrollbar - minimal and theme-matched */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: rgba(168, 85, 247, 0.3);
+  border-radius: 4px;
+  transition: background 0.2s ease;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(168, 85, 247, 0.5);
+}
+
+.dark ::-webkit-scrollbar-thumb {
+  background: rgba(192, 132, 252, 0.3);
+}
+
+.dark ::-webkit-scrollbar-thumb:hover {
+  background: rgba(192, 132, 252, 0.5);
+}
+
+* {
+  scrollbar-width: thin;
+  scrollbar-color: rgba(168, 85, 247, 0.3) transparent;
+}
+
+.dark * {
+  scrollbar-color: rgba(192, 132, 252, 0.3) transparent;
+}
+
 /* Smooth scroll behavior */
 html {
   scroll-behavior: smooth;
