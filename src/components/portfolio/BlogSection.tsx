@@ -1,6 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { ArrowRight, ExternalLink } from 'lucide-react';
+import Banner1 from '../../assets/thumbnails/blogs/banner-blog-01.jpg';
 
 interface BlogPost {
   title: string;
@@ -17,16 +18,16 @@ interface BlogSectionProps {
 export const BlogSection: React.FC<BlogSectionProps> = ({ isDarkMode }) => {
   const blogPosts: BlogPost[] = [
     {
-      title: 'Spring Boot Export to Excel',
+      title: 'Spring Boot: Export Excel File from MySQL Database with User Selected Fields',
       description: 'Learn how to export data to Excel files using Spring Boot and Apache POI.',
       image: 'https://images.pexels.com/photos/7376/startup-photos.jpg?auto=compress&cs=tinysrgb&w=400',
       url: 'https://seaumsiddiqui.com/post/74be4540-93c7-4dcd-91c1-1729e5001d83',
       date: '2025'
     },
     {
-      title: 'Bengali Enum with JPA',
+      title: 'Storing Bengali Enum Values in Database with JPA Converters',
       description: 'Implementing Bengali language enums with Java Persistence API in Spring Boot.',
-      image: 'https://images.pexels.com/photos/11035380/pexels-photo-11035380.jpeg?auto=compress&cs=tinysrgb&w=400',
+      image: Banner1,
       url: 'https://seaumsiddiqui.com/post/80649cb4-ce0a-4849-9b8b-a195dbe8af2b',
       date: '2025'
     }
