@@ -43,20 +43,20 @@ export const BlogSection: React.FC<BlogSectionProps> = ({ isDarkMode }) => {
       </div>
 
       <div>
-        <div className="space-y-4">
+        <div className="space-y-3">
           {blogPosts.map((post, index) => (
             <div
               key={index}
-              className="group relative grid gap-4 pb-1 transition-all sm:grid-cols-8 sm:gap-8 md:gap-4 lg:hover:!opacity-100 lg:group-hover/list:opacity-50"
+              className="group relative grid gap-3 pb-1 transition-all sm:grid-cols-8 sm:gap-4 md:gap-3 lg:hover:!opacity-100 lg:group-hover/list:opacity-50"
             >
               <a
                 href={post.url}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="absolute -inset-x-4 -inset-y-4 z-0 hidden rounded-lg transition motion-reduce:transition-none lg:-inset-x-6 lg:block lg:group-hover:bg-white/5 lg:group-hover:shadow-lg lg:group-hover:drop-shadow-lg"
+                className="absolute -inset-x-3 -inset-y-3 z-0 hidden rounded-lg transition motion-reduce:transition-none lg:-inset-x-4 lg:block lg:group-hover:bg-white/5 lg:group-hover:shadow-lg lg:group-hover:drop-shadow-lg"
               />
 
-              <div className="z-10 sm:col-span-3">
+              <div className="z-10 sm:col-span-2">
                 {post.image && (
                   <div className="relative w-full aspect-video rounded overflow-hidden border border-light-border/20 dark:border-dark-border/20">
                     <img
@@ -69,8 +69,8 @@ export const BlogSection: React.FC<BlogSectionProps> = ({ isDarkMode }) => {
                 )}
               </div>
 
-              <div className="z-10 sm:col-span-5 flex flex-col justify-center">
-                <header className="mb-2 text-xs font-semibold uppercase tracking-wide text-light-text-secondary dark:text-dark-text-secondary">
+              <div className="z-10 sm:col-span-6 flex flex-col justify-center">
+                <header className="mb-1 text-xs font-semibold uppercase tracking-wide text-light-text-secondary dark:text-dark-text-secondary">
                   {post.date}
                 </header>
                 <h3 className="font-semibold leading-snug">
@@ -80,12 +80,12 @@ export const BlogSection: React.FC<BlogSectionProps> = ({ isDarkMode }) => {
                     rel="noopener noreferrer"
                     className="group/link"
                   >
-                    <span className={`inline-flex items-baseline text-base font-medium leading-tight transition-colors duration-300 group-hover:text-primary-500 ${
+                    <span className={`inline-flex items-baseline text-sm font-medium leading-tight transition-colors duration-300 group-hover:text-primary-500 ${
                       isDarkMode ? 'text-dark-text' : 'text-light-text'
                     }`}>
-                      <span className="absolute -inset-x-4 -inset-y-2.5 hidden rounded md:-inset-x-6 md:-inset-y-4 lg:block" />
+                      <span className="absolute -inset-x-3 -inset-y-2 hidden rounded md:-inset-x-4 md:-inset-y-3 lg:block" />
                       <span>{post.title}</span>
-                      <ExternalLink className="ml-2 w-4 h-4 inline-block flex-shrink-0 transition-transform group-hover:translate-x-1 group-hover:-translate-y-1" />
+                      <ExternalLink className="ml-1.5 w-3.5 h-3.5 inline-block flex-shrink-0 transition-transform group-hover:translate-x-1 group-hover:-translate-y-1" />
                     </span>
                   </a>
                 </h3>
@@ -95,7 +95,7 @@ export const BlogSection: React.FC<BlogSectionProps> = ({ isDarkMode }) => {
         </div>
 
 
-        <div className="mt-8">
+        <div className="mt-6">
           <Link
             to="/blogs"
             className={`group inline-flex items-center space-x-2 text-sm font-semibold transition-colors duration-300 ${
