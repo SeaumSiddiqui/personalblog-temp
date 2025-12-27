@@ -43,7 +43,7 @@ export const BlogSection: React.FC<BlogSectionProps> = ({ isDarkMode }) => {
       </div>
 
       <div>
-        <div className="space-y-3">
+        <div className="space-y-6">
           {blogPosts.map((post, index) => (
             <div
               key={index}
@@ -53,7 +53,7 @@ export const BlogSection: React.FC<BlogSectionProps> = ({ isDarkMode }) => {
                 href={post.url}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="absolute -inset-x-3 -inset-y-3 z-0 hidden rounded-lg transition motion-reduce:transition-none lg:-inset-x-4 lg:block lg:group-hover:bg-white/5 lg:group-hover:shadow-lg lg:group-hover:drop-shadow-lg"
+                className="absolute -inset-x-3 -inset-y-2 z-0 hidden rounded-lg transition motion-reduce:transition-none lg:-inset-x-4 lg:block lg:group-hover:bg-white/5 lg:group-hover:shadow-lg lg:group-hover:drop-shadow-lg"
               />
 
               <div className="z-10 sm:col-span-2">
