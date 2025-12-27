@@ -1,4 +1,5 @@
 import React from 'react';
+import { MapPin } from 'lucide-react';
 
 interface HeroSectionProps {
   isDarkMode: boolean;
@@ -29,6 +30,13 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
         I build robust, scalable backend systems and RESTful APIs.
         Specialized in Spring Boot and microservices architecture.
       </p>
+
+      <div className={`flex items-center gap-2 text-sm transition-colors duration-300 ${
+        isDarkMode ? 'text-dark-text-secondary' : 'text-light-text-secondary'
+      }`}>
+        <MapPin size={16} className="flex-shrink-0" />
+        <span>Dhaka, Bangladesh</span>
+      </div>
     </div>
   );
 };
