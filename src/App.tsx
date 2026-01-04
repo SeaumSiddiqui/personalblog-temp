@@ -8,12 +8,14 @@ import { BlogPost } from './pages/BlogPost';
 import { About } from './pages/About';
 import { IdeaDemo } from './pages/IdeaDemo';
 import { ProjectArchive } from './pages/ProjectArchive';
+import { ClickSpark } from './components/reactbits';
 
 function App() {
   return (
-    <Router>
-      <div className="App">
-        <Routes>
+    <ClickSpark sparkColor="#3b82f6" sparkSize={10} sparkRadius={15}>
+      <Router>
+        <div className="App">
+          <Routes>
           <Route path="/" element={<Portfolio />} />
           <Route path="/blogs" element={<Home />} />
           <Route path="/about" element={<About />} />
@@ -37,8 +39,9 @@ function App() {
             }
           />
         </Routes>
-      </div>
-    </Router>
+        </div>
+      </Router>
+    </ClickSpark>
   );
 }
 
