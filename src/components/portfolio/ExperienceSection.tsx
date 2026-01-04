@@ -123,7 +123,7 @@ export const ExperienceSection: React.FC<ExperienceSectionProps> = ({ isDarkMode
 
       <div className="mt-12">
         <a
-          href="/resume.pdf"
+          href="/seaumsiddiqui_resume.pdf"
           target="_blank"
           rel="noopener noreferrer"
           className={`group inline-flex items-center text-sm font-semibold transition-colors duration-300 ${
