@@ -12,7 +12,7 @@ import { ClickSpark } from './components/reactbits';
 
 function App() {
   return (
-    <ClickSpark sparkColor="#3b82f6" sparkSize={10} sparkRadius={15}>
+    <ClickSpark sparkColor="#3b82f6" sparkSize={10} sparkRadius={15} sparkCount={8} duration={400}>
       <Router>
         <div className="App">
           <Routes>
