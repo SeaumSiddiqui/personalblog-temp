@@ -14,6 +14,7 @@ import { BlogSection } from '../components/portfolio/BlogSection';
 import { ContactModal } from '../components/portfolio/ContactModal';
 import { PortfolioFooter } from '../components/portfolio/PortfolioFooter';
 import { ScrollControls } from '../components/portfolio/ScrollControls';
+import { ClickSpark } from '../components/ClickSpark';
 
 export const Portfolio: React.FC = () => {
   const { isDarkMode, toggleTheme } = useTheme();
@@ -170,6 +171,8 @@ export const Portfolio: React.FC = () => {
           isOpen={isContactModalOpen}
           onClose={closeContactModal}
         />
+
+        <ClickSpark isDarkMode={isDarkMode} />
       </div>
     </div>
   );
