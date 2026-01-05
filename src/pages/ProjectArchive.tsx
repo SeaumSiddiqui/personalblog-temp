@@ -5,7 +5,7 @@ import { SocialLinks } from '../components/SocialLinks';
 import { Link } from 'react-router-dom';
 import { useThemeContext } from '../context/ThemeContext';
 import projectThumbnail from '../assets/thumbnails/projects/personalblog.png';
-import { ThemedLiquidEther } from '../components/ThemedLiquidEther';
+import { ThemedLiquidEther } from '../components/portfolio/ThemedLequidEther';
 
 interface Project {
   title: string;
