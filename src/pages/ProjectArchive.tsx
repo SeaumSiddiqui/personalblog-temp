@@ -43,6 +43,57 @@ export const ProjectArchive: React.FC = () => {
       year: '2025',
       variant: 'portrait'
     },
+    //  DEMO / FAKE PROJECTS
+    {
+      title: 'TaskFlow – Project Management Dashboard',
+      description:
+        'A demo project management dashboard designed to track tasks, deadlines, and team productivity with a clean Kanban-style UI.',
+      technologies: ['React', 'TypeScript', 'Tailwind CSS', 'Vite'],
+      image: 'https://images.unsplash.com/photo-1551288049-bebda4e38f71',
+      link: '#',
+      year: '2024',
+      variant: 'portrait'
+    },
+    {
+      title: 'FinScope – Personal Finance Tracker',
+      description:
+        'A concept finance tracking app that visualizes income, expenses, and savings goals using interactive charts.',
+      technologies: ['Next.js', 'TypeScript', 'Chart.js'],
+      image: 'https://images.unsplash.com/photo-1567427017947-545c5f8d16ad',
+      link: '#',
+      year: '2024',
+      variant: 'portrait'
+    },
+    {
+      title: 'EduWave – Online Learning Platform',
+      description:
+        'A demo e-learning platform featuring course listings, video previews, and student progress tracking.',
+      technologies: ['React', 'Node.js', 'Express', 'MongoDB'],
+      image: 'https://images.unsplash.com/photo-1522202176988-66273c2fd55f',
+      link: '#',
+      year: '2023',
+      variant: 'wide'
+    },
+    {
+      title: 'ShopEase – E-commerce UI Concept',
+      description:
+        'A modern e-commerce frontend concept with product browsing, filtering, and cart interactions.',
+      technologies: ['React', 'Redux', 'CSS Modules'],
+      image: 'https://images.unsplash.com/photo-1512436991641-6745cdb1723f',
+      link: '#',
+      year: '2023',
+      variant: 'portrait'
+    },
+    {
+      title: 'HealthSync – Fitness & Wellness App',
+      description:
+        'A demo fitness and wellness application concept that tracks workouts, habits, and daily activity.',
+      technologies: ['React Native', 'Expo', 'TypeScript'],
+      image: 'https://images.unsplash.com/photo-1554284126-aa88f22d8b74',
+      link: '#',
+      year: '2022',
+      variant: 'portrait'
+    }
   ];
 
   const handleProjectClick = (link?: string) => {
