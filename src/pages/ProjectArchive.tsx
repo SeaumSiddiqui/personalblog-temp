@@ -5,6 +5,7 @@ import { SocialLinks } from '../components/SocialLinks';
 import { Link } from 'react-router-dom';
 import { useThemeContext } from '../context/ThemeContext';
 import projectThumbnail from '../assets/thumbnails/projects/personalblog.png';
+import { ThemedLiquidEther } from '../components/ThemedLiquidEther';
 
 interface Project {
   title: string;
@@ -43,15 +44,35 @@ export const ProjectArchive: React.FC = () => {
   };
 
   return (
-    <div className={`min-h-screen transition-colors duration-300 ${
+    <div className={`min-h-screen relative transition-colors duration-300 ${
       isDarkMode ? 'bg-dark-bg' : 'bg-light-bg'
     }`}>
+      <div className="absolute inset-0 w-full h-full">
+        <ThemedLiquidEther
+          isDarkMode={isDarkMode}
+          mouseForce={20}
+          cursorSize={100}
+          isViscous={false}
+          viscous={30}
+          iterationsViscous={32}
+          iterationsPoisson={32}
+          resolution={0.5}
+          isBounce={false}
+          autoDemo={true}
+          autoSpeed={0.5}
+          autoIntensity={2.2}
+          takeoverDuration={0.25}
+          autoResumeDelay={3000}
+          autoRampDuration={0.6}
+        />
+      </div>
+
       <div className="fixed right-6 top-1/2 transform -translate-y-1/2 z-50 flex flex-col items-center space-y-6">
         <SocialLinks layout="vertical" size="medium" />
         <ThemeToggle isDarkMode={isDarkMode} onToggle={toggleTheme} />
       </div>
 
-      <div className="max-w-6xl mx-auto px-6 py-12 lg:px-12 lg:py-20">
+      <div className="relative z-10 max-w-6xl mx-auto px-6 py-12 lg:px-12 lg:py-20">
         <div className="mb-12">
           <Link
             to="/"
@@ -80,10 +101,10 @@ export const ProjectArchive: React.FC = () => {
           {projects.map((project, index) => (
             <div
               key={index}
-              className={`rounded-lg border transition-all duration-300 overflow-hidden ${
+              className={`rounded-lg border transition-all duration-300 overflow-hidden backdrop-blur-md ${
                 isDarkMode
-                  ? 'bg-dark-card border-dark-border hover:border-primary-500/50'
-                  : 'bg-light-card border-light-border hover:border-primary-400/50'
+                  ? 'bg-dark-card/80 border-dark-border hover:border-primary-500/50'
+                  : 'bg-light-card/80 border-light-border hover:border-primary-400/50'
               }`}
             >
               <div
