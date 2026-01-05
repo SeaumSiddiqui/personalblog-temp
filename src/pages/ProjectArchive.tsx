@@ -109,17 +109,17 @@ export const ProjectArchive: React.FC = () => {
       <div className="absolute inset-0 w-full h-full">
         <ThemedLiquidEther
           isDarkMode={isDarkMode}
-          mouseForce={20}
-          cursorSize={100}
+          mouseForce={15}
+          cursorSize={80}
           isViscous={false}
-          viscous={30}
-          iterationsViscous={32}
-          iterationsPoisson={32}
-          resolution={0.5}
+          viscous={20}
+          iterationsViscous={16}
+          iterationsPoisson={16}
+          resolution={0.3}
           isBounce={false}
           autoDemo={true}
-          autoSpeed={0.5}
-          autoIntensity={2.2}
+          autoSpeed={0.3}
+          autoIntensity={1.5}
           takeoverDuration={0.25}
           autoResumeDelay={3000}
           autoRampDuration={0.6}
@@ -157,16 +157,20 @@ export const ProjectArchive: React.FC = () => {
         </div>
 
         <MagicBento
-          enableBorderGlow={true}
+          enableSpotlight={false}
+          enableBorderGlow={false}
           glowColor={glowColor}
         >
           {projects.map((project, index) => (
             <BentoCard
               key={index}
               variant={project.variant}
+              enableStars={false}
+              enableTilt={false}
+              clickEffect={false}
               enableMagnetism={true}
               glowColor={glowColor}
-              enableBorderGlow={true}
+              enableBorderGlow={false}
               onClick={() => handleProjectClick(project.link)}
               className={`group ${
                 isDarkMode
