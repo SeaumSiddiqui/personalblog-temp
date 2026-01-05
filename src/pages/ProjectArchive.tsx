@@ -1,5 +1,5 @@
 import React from 'react';
-import { ArrowLeft } from 'lucide-react';
+import { ArrowLeft, ExternalLink } from 'lucide-react';
 import { ThemeToggle } from '../components/ThemeToggle';
 import { SocialLinks } from '../components/SocialLinks';
 import { Link } from 'react-router-dom';
@@ -7,7 +7,7 @@ import { useThemeContext } from '../context/ThemeContext';
 import qcharitybdThumbnail from '../assets/thumbnails/projects/qcharitybd.png';
 import personalblogThumbnail from '../assets/thumbnails/projects/personalblog.png';
 import { ThemedLiquidEther } from '../components/portfolio/ThemedLequidEther';
-import MagicBento from '../components/reactbits/MagicBento';
+import MagicBento, { BentoCard } from '../components/reactbits/MagicBento';
 
 interface Project {
   title: string;
@@ -16,10 +16,13 @@ interface Project {
   image: string;
   link?: string;
   year: string;
+  variant: 'square' | 'portrait' | 'banner' | 'wide';
 }
 
 export const ProjectArchive: React.FC = () => {
   const { isDarkMode, toggleTheme } = useThemeContext();
+
+  const glowColor = isDarkMode ? '59, 130, 246' : '37, 99, 235';
 
   const projects: Project[] = [
     {
@@ -28,17 +31,25 @@ export const ProjectArchive: React.FC = () => {
       technologies: ['Spring Boot', 'React', 'PostgreSQL', 'Docker', 'AWS', 'Keycloak'],
       image: qcharitybdThumbnail,
       link: 'https://qcharitybd.com',
-      year: '2025'
+      year: '2025',
+      variant: 'wide'
     },
     {
       title: 'Blog Writing Platform',
-      description: 'A full-stack blog management system with authentication, role-based access control, and modern UI. Features markdown editor, image uploads, and responsive design with a clean, elegant interface.',
+      description: 'A full-stack blog management system with authentication, role-based access control, and modern UI. Features markdown editor, image uploads, and responsive design.',
       technologies: ['Spring Boot', 'React', 'TypeScript', 'PostgreSQL', 'Keycloak', 'Docker'],
       image: personalblogThumbnail,
       link: 'https://seaumsiddiqui.com/blogs',
-      year: '2025'
+      year: '2025',
+      variant: 'portrait'
     },
   ];
+
+  const handleProjectClick = (link?: string) => {
+    if (link) {
+      window.open(link, '_blank', 'noopener,noreferrer');
+    }
+  };
 
   return (
     <div className={`min-h-screen relative transition-colors duration-300 ${
@@ -69,7 +80,7 @@ export const ProjectArchive: React.FC = () => {
         <ThemeToggle isDarkMode={isDarkMode} onToggle={toggleTheme} />
       </div>
 
-      <div className="relative z-10 max-w-6xl mx-auto px-6 py-12 lg:px-12 lg:py-20">
+      <div className="relative z-10 max-w-5xl mx-auto px-6 py-12 lg:px-12 lg:py-20">
         <div className="mb-12">
           <Link
             to="/"
@@ -95,16 +106,109 @@ export const ProjectArchive: React.FC = () => {
         </div>
 
         <MagicBento
-          projects={projects}
-          isDarkMode={isDarkMode}
-          enableStars={true}
           enableSpotlight={true}
           enableBorderGlow={true}
-          enableTilt={true}
-          clickEffect={true}
-          enableMagnetism={true}
-          particleCount={10}
-        />
+          glowColor={glowColor}
+          spotlightRadius={400}
+        >
+          {projects.map((project, index) => (
+            <BentoCard
+              key={index}
+              variant={project.variant}
+              enableStars={true}
+              enableTilt={true}
+              clickEffect={true}
+              enableMagnetism={true}
+              particleCount={8}
+              glowColor={glowColor}
+              enableBorderGlow={true}
+              onClick={() => handleProjectClick(project.link)}
+              className={`group ${
+                isDarkMode
+                  ? 'bg-dark-card/80 border border-dark-border'
+                  : 'bg-light-card/80 border border-light-border'
+              } backdrop-blur-sm`}
+            >
+              <div className="relative w-full h-full flex flex-col">
+                <div className={`relative overflow-hidden ${
+                  project.variant === 'wide' ? 'h-48 md:h-64' :
+                  project.variant === 'portrait' ? 'h-40' :
+                  project.variant === 'banner' ? 'h-32' : 'h-36'
+                }`}>
+                  <img
+                    src={project.image}
+                    alt={project.title}
+                    className="w-full h-full object-cover object-top transition-transform duration-500 group-hover:scale-105"
+                  />
+                  <div className={`absolute inset-0 ${
+                    isDarkMode
+                      ? 'bg-gradient-to-t from-dark-card via-dark-card/50 to-transparent'
+                      : 'bg-gradient-to-t from-light-card via-light-card/50 to-transparent'
+                  }`} />
+
+                  <div className="absolute top-3 right-3 flex items-center gap-2">
+                    <span className={`px-2 py-1 text-xs font-medium rounded-full ${
+                      isDarkMode
+                        ? 'bg-primary-500/20 text-primary-300'
+                        : 'bg-primary-500/20 text-primary-700'
+                    }`}>
+                      {project.year}
+                    </span>
+                    {project.link && (
+                      <span className={`p-1.5 rounded-full transition-colors ${
+                        isDarkMode
+                          ? 'bg-white/10 hover:bg-white/20'
+                          : 'bg-black/10 hover:bg-black/20'
+                      }`}>
+                        <ExternalLink className={`w-3.5 h-3.5 ${
+                          isDarkMode ? 'text-white' : 'text-gray-800'
+                        }`} />
+                      </span>
+                    )}
+                  </div>
+                </div>
+
+                <div className="flex-1 p-5 flex flex-col">
+                  <h3 className={`text-lg md:text-xl font-semibold mb-2 transition-colors ${
+                    isDarkMode ? 'text-dark-text' : 'text-light-text'
+                  }`}>
+                    {project.title}
+                  </h3>
+
+                  <p className={`text-sm leading-relaxed mb-4 flex-1 ${
+                    isDarkMode ? 'text-dark-text-secondary' : 'text-light-text-secondary'
+                  } ${project.variant === 'square' || project.variant === 'banner' ? 'line-clamp-2' : 'line-clamp-4'}`}>
+                    {project.description}
+                  </p>
+
+                  <div className="flex flex-wrap gap-1.5 mt-auto">
+                    {project.technologies.slice(0, project.variant === 'wide' || project.variant === 'portrait' ? 6 : 4).map((tech, techIndex) => (
+                      <span
+                        key={techIndex}
+                        className={`px-2 py-0.5 text-xs rounded-md transition-colors ${
+                          isDarkMode
+                            ? 'bg-dark-border text-dark-text-secondary'
+                            : 'bg-light-border text-light-text-secondary'
+                        }`}
+                      >
+                        {tech}
+                      </span>
+                    ))}
+                    {project.technologies.length > (project.variant === 'wide' || project.variant === 'portrait' ? 6 : 4) && (
+                      <span className={`px-2 py-0.5 text-xs rounded-md ${
+                        isDarkMode
+                          ? 'bg-dark-border text-dark-text-secondary'
+                          : 'bg-light-border text-light-text-secondary'
+                      }`}>
+                        +{project.technologies.length - (project.variant === 'wide' || project.variant === 'portrait' ? 6 : 4)}
+                      </span>
+                    )}
+                  </div>
+                </div>
+              </div>
+            </BentoCard>
+          ))}
+        </MagicBento>
       </div>
     </div>
   );
