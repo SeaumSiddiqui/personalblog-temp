@@ -454,7 +454,7 @@ export const BentoCard: React.FC<BentoCardProps> = ({
     <div
       ref={cardRef}
       onClick={onClick}
-      className={`bento-card relative overflow-hidden rounded-2xl cursor-pointer ${variantClasses[variant]} ${enableBorderGlow ? 'bento-card--border-glow' : ''} ${className}`}
+      className={`bento-card relative overflow-hidden rounded-2xl cursor-pointer will-change-transform ${variantClasses[variant]} ${enableBorderGlow ? 'bento-card--border-glow' : ''} ${className}`}
       style={{
         '--glow-x': '50%',
         '--glow-y': '50%',

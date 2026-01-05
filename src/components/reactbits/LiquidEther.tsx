@@ -1241,7 +1241,7 @@ const LiquidEther: React.FC<LiquidEtherProps> = ({
   return (
     <div
       ref={mountRef}
-      className={`w-full h-full relative overflow-hidden pointer-events-none touch-none ${className || ''}`}
+      className={`w-full h-full relative overflow-hidden pointer-events-none touch-none will-change-transform ${className || ''}`}
       style={style}
     />
   );

@@ -8,6 +8,7 @@ import qcharitybdThumbnail from '../assets/thumbnails/projects/qcharitybd.png';
 import personalblogThumbnail from '../assets/thumbnails/projects/personalblog.png';
 import { ThemedLiquidEther } from '../components/portfolio/ThemedLequidEther';
 import MagicBento, { BentoCard } from '../components/reactbits/MagicBento';
+import { ScrollReveal } from '../components/reactbits/ScrollReveal';
 
 interface Project {
   title: string;
@@ -162,22 +163,30 @@ export const ProjectArchive: React.FC = () => {
           glowColor={glowColor}
         >
           {projects.map((project, index) => (
-            <BentoCard
+            <ScrollReveal
               key={index}
-              variant={project.variant}
-              enableStars={false}
-              enableTilt={false}
-              clickEffect={false}
-              enableMagnetism={true}
-              glowColor={glowColor}
-              enableBorderGlow={false}
-              onClick={() => handleProjectClick(project.link)}
-              className={`group ${
-                isDarkMode
-                  ? 'bg-dark-card/80 border border-dark-border'
-                  : 'bg-light-card/80 border border-light-border'
-              } backdrop-blur-sm`}
+              delay={index * 0.1}
+              duration={0.6}
+              distance={20}
+              direction="up"
+              threshold={0.1}
+              once={true}
             >
+              <BentoCard
+                variant={project.variant}
+                enableStars={false}
+                enableTilt={false}
+                clickEffect={false}
+                enableMagnetism={true}
+                glowColor={glowColor}
+                enableBorderGlow={false}
+                onClick={() => handleProjectClick(project.link)}
+                className={`group h-full ${
+                  isDarkMode
+                    ? 'bg-dark-card/80 border border-dark-border'
+                    : 'bg-light-card/80 border border-light-border'
+                } backdrop-blur-sm`}
+              >
               <div className="relative w-full h-full flex flex-col">
                 <div className={`relative overflow-hidden ${
                   project.variant === 'wide' ? 'h-48 md:h-64' :
@@ -255,7 +264,8 @@ export const ProjectArchive: React.FC = () => {
                   </div>
                 </div>
               </div>
-            </BentoCard>
+              </BentoCard>
+            </ScrollReveal>
           ))}
         </MagicBento>
       </div>
