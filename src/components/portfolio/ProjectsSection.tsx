@@ -1,7 +1,8 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { ExternalLink, ArrowRight } from 'lucide-react';
+import { ArrowRight } from 'lucide-react';
 import projectThumbnail from '../../assets/thumbnails/projects/personalblog.png';
+import { ProjectBento } from './ProjectBento';
 
 interface Project {
   title: string;
@@ -43,81 +44,17 @@ export const ProjectsSection: React.FC<ProjectsSectionProps> = ({ isDarkMode }) 
         </h2>
       </div>
 
-      <div className="space-y-12">
-        {projects.map((project, index) => (
-          <div
-            key={index}
-            className="group relative grid gap-4 pb-1 transition-all sm:grid-cols-8 sm:gap-8 md:gap-4 lg:hover:!opacity-100 lg:group-hover/list:opacity-50"
-          >
-            {project.link && (
-              <a
-                href={project.link}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="absolute -inset-x-4 -inset-y-4 z-0 hidden rounded-lg transition motion-reduce:transition-none lg:-inset-x-6 lg:block lg:group-hover:bg-white/5 lg:group-hover:shadow-lg lg:group-hover:drop-shadow-lg"
-              />
-            )}
-            {!project.link && (
-              <div className="absolute -inset-x-4 -inset-y-4 z-0 hidden rounded-lg transition motion-reduce:transition-none lg:-inset-x-6 lg:block lg:group-hover:bg-primary-900/10 lg:group-hover:shadow-lg lg:group-hover:drop-shadow-lg" />
-            )}
-
-            <div className="z-10 sm:col-span-3">
-              <img
-                src={project.image}
-                alt={project.title}
-                className="rounded-lg border-2 border-light-border dark:border-dark-border transition-all duration-300 group-hover:border-primary-400 dark:group-hover:border-primary-500"
-              />
-            </div>
-
-            <div className="z-10 sm:col-span-5">
-              <h3 className="font-semibold leading-snug">
-                {project.link ? (
-                  <a
-                    href={project.link}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="group/link"
-                  >
-                    <span className={`inline-flex items-baseline text-base font-medium leading-tight transition-colors duration-300 group-hover:text-primary-500 ${
-                      isDarkMode ? 'text-dark-text' : 'text-light-text'
-                    }`}>
-                      <span className="absolute -inset-x-4 -inset-y-2.5 hidden rounded md:-inset-x-6 md:-inset-y-4 lg:block" />
-                      <span>{project.title}</span>
-                      <ExternalLink className="ml-2 w-4 h-4 inline-block transition-transform group-hover:translate-x-1 group-hover:-translate-y-1" />
-                    </span>
-                  </a>
-                ) : (
-                  <span className={`inline-flex items-baseline text-base font-medium leading-tight transition-colors duration-300 group-hover:text-primary-500 ${
-                    isDarkMode ? 'text-dark-text' : 'text-light-text'
-                  }`}>
-                    {project.title}
-                  </span>
-                )}
-              </h3>
-
-              <p className={`mt-2 text-sm leading-relaxed transition-colors duration-300 ${
-                isDarkMode ? 'text-dark-text-secondary' : 'text-light-text-secondary'
-              }`}>
-                {project.description}
-              </p>
-
-              <ul className="mt-4 flex flex-wrap gap-2">
-                {project.technologies.map((tech, techIndex) => (
-                  <li
-                    key={techIndex}
-                    className={`px-3 py-1 text-xs rounded-full transition-all duration-300 ${
-                      isDarkMode
-                        ? 'bg-primary-900/30 text-primary-300'
-                        : 'bg-primary-100 text-primary-700'
-                    }`}
-                  >
-                    {tech}
-                  </li>
-                ))}
-              </ul>
-            </div>
-          </div>
-        ))}
+      <div className="mb-12">
+        <ProjectBento
+          projects={projects}
+          isDarkMode={isDarkMode}
+          enableSpotlight={true}
+          enableBorderGlow={true}
+          enableTilt={true}
+          clickEffect={true}
+          enableMagnetism={true}
+          particleCount={8}
+        />
       </div>
 
       <div className="mt-12">
