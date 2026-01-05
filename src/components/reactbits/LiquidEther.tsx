@@ -113,6 +113,7 @@ const LiquidEther: React.FC<LiquidEtherProps> = ({
     }
 
     const paletteTex = makePaletteTexture(colors);
+    // Hard-code transparent background vector (alpha 0)
     const bgVec4 = new THREE.Vector4(0, 0, 0, 0);
 
     class CommonClass {
@@ -134,6 +135,7 @@ const LiquidEther: React.FC<LiquidEtherProps> = ({
         this.pixelRatio = Math.min(window.devicePixelRatio || 1, 2);
         this.resize();
         this.renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
+        // Always transparent
         this.renderer.autoClear = false;
         this.renderer.setClearColor(new THREE.Color(0x000000), 0);
         this.renderer.setPixelRatio(this.pixelRatio);
@@ -447,7 +449,7 @@ const LiquidEther: React.FC<LiquidEtherProps> = ({
         vec2 spot_new3 = spot_new - error / 2.0;
         vec2 vel_2 = texture2D(velocity, spot_new3).xy;
         vec2 spot_old2 = spot_new3 - vel_2 * dt * ratio;
-        vec2 newVel2 = texture2D(velocity, spot_old2).xy;
+        vec2 newVel2 = texture2D(velocity, spot_old2).xy; 
         gl_FragColor = vec4(newVel2, 0.0, 0.0);
     }
 }
@@ -1239,7 +1241,7 @@ const LiquidEther: React.FC<LiquidEtherProps> = ({
   return (
     <div
       ref={mountRef}
-      className={`w-full h-full relative overflow-hidden pointer-events-none touch-none will-change-transform ${className || ''}`}
+      className={`w-full h-full relative overflow-hidden pointer-events-none touch-none ${className || ''}`}
       style={style}
     />
   );

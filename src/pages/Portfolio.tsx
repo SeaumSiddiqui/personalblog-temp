@@ -14,7 +14,7 @@ import { BlogSection } from '../components/portfolio/BlogSection';
 import { ContactModal } from '../components/portfolio/ContactModal';
 import { PortfolioFooter } from '../components/portfolio/PortfolioFooter';
 import { ScrollControls } from '../components/portfolio/ScrollControls';
-import { ThemedLiquidEther } from '../components/portfolio/ThemedLequidEther';
+import SparkContainer from '@kamiru/react-spark';
 
 export const Portfolio: React.FC = () => {
   const { isDarkMode, toggleTheme } = useTheme();
@@ -22,6 +22,7 @@ export const Portfolio: React.FC = () => {
   const [activeSection, setActiveSection] = useState('about');
   const [showScrollTop, setShowScrollTop] = useState(false);
   const [isContactModalOpen, setIsContactModalOpen] = useState(false);
+  const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
 
   useEffect(() => {
     const handleScroll = () => {
@@ -50,10 +51,16 @@ export const Portfolio: React.FC = () => {
       }
     };
 
+    const handleMouseMove = (e: MouseEvent) => {
+      setMousePosition({ x: e.clientX, y: e.clientY });
+    };
+
     window.addEventListener('scroll', handleScroll);
+    window.addEventListener('mousemove', handleMouseMove);
 
     return () => {
       window.removeEventListener('scroll', handleScroll);
+      window.removeEventListener('mousemove', handleMouseMove);
     };
   }, []);
 
@@ -89,30 +96,22 @@ export const Portfolio: React.FC = () => {
   }
 
   return (
-    <div className={`min-h-screen transition-colors duration-300 ${
-      isDarkMode
-        ? 'bg-dark-bg'
-        : 'bg-light-bg'
-    }`}>
-      <div className="fixed inset-0 w-full h-full pointer-events-none">
-        <ThemedLiquidEther
-          isDarkMode={isDarkMode}
-          mouseForce={15}
-          cursorSize={30}
-          isViscous={false}
-          viscous={20}
-          iterationsViscous={16}
-          iterationsPoisson={16}
-          resolution={0.3}
-          isBounce={false}
-          autoDemo={true}
-          autoSpeed={0.3}
-          autoIntensity={1.5}
-          takeoverDuration={0.25}
-          autoResumeDelay={3000}
-          autoRampDuration={0.6}
-        />
-      </div>
+    <SparkContainer sparkConfig={{ color: isDarkMode ? '#b794f6' : '#9333ea' }}>
+      <div className={`min-h-screen transition-colors duration-300 ${
+        isDarkMode
+          ? 'bg-dark-bg'
+          : 'bg-light-bg'
+      }`}>
+      <div
+        className="fixed inset-0 pointer-events-none transition-opacity duration-300"
+        style={{
+          background: `radial-gradient(600px circle at ${mousePosition.x}px ${mousePosition.y}px, ${
+            isDarkMode
+              ? 'rgba(183, 148, 246, 0.08)'
+              : 'rgba(183, 148, 246, 0.04)'
+          }, transparent 80%)`
+        }}
+      />
 
       <div className="relative z-10">
         <div className="fixed right-6 top-1/2 transform -translate-y-1/2 z-50 flex flex-col items-center space-y-6">
@@ -174,6 +173,7 @@ export const Portfolio: React.FC = () => {
           onClose={closeContactModal}
         />
       </div>
-    </div>
+      </div>
+    </SparkContainer>
   );
 };

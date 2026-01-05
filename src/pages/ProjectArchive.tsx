@@ -8,7 +8,6 @@ import qcharitybdThumbnail from '../assets/thumbnails/projects/qcharitybd.png';
 import personalblogThumbnail from '../assets/thumbnails/projects/personalblog.png';
 import { ThemedLiquidEther } from '../components/portfolio/ThemedLequidEther';
 import MagicBento, { BentoCard } from '../components/reactbits/MagicBento';
-import { ScrollReveal } from '../components/reactbits/ScrollReveal';
 
 interface Project {
   title: string;
@@ -33,7 +32,7 @@ export const ProjectArchive: React.FC = () => {
       image: qcharitybdThumbnail,
       link: 'https://qcharitybd.com',
       year: '2025',
-      variant: 'portrait'
+      variant: 'wide'
     },
     {
       title: 'Blog Writing Platform',
@@ -42,7 +41,7 @@ export const ProjectArchive: React.FC = () => {
       image: personalblogThumbnail,
       link: 'https://seaumsiddiqui.com/blogs',
       year: '2025',
-      variant: 'square'
+      variant: 'portrait'
     },
     //  DEMO / FAKE PROJECTS
     {
@@ -53,7 +52,7 @@ export const ProjectArchive: React.FC = () => {
       image: 'https://images.unsplash.com/photo-1551288049-bebda4e38f71',
       link: '#',
       year: '2024',
-      variant: 'square'
+      variant: 'portrait'
     },
     {
       title: 'FinScope – Personal Finance Tracker',
@@ -63,7 +62,7 @@ export const ProjectArchive: React.FC = () => {
       image: 'https://images.unsplash.com/photo-1567427017947-545c5f8d16ad',
       link: '#',
       year: '2024',
-      variant: 'banner'
+      variant: 'portrait'
     },
     {
       title: 'EduWave – Online Learning Platform',
@@ -73,7 +72,7 @@ export const ProjectArchive: React.FC = () => {
       image: 'https://images.unsplash.com/photo-1522202176988-66273c2fd55f',
       link: '#',
       year: '2023',
-      variant: 'square'
+      variant: 'wide'
     },
     {
       title: 'ShopEase – E-commerce UI Concept',
@@ -83,7 +82,7 @@ export const ProjectArchive: React.FC = () => {
       image: 'https://images.unsplash.com/photo-1512436991641-6745cdb1723f',
       link: '#',
       year: '2023',
-      variant: 'square'
+      variant: 'portrait'
     },
     {
       title: 'HealthSync – Fitness & Wellness App',
@@ -93,7 +92,7 @@ export const ProjectArchive: React.FC = () => {
       image: 'https://images.unsplash.com/photo-1554284126-aa88f22d8b74',
       link: '#',
       year: '2022',
-      variant: 'wide'
+      variant: 'portrait'
     }
   ];
 
@@ -111,7 +110,7 @@ export const ProjectArchive: React.FC = () => {
         <ThemedLiquidEther
           isDarkMode={isDarkMode}
           mouseForce={15}
-          cursorSize={30}
+          cursorSize={80}
           isViscous={false}
           viscous={20}
           iterationsViscous={16}
@@ -163,30 +162,22 @@ export const ProjectArchive: React.FC = () => {
           glowColor={glowColor}
         >
           {projects.map((project, index) => (
-            <ScrollReveal
+            <BentoCard
               key={index}
-              delay={index * 0.1}
-              duration={0.6}
-              distance={20}
-              direction="up"
-              threshold={0.1}
-              once={true}
+              variant={project.variant}
+              enableStars={false}
+              enableTilt={false}
+              clickEffect={false}
+              enableMagnetism={true}
+              glowColor={glowColor}
+              enableBorderGlow={false}
+              onClick={() => handleProjectClick(project.link)}
+              className={`group ${
+                isDarkMode
+                  ? 'bg-dark-card/80 border border-dark-border'
+                  : 'bg-light-card/80 border border-light-border'
+              } backdrop-blur-sm`}
             >
-              <BentoCard
-                variant={project.variant}
-                enableStars={false}
-                enableTilt={false}
-                clickEffect={false}
-                enableMagnetism={true}
-                glowColor={glowColor}
-                enableBorderGlow={false}
-                onClick={() => handleProjectClick(project.link)}
-                className={`group h-full ${
-                  isDarkMode
-                    ? 'bg-dark-card/80 border border-dark-border'
-                    : 'bg-light-card/80 border border-light-border'
-                } backdrop-blur-sm`}
-              >
               <div className="relative w-full h-full flex flex-col">
                 <div className={`relative overflow-hidden ${
                   project.variant === 'wide' ? 'h-48 md:h-64' :
@@ -264,8 +255,7 @@ export const ProjectArchive: React.FC = () => {
                   </div>
                 </div>
               </div>
-              </BentoCard>
-            </ScrollReveal>
+            </BentoCard>
           ))}
         </MagicBento>
       </div>
