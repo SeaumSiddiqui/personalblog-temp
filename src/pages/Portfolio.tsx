@@ -15,7 +15,6 @@ import { ContactModal } from '../components/portfolio/ContactModal';
 import { PortfolioFooter } from '../components/portfolio/PortfolioFooter';
 import { ScrollControls } from '../components/portfolio/ScrollControls';
 import { ThemedLiquidEther } from '../components/portfolio/ThemedLequidEther';
-import SparkContainer from '@kamiru/react-spark';
 
 export const Portfolio: React.FC = () => {
   const { isDarkMode, toggleTheme } = useTheme();
@@ -90,12 +89,11 @@ export const Portfolio: React.FC = () => {
   }
 
   return (
-    <SparkContainer color={isDarkMode ? '#b794f6' : '#9333ea'}>
-      <div className={`min-h-screen transition-colors duration-300 ${
-        isDarkMode
-          ? 'bg-dark-bg'
-          : 'bg-light-bg'
-      }`}>
+    <div className={`min-h-screen transition-colors duration-300 ${
+      isDarkMode
+        ? 'bg-dark-bg'
+        : 'bg-light-bg'
+    }`}>
       <div className="fixed inset-0 w-full h-full pointer-events-none">
         <ThemedLiquidEther
           isDarkMode={isDarkMode}
@@ -176,7 +174,6 @@ export const Portfolio: React.FC = () => {
           onClose={closeContactModal}
         />
       </div>
-      </div>
-    </SparkContainer>
+    </div>
   );
 };
