@@ -32,7 +32,7 @@ export const ProjectArchive: React.FC = () => {
       image: qcharitybdThumbnail,
       link: 'https://qcharitybd.com',
       year: '2025',
-      variant: 'wide'
+      variant: 'portrait'
     },
     {
       title: 'Blog Writing Platform',
@@ -41,7 +41,7 @@ export const ProjectArchive: React.FC = () => {
       image: personalblogThumbnail,
       link: 'https://seaumsiddiqui.com/blogs',
       year: '2025',
-      variant: 'portrait'
+      variant: 'square'
     },
     //  DEMO / FAKE PROJECTS
     {
@@ -52,7 +52,7 @@ export const ProjectArchive: React.FC = () => {
       image: 'https://images.unsplash.com/photo-1551288049-bebda4e38f71',
       link: '#',
       year: '2024',
-      variant: 'portrait'
+      variant: 'square'
     },
     {
       title: 'FinScope – Personal Finance Tracker',
@@ -62,7 +62,7 @@ export const ProjectArchive: React.FC = () => {
       image: 'https://images.unsplash.com/photo-1567427017947-545c5f8d16ad',
       link: '#',
       year: '2024',
-      variant: 'portrait'
+      variant: 'banner'
     },
     {
       title: 'EduWave – Online Learning Platform',
@@ -72,7 +72,7 @@ export const ProjectArchive: React.FC = () => {
       image: 'https://images.unsplash.com/photo-1522202176988-66273c2fd55f',
       link: '#',
       year: '2023',
-      variant: 'wide'
+      variant: 'square'
     },
     {
       title: 'ShopEase – E-commerce UI Concept',
@@ -82,7 +82,7 @@ export const ProjectArchive: React.FC = () => {
       image: 'https://images.unsplash.com/photo-1512436991641-6745cdb1723f',
       link: '#',
       year: '2023',
-      variant: 'portrait'
+      variant: 'square'
     },
     {
       title: 'HealthSync – Fitness & Wellness App',
@@ -92,7 +92,7 @@ export const ProjectArchive: React.FC = () => {
       image: 'https://images.unsplash.com/photo-1554284126-aa88f22d8b74',
       link: '#',
       year: '2022',
-      variant: 'portrait'
+      variant: 'wide'
     }
   ];
 
@@ -110,7 +110,7 @@ export const ProjectArchive: React.FC = () => {
         <ThemedLiquidEther
           isDarkMode={isDarkMode}
           mouseForce={15}
-          cursorSize={80}
+          cursorSize={30}
           isViscous={false}
           viscous={20}
           iterationsViscous={16}
