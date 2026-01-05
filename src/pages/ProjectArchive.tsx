@@ -157,20 +157,14 @@ export const ProjectArchive: React.FC = () => {
         </div>
 
         <MagicBento
-          enableSpotlight={true}
           enableBorderGlow={true}
           glowColor={glowColor}
-          spotlightRadius={400}
         >
           {projects.map((project, index) => (
             <BentoCard
               key={index}
               variant={project.variant}
-              enableStars={true}
-              enableTilt={true}
-              clickEffect={true}
               enableMagnetism={true}
-              particleCount={8}
               glowColor={glowColor}
               enableBorderGlow={true}
               onClick={() => handleProjectClick(project.link)}
