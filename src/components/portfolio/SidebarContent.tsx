@@ -53,13 +53,13 @@ export const SidebarContent: React.FC<SidebarContentProps> = ({ isDarkMode }) =>
   ];
 
   const stats: Stat[] = [
-    { label: 'Projects', value: '19+' },
-    { label: 'Clients', value: '9+' },
-    { label: 'Yrs Expertise', value: '4+' }
+    { label: 'Projects', value: '2+' },
+    { label: 'Clients', value: '1+' },
+    { label: 'Yrs Expertise', value: '0+' }
   ];
 
   return (
-    <div className="relative w-full overflow-hidden">
+    <div className="relative w-full overflow-hidden mt-3">
       <div
         className={`transition-all duration-700 ease-in-out ${
           showStacks ? 'opacity-0 -translate-y-8' : 'opacity-100 translate-y-0'

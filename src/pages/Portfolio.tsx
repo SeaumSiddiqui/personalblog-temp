@@ -14,7 +14,6 @@ import { BlogSection } from '../components/portfolio/BlogSection';
 import { ContactModal } from '../components/portfolio/ContactModal';
 import { PortfolioFooter } from '../components/portfolio/PortfolioFooter';
 import { ScrollControls } from '../components/portfolio/ScrollControls';
-import SparkContainer from '@kamiru/react-spark';
 
 export const Portfolio: React.FC = () => {
   const { isDarkMode, toggleTheme } = useTheme();
@@ -96,12 +95,11 @@ export const Portfolio: React.FC = () => {
   }
 
   return (
-    <SparkContainer sparkConfig={{ color: isDarkMode ? '#b794f6' : '#9333ea' }}>
-      <div className={`min-h-screen transition-colors duration-300 ${
-        isDarkMode
-          ? 'bg-dark-bg'
-          : 'bg-light-bg'
-      }`}>
+    <div className={`min-h-screen transition-colors duration-300 ${
+      isDarkMode
+        ? 'bg-dark-bg'
+        : 'bg-light-bg'
+    }`}>
       <div
         className="fixed inset-0 pointer-events-none transition-opacity duration-300"
         style={{
@@ -173,7 +171,6 @@ export const Portfolio: React.FC = () => {
           onClose={closeContactModal}
         />
       </div>
-      </div>
-    </SparkContainer>
+    </div>
   );
 };

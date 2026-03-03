@@ -21,14 +21,13 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
       <h2 className={`text-xl sm:text-2xl font-semibold transition-colors duration-300 ${
         isDarkMode ? 'text-dark-text' : 'text-light-text'
       }`}>
-        Backend Developer
+        Backend Engineer
       </h2>
 
       <p className={`max-w-sm text-base leading-relaxed transition-colors duration-300 ${
         isDarkMode ? 'text-dark-text-secondary' : 'text-light-text-secondary'
       }`}>
-        I build robust, scalable backend systems and RESTful APIs.
-        Specialized in Spring Boot and microservices architecture.
+        I build scalable backend systems and RESTful APIs using Spring Boot and microservices architecture.
       </p>
 
       <div className={`flex items-center gap-2 text-sm transition-colors duration-300 ${
