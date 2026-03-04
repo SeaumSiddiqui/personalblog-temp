@@ -48,9 +48,9 @@ export const ExperienceSection: React.FC<ExperienceSectionProps> = ({ isDarkMode
         {experiences.map((exp, index) => (
           <div
             key={index}
-            className={`group relative grid gap-4 pb-1 transition-all sm:grid-cols-8 sm:gap-8 md:gap-4 lg:hover:!opacity-100 lg:group-hover/list:opacity-50`}
+            className={`group relative grid gap-4 pb-1 transition-all duration-300 ease-spring sm:grid-cols-8 sm:gap-8 md:gap-4 lg:hover:!opacity-100 lg:group-hover/list:opacity-50`}
           >
-            <div className="absolute -inset-x-4 -inset-y-4 z-0 hidden rounded-lg transition motion-reduce:transition-none lg:-inset-x-6 lg:block lg:group-hover:bg-white/5 lg:group-hover:shadow-lg lg:group-hover:drop-shadow-lg" />
+            <div className="absolute -inset-x-4 -inset-y-4 z-0 hidden rounded-lg transition-all duration-300 ease-spring motion-reduce:transition-none lg:-inset-x-6 lg:block lg:group-hover:bg-white/5 lg:group-hover:shadow-[0_10px_30px_-15px_rgba(0,0,0,0.3)] lg:group-hover:scale-[1.02]" />
 
             <header className="z-10 mb-2 mt-1 text-xs font-mono font-medium uppercase tracking-wide text-slate-400 sm:col-span-2">
               {exp.duration}
@@ -83,17 +83,17 @@ export const ExperienceSection: React.FC<ExperienceSectionProps> = ({ isDarkMode
                 )}
               </h3>
 
-              <p className={`mt-2 text-sm leading-relaxed ${
+              <p className={`mt-2 text-sm leading-loose ${
                 isDarkMode ? 'text-slate-400' : 'text-slate-700'
               }`}>
                 {exp.description}
               </p>
 
-              <ul className="mt-2 space-y-1">
+              <ul className="mt-3 space-y-2">
                 {exp.achievements.map((achievement, achIndex) => (
                   <li
                     key={achIndex}
-                    className={`text-sm leading-relaxed ${
+                    className={`text-sm leading-loose ${
                       isDarkMode ? 'text-slate-400' : 'text-slate-700'
                     }`}
                   >

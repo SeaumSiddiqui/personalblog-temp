@@ -48,13 +48,13 @@ export const BlogSection: React.FC<BlogSectionProps> = ({ isDarkMode }) => {
           {blogPosts.map((post, index) => (
             <div
               key={index}
-              className="group relative grid gap-3 pb-1 transition-all sm:grid-cols-8 sm:gap-4 md:gap-3 lg:hover:!opacity-100 lg:group-hover/list:opacity-50"
+              className="group relative grid gap-3 pb-1 transition-all duration-300 ease-spring sm:grid-cols-8 sm:gap-4 md:gap-3 lg:hover:!opacity-100 lg:group-hover/list:opacity-50"
             >
               <a
                 href={post.url}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="absolute -inset-x-3 -inset-y-2 z-0 hidden rounded-lg transition motion-reduce:transition-none lg:-inset-x-4 lg:block lg:group-hover:bg-white/5 lg:group-hover:shadow-lg lg:group-hover:drop-shadow-lg"
+                className="absolute -inset-x-3 -inset-y-2 z-0 hidden rounded-lg transition-all duration-300 ease-spring motion-reduce:transition-none lg:-inset-x-4 lg:block lg:group-hover:bg-white/5 lg:group-hover:shadow-[0_10px_30px_-15px_rgba(0,0,0,0.3)] lg:group-hover:scale-[1.02]"
               />
 
               <div className="z-10 sm:col-span-2">
