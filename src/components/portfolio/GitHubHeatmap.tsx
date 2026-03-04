@@ -6,10 +6,19 @@ interface ContributionDay {
   count: number;
 }
 
+interface TooltipState {
+  visible: boolean;
+  x: number;
+  y: number;
+  content: string;
+}
+
 export default function GitHubHeatmap() {
   const { isDarkMode } = useTheme();
   const [data, setData] = useState<ContributionDay[]>([]);
   const [loading, setLoading] = useState(true);
+  const [hoveredCell, setHoveredCell] = useState<string | null>(null);
+  const [tooltip, setTooltip] = useState<TooltipState>({ visible: false, x: 0, y: 0, content: '' });
 
   const GITHUB_USERNAME = 'SeaumSiddiqui';
 
@@ -60,6 +69,12 @@ export default function GitHubHeatmap() {
       });
     }
     return mockData;
+  };
+
+  const formatDate = (dateStr: string): string => {
+    const date = new Date(dateStr);
+    const months = ['JAN', 'FEB', 'MAR', 'APR', 'MAY', 'JUN', 'JUL', 'AUG', 'SEP', 'OCT', 'NOV', 'DEC'];
+    return `${months[date.getMonth()]} ${date.getDate()}, ${date.getFullYear()}`;
   };
 
   const { weeks, monthLabels, yearLabels } = useMemo(() => {
@@ -113,6 +128,30 @@ export default function GitHubHeatmap() {
     return { weeks: weeksArr, monthLabels: monthLabelsArr, yearLabels: yearLabelsArr };
   }, [data]);
 
+  const handleMouseEnter = (day: ContributionDay, cellX: number, cellY: number, svgRect: DOMRect) => {
+    const cellKey = `${day.date}`;
+    setHoveredCell(cellKey);
+
+    const content = day.count > 0
+      ? `${day.count} COMMIT${day.count > 1 ? 'S' : ''} ON ${formatDate(day.date)}`
+      : `NO COMMITS ON ${formatDate(day.date)}`;
+
+    const tooltipX = svgRect.left + cellX;
+    const tooltipY = svgRect.top + cellY - 8;
+
+    setTooltip({
+      visible: true,
+      x: tooltipX,
+      y: tooltipY,
+      content,
+    });
+  };
+
+  const handleMouseLeave = () => {
+    setHoveredCell(null);
+    setTooltip({ ...tooltip, visible: false });
+  };
+
   if (loading) {
     return (
       <div className="flex items-center justify-center py-4">
@@ -136,9 +175,10 @@ export default function GitHubHeatmap() {
   const emptyStroke = isDarkMode ? 'rgba(100, 116, 139, 0.4)' : 'rgba(148, 163, 184, 0.5)';
   const fillStroke = isDarkMode ? 'rgba(163, 180, 90, 0.8)' : 'rgba(120, 140, 60, 0.7)';
   const textColor = isDarkMode ? 'rgba(148, 163, 184, 0.5)' : 'rgba(100, 116, 139, 0.5)';
+  const hoverStroke = isDarkMode ? 'rgba(163, 180, 90, 1)' : 'rgba(120, 140, 60, 1)';
 
   return (
-    <div className="w-full">
+    <div className="w-full relative">
       <div className={`text-[10px] font-mono tracking-widest mb-2 ${
         isDarkMode ? 'text-slate-500' : 'text-slate-400'
       }`}>
@@ -166,6 +206,22 @@ export default function GitHubHeatmap() {
                 x2="0"
                 y2="3"
                 stroke={fillStroke}
+                strokeWidth="1.2"
+              />
+            </pattern>
+            <pattern
+              id="hatch-hover"
+              patternUnits="userSpaceOnUse"
+              width="3"
+              height="3"
+              patternTransform="rotate(45)"
+            >
+              <line
+                x1="0"
+                y1="0"
+                x2="0"
+                y2="3"
+                stroke={hoverStroke}
                 strokeWidth="1.2"
               />
             </pattern>
@@ -236,6 +292,7 @@ export default function GitHubHeatmap() {
               const x = weekdayLabelWidth + weekIndex * (cellSize + cellGap);
               const y = yearLabelHeight + monthLabelHeight + dayIndex * (cellSize + cellGap);
               const hasCommits = day.count > 0;
+              const isHovered = hoveredCell === day.date;
 
               return (
                 <rect
@@ -246,16 +303,42 @@ export default function GitHubHeatmap() {
                   height={cellSize}
                   rx={1.5}
                   ry={1.5}
-                  fill={hasCommits ? 'url(#hatch)' : emptyFill}
-                  stroke={hasCommits ? fillStroke : emptyStroke}
-                  strokeWidth={0.8}
-                  strokeDasharray={hasCommits ? '0' : '1.5 1'}
+                  fill={hasCommits ? (isHovered ? 'url(#hatch-hover)' : 'url(#hatch)') : emptyFill}
+                  stroke={isHovered ? hoverStroke : (hasCommits ? fillStroke : emptyStroke)}
+                  strokeWidth={isHovered ? 1.2 : 0.8}
+                  strokeDasharray={hasCommits || isHovered ? '0' : '1.5 1'}
+                  style={{ cursor: 'pointer' }}
+                  onMouseEnter={(e) => {
+                    const svg = e.currentTarget.ownerSVGElement;
+                    if (svg) {
+                      const svgRect = svg.getBoundingClientRect();
+                      handleMouseEnter(day, x + cellSize / 2, y, svgRect);
+                    }
+                  }}
+                  onMouseLeave={handleMouseLeave}
                 />
               );
             })
           ))}
         </svg>
       </div>
+
+      {tooltip.visible && (
+        <div
+          className={`fixed z-50 px-2 py-1 text-[9px] font-mono tracking-wider whitespace-nowrap pointer-events-none ${
+            isDarkMode
+              ? 'bg-slate-800/95 text-slate-300 border border-slate-600/50'
+              : 'bg-slate-100/95 text-slate-600 border border-slate-300/50'
+          }`}
+          style={{
+            left: tooltip.x,
+            top: tooltip.y,
+            transform: 'translate(-50%, -100%)',
+          }}
+        >
+          {tooltip.content}
+        </div>
+      )}
     </div>
   );
 }

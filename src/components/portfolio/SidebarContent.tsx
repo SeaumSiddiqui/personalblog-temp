@@ -192,11 +192,7 @@ export const SidebarContent: React.FC<SidebarContentProps> = ({ isDarkMode }) =>
           pointerEvents: activeSection === 'github' ? 'auto' : 'none',
         }}
       >
-        <div className={`p-4 rounded-lg ${
-          isDarkMode
-            ? 'bg-black/60 border border-slate-800'
-            : 'bg-white/60 border border-slate-300'
-        }`}>
+        <div className="p-4 rounded-lg">
           <GitHubHeatmap />
         </div>
       </div>
