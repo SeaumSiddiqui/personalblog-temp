@@ -11,11 +11,9 @@ export const AnimatedHeading: React.FC<AnimatedHeadingProps> = ({
   isDarkMode,
   className = ''
 }) => {
-  const [visibleWords, setVisibleWords] = useState<number[]>([]);
+  const [isVisible, setIsVisible] = useState(false);
   const [hasAnimated, setHasAnimated] = useState(false);
   const headingRef = useRef<HTMLHeadingElement>(null);
-
-  const words = text.split(' ');
 
   useEffect(() => {
     const observer = new IntersectionObserver(
@@ -23,11 +21,7 @@ export const AnimatedHeading: React.FC<AnimatedHeadingProps> = ({
         entries.forEach((entry) => {
           if (entry.isIntersecting && !hasAnimated) {
             setHasAnimated(true);
-            words.forEach((_, index) => {
-              setTimeout(() => {
-                setVisibleWords(prev => [...prev, index]);
-              }, index * 80);
-            });
+            setTimeout(() => setIsVisible(true), 100);
           }
         });
       },
@@ -39,31 +33,21 @@ export const AnimatedHeading: React.FC<AnimatedHeadingProps> = ({
     }
 
     return () => observer.disconnect();
-  }, [text, hasAnimated, words.length]);
+  }, [hasAnimated]);
 
   return (
     <h2
       ref={headingRef}
-      className={`text-sm font-heading font-semibold uppercase tracking-widest transition-colors duration-300 ${
-        isDarkMode ? 'text-dark-text' : 'text-light-text'
+      className={`text-xl font-serif italic transition-colors duration-300 ${
+        isDarkMode ? 'text-slate-300' : 'text-slate-700'
       } ${className}`}
+      style={{
+        opacity: isVisible ? 1 : 0,
+        transform: isVisible ? 'translateY(0) skewX(0deg)' : 'translateY(20px) skewX(-3deg)',
+        transition: 'opacity 0.5s ease-out, transform 0.5s cubic-bezier(0.34, 1.56, 0.64, 1)',
+      }}
     >
-      {words.map((word, index) => (
-        <span
-          key={index}
-          className="inline-block overflow-hidden mr-2"
-        >
-          <span
-            className="inline-block transition-all duration-400 ease-out"
-            style={{
-              transform: visibleWords.includes(index) ? 'translateY(0)' : 'translateY(100%)',
-              opacity: visibleWords.includes(index) ? 1 : 0,
-            }}
-          >
-            {word}
-          </span>
-        </span>
-      ))}
+      {text}
     </h2>
   );
 };
