@@ -11,9 +11,11 @@ export const AnimatedHeading: React.FC<AnimatedHeadingProps> = ({
   isDarkMode,
   className = ''
 }) => {
-  const [visibleChars, setVisibleChars] = useState<number[]>([]);
+  const [visibleWords, setVisibleWords] = useState<number[]>([]);
   const [hasAnimated, setHasAnimated] = useState(false);
   const headingRef = useRef<HTMLHeadingElement>(null);
+
+  const words = text.split(' ');
 
   useEffect(() => {
     const observer = new IntersectionObserver(
@@ -21,10 +23,10 @@ export const AnimatedHeading: React.FC<AnimatedHeadingProps> = ({
         entries.forEach((entry) => {
           if (entry.isIntersecting && !hasAnimated) {
             setHasAnimated(true);
-            text.split('').forEach((_, index) => {
+            words.forEach((_, index) => {
               setTimeout(() => {
-                setVisibleChars(prev => [...prev, index]);
-              }, index * 40);
+                setVisibleWords(prev => [...prev, index]);
+              }, index * 80);
             });
           }
         });
@@ -37,7 +39,7 @@ export const AnimatedHeading: React.FC<AnimatedHeadingProps> = ({
     }
 
     return () => observer.disconnect();
-  }, [text, hasAnimated]);
+  }, [text, hasAnimated, words.length]);
 
   return (
     <h2
@@ -46,20 +48,19 @@ export const AnimatedHeading: React.FC<AnimatedHeadingProps> = ({
         isDarkMode ? 'text-dark-text' : 'text-light-text'
       } ${className}`}
     >
-      {text.split('').map((char, index) => (
+      {words.map((word, index) => (
         <span
           key={index}
-          className="inline-block overflow-hidden"
-          style={{ width: char === ' ' ? '0.3em' : 'auto' }}
+          className="inline-block overflow-hidden mr-2"
         >
           <span
             className="inline-block transition-all duration-400 ease-out"
             style={{
-              transform: visibleChars.includes(index) ? 'translateY(0)' : 'translateY(100%)',
-              opacity: visibleChars.includes(index) ? 1 : 0,
+              transform: visibleWords.includes(index) ? 'translateY(0)' : 'translateY(100%)',
+              opacity: visibleWords.includes(index) ? 1 : 0,
             }}
           >
-            {char === ' ' ? '\u00A0' : char}
+            {word}
           </span>
         </span>
       ))}

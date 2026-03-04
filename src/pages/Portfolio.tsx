@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { useTheme } from '../hooks/useTheme';
 import { useAuth } from '../hooks/useAuth';
 import { ThemeToggle } from '../components/ThemeToggle';
@@ -22,6 +22,16 @@ export const Portfolio: React.FC = () => {
   const [showScrollTop, setShowScrollTop] = useState(false);
   const [isContactModalOpen, setIsContactModalOpen] = useState(false);
   const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
+
+  const [nameAnimationComplete, setNameAnimationComplete] = useState(false);
+  const [startCardsAnimation, setStartCardsAnimation] = useState(false);
+
+  const handleNameAnimationComplete = useCallback(() => {
+    setNameAnimationComplete(true);
+    setTimeout(() => {
+      setStartCardsAnimation(true);
+    }, 600);
+  }, []);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -113,7 +123,12 @@ export const Portfolio: React.FC = () => {
 
       <div className="relative z-10">
         <div className="fixed right-6 top-1/2 transform -translate-y-1/2 z-50 flex flex-col items-center space-y-6">
-          <SocialLinks layout="vertical" size="medium" />
+          <SocialLinks
+            layout="vertical"
+            size="medium"
+            animate={true}
+            startAnimation={nameAnimationComplete}
+          />
           <ThemeToggle isDarkMode={isDarkMode} onToggle={toggleTheme} />
         </div>
 
@@ -126,17 +141,22 @@ export const Portfolio: React.FC = () => {
                     isDarkMode={isDarkMode}
                     scrollToSection={scrollToSection}
                     openContactModal={openContactModal}
+                    onNameAnimationComplete={handleNameAnimationComplete}
                   />
 
                   <PortfolioNavigation
                     isDarkMode={isDarkMode}
                     activeSection={activeSection}
                     scrollToSection={scrollToSection}
+                    startAnimation={nameAnimationComplete}
                   />
                 </div>
 
                 <div className="hidden lg:block">
-                  <SidebarContent isDarkMode={isDarkMode} />
+                  <SidebarContent
+                    isDarkMode={isDarkMode}
+                    startAnimation={startCardsAnimation}
+                  />
                 </div>
               </header>
 

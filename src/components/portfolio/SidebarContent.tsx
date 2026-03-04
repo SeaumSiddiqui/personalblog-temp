@@ -13,6 +13,7 @@ import GitHubHeatmap from './GitHubHeatmap';
 
 interface SidebarContentProps {
   isDarkMode: boolean;
+  startAnimation?: boolean;
 }
 
 interface Stat {
@@ -65,7 +66,7 @@ const AnimatedCounter: React.FC<{ target: number; suffix: string; isDarkMode: bo
   );
 };
 
-export const SidebarContent: React.FC<SidebarContentProps> = ({ isDarkMode }) => {
+export const SidebarContent: React.FC<SidebarContentProps> = ({ isDarkMode, startAnimation = false }) => {
   const [activeSection, setActiveSection] = useState<SectionType>('stats');
   const [cardsVisible, setCardsVisible] = useState<number[]>([]);
   const [shouldAnimateCounters, setShouldAnimateCounters] = useState(false);
@@ -99,20 +100,19 @@ export const SidebarContent: React.FC<SidebarContentProps> = ({ isDarkMode }) =>
   }, []);
 
   useEffect(() => {
-    if (animationTriggered.current) return;
+    if (!startAnimation || animationTriggered.current) return;
     animationTriggered.current = true;
 
-    const baseDelay = 2000;
     [0, 1, 2].forEach((index) => {
       setTimeout(() => {
         setCardsVisible(prev => [...prev, index]);
-      }, baseDelay + index * 150);
+      }, index * 150);
     });
 
     setTimeout(() => {
       setShouldAnimateCounters(true);
-    }, baseDelay + 300);
-  }, []);
+    }, 300);
+  }, [startAnimation]);
 
   const techs: Tech[] = [
     { name: 'Java', icon: SiOpenjdk },

@@ -6,12 +6,14 @@ interface SocialLinksProps {
   layout?: 'vertical' | 'horizontal';
   size?: 'small' | 'medium' | 'large';
   animate?: boolean;
+  startAnimation?: boolean;
 }
 
 export const SocialLinks: React.FC<SocialLinksProps> = ({
   layout = 'vertical',
   size = 'medium',
-  animate = true
+  animate = true,
+  startAnimation = false
 }) => {
   const { isDarkMode } = useTheme();
   const [visibleItems, setVisibleItems] = useState<number[]>([]);
@@ -45,18 +47,22 @@ export const SocialLinks: React.FC<SocialLinksProps> = ({
   ];
 
   useEffect(() => {
-    if (!animate || animationTriggered.current) return;
+    if (!animate) {
+      setVisibleItems([0, 1, 2, 3]);
+      return;
+    }
+
+    if (!startAnimation || animationTriggered.current) return;
     animationTriggered.current = true;
 
-    const baseDelay = 2200;
     const reversedIndices = [...socialLinks.keys()].reverse();
 
     reversedIndices.forEach((index, i) => {
       setTimeout(() => {
         setVisibleItems(prev => [...prev, index]);
-      }, baseDelay + i * 100);
+      }, i * 100);
     });
-  }, [animate]);
+  }, [animate, startAnimation]);
 
   const sizeClasses = {
     small: 'w-8 h-8',
