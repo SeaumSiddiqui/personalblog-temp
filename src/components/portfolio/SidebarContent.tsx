@@ -90,7 +90,7 @@ export const SidebarContent: React.FC<SidebarContentProps> = ({ isDarkMode }) =>
                   {stat.value}
                 </div>
               </div>
-              <div className={`text-xs font-primary font-medium ${
+              <div className={`text-xs font-mono font-medium ${
                 isDarkMode ? 'text-slate-400' : 'text-slate-600'
               }`}>
                 {stat.label}
@@ -125,7 +125,7 @@ export const SidebarContent: React.FC<SidebarContentProps> = ({ isDarkMode }) =>
                 }`} />
               </div>
               <div className="flex items-center gap-1">
-                <div className={`text-xs font-medium text-center ${
+                <div className={`text-xs font-mono font-medium text-center ${
                   isDarkMode ? 'text-slate-300' : 'text-slate-700'
                 }`}>
                   {tech.name}

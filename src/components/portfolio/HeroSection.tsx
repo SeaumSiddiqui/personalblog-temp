@@ -12,23 +12,23 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
 }) => {
   return (
     <div className="space-y-4">
-      <h1 className={`text-4xl sm:text-5xl font-primary font-black tracking-tighter transition-colors duration-300 ${
+      <h1 className={`text-5xl sm:text-6xl lg:text-7xl font-primary font-black tracking-tighter leading-none transition-colors duration-300 ${
         isDarkMode ? 'text-dark-text' : 'text-light-text'
       }`}>
         Seaum Siddiqui
       </h1>
 
-      <h2 className={`text-lg sm:text-xl font-heading font-semibold transition-colors duration-300 ${
-        isDarkMode ? 'text-dark-text' : 'text-light-text'
+      <h2 className={`text-sm sm:text-base font-mono font-medium uppercase tracking-wide transition-colors duration-300 ${
+        isDarkMode ? 'text-slate-400' : 'text-slate-500'
       }`}>
         Backend Engineer
       </h2>
 
-      <p className="max-w-sm text-sm sm:text-base leading-relaxed text-slate-400">
+      <p className="max-w-sm text-sm leading-relaxed text-slate-400">
         I build scalable backend systems and RESTful APIs using Spring Boot and microservices architecture.
       </p>
 
-      <div className="flex items-center gap-2 text-xs sm:text-sm text-slate-400">
+      <div className="flex items-center gap-2 text-xs font-mono text-slate-400">
         <MapPin size={16} className="flex-shrink-0" />
         <span>Dhaka, Bangladesh</span>
       </div>
