@@ -1,4 +1,5 @@
 import { useEffect, useState, useMemo } from 'react';
+import { createPortal } from 'react-dom';
 import { useTheme } from '../../hooks/useTheme';
 
 interface ContributionDay {
@@ -10,7 +11,8 @@ interface TooltipState {
   visible: boolean;
   x: number;
   y: number;
-  content: string;
+  count: number;
+  formattedDate: string;
 }
 
 export default function GitHubHeatmap() {
@@ -18,7 +20,7 @@ export default function GitHubHeatmap() {
   const [data, setData] = useState<ContributionDay[]>([]);
   const [loading, setLoading] = useState(true);
   const [hoveredCell, setHoveredCell] = useState<string | null>(null);
-  const [tooltip, setTooltip] = useState<TooltipState>({ visible: false, x: 0, y: 0, content: '' });
+  const [tooltip, setTooltip] = useState<TooltipState>({ visible: false, x: 0, y: 0, count: 0, formattedDate: '' });
 
   const GITHUB_USERNAME = 'SeaumSiddiqui';
 
@@ -73,7 +75,7 @@ export default function GitHubHeatmap() {
 
   const formatDate = (dateStr: string): string => {
     const date = new Date(dateStr);
-    const months = ['JAN', 'FEB', 'MAR', 'APR', 'MAY', 'JUN', 'JUL', 'AUG', 'SEP', 'OCT', 'NOV', 'DEC'];
+    const months = ['JANUARY', 'FEBRUARY', 'MARCH', 'APRIL', 'MAY', 'JUNE', 'JULY', 'AUGUST', 'SEPTEMBER', 'OCTOBER', 'NOVEMBER', 'DECEMBER'];
     return `${months[date.getMonth()]} ${date.getDate()}, ${date.getFullYear()}`;
   };
 
@@ -128,22 +130,20 @@ export default function GitHubHeatmap() {
     return { weeks: weeksArr, monthLabels: monthLabelsArr, yearLabels: yearLabelsArr };
   }, [data]);
 
-  const handleMouseEnter = (day: ContributionDay, cellX: number, cellY: number, svgRect: DOMRect) => {
+  const handleMouseEnter = (day: ContributionDay, event: React.MouseEvent<SVGRectElement>) => {
     const cellKey = `${day.date}`;
     setHoveredCell(cellKey);
 
-    const content = day.count > 0
-      ? `${day.count} COMMIT${day.count > 1 ? 'S' : ''} ON ${formatDate(day.date)}`
-      : `NO COMMITS ON ${formatDate(day.date)}`;
-
-    const tooltipX = svgRect.left + cellX;
-    const tooltipY = svgRect.top + cellY - 8;
+    const rect = event.currentTarget.getBoundingClientRect();
+    const tooltipX = rect.left + rect.width / 2;
+    const tooltipY = rect.top - 8;
 
     setTooltip({
       visible: true,
       x: tooltipX,
       y: tooltipY,
-      content,
+      count: day.count,
+      formattedDate: formatDate(day.date),
     });
   };
 
@@ -308,13 +308,7 @@ export default function GitHubHeatmap() {
                   strokeWidth={isHovered ? 1.2 : 0.8}
                   strokeDasharray={hasCommits || isHovered ? '0' : '1.5 1'}
                   style={{ cursor: 'pointer' }}
-                  onMouseEnter={(e) => {
-                    const svg = e.currentTarget.ownerSVGElement;
-                    if (svg) {
-                      const svgRect = svg.getBoundingClientRect();
-                      handleMouseEnter(day, x + cellSize / 2, y, svgRect);
-                    }
-                  }}
+                  onMouseEnter={(e) => handleMouseEnter(day, e)}
                   onMouseLeave={handleMouseLeave}
                 />
               );
@@ -323,21 +317,32 @@ export default function GitHubHeatmap() {
         </svg>
       </div>
 
-      {tooltip.visible && (
+      {tooltip.visible && createPortal(
         <div
-          className={`fixed z-50 px-2 py-1 text-[9px] font-mono tracking-wider whitespace-nowrap pointer-events-none ${
+          className={`fixed z-[9999] px-2 py-1 text-[9px] font-mono tracking-wider whitespace-nowrap pointer-events-none ${
             isDarkMode
-              ? 'bg-slate-800/95 text-slate-300 border border-slate-600/50'
-              : 'bg-slate-100/95 text-slate-600 border border-slate-300/50'
+              ? 'bg-slate-800 text-slate-300'
+              : 'bg-slate-100 text-slate-600'
           }`}
           style={{
             left: tooltip.x,
             top: tooltip.y,
             transform: 'translate(-50%, -100%)',
+            boxShadow: isDarkMode
+              ? '0 2px 8px rgba(0, 0, 0, 0.4)'
+              : '0 2px 8px rgba(0, 0, 0, 0.15)',
           }}
         >
-          {tooltip.content}
-        </div>
+          {tooltip.count > 0 ? (
+            <>
+              <span className="font-bold">{tooltip.count} COMMIT{tooltip.count > 1 ? 'S' : ''}</span>
+              {' '}ON {tooltip.formattedDate}
+            </>
+          ) : (
+            <>NO COMMITS ON {tooltip.formattedDate}</>
+          )}
+        </div>,
+        document.body
       )}
     </div>
   );
