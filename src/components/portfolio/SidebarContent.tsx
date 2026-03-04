@@ -84,13 +84,13 @@ export const SidebarContent: React.FC<SidebarContentProps> = ({ isDarkMode }) =>
                   {index === 1 && <Users className={`w-3.5 h-3.5 ${isDarkMode ? 'text-primary-400' : 'text-primary-600'}`} />}
                   {index === 2 && <Award className={`w-3.5 h-3.5 ${isDarkMode ? 'text-primary-400' : 'text-primary-600'}`} />}
                 </div>
-                <div className={`text-xl font-bold ${
+                <div className={`text-xl font-mono font-bold ${
                   isDarkMode ? 'text-slate-100' : 'text-slate-900'
                 }`}>
                   {stat.value}
                 </div>
               </div>
-              <div className={`text-xs font-medium ${
+              <div className={`text-xs font-primary font-medium ${
                 isDarkMode ? 'text-slate-400' : 'text-slate-600'
               }`}>
                 {stat.label}
