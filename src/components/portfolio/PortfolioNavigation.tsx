@@ -64,7 +64,7 @@ export const PortfolioNavigation: React.FC<PortfolioNavigationProps> = ({
                 }}
               />
               <span
-                className={`text-xs font-bold uppercase tracking-widest transition-colors duration-300 ${
+                className={`text-xs font-mono font-bold uppercase tracking-widest transition-colors duration-300 ${
                   activeSection === item.id
                     ? 'text-primary-500'
                     : isDarkMode
