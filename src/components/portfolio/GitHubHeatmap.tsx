@@ -24,15 +24,24 @@ export default function GitHubHeatmap() {
       const response = await fetch(
         `https://github-contributions-api.jogruber.de/v4/${GITHUB_USERNAME}?y=last`
       );
+
+      if (!response.ok) {
+        throw new Error('Failed to fetch contributions');
+      }
+
       const result = await response.json();
 
-      const contributions = result.contributions.map((day: any) => ({
-        date: day.date,
-        count: day.count,
-        level: day.level as 0 | 1 | 2 | 3 | 4,
-      }));
+      if (result && result.contributions && Array.isArray(result.contributions)) {
+        const contributions = result.contributions.map((day: any) => ({
+          date: day.date,
+          count: day.count,
+          level: day.level as 0 | 1 | 2 | 3 | 4,
+        }));
 
-      setData(contributions);
+        setData(contributions);
+      } else {
+        setData(generateMockData());
+      }
       setLoading(false);
     } catch (error) {
       console.error('Error fetching GitHub contributions:', error);
@@ -119,7 +128,7 @@ export default function GitHubHeatmap() {
             showWeekdayLabels={true}
             labels={{
               months: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
-              weekdays: ['Mon', 'Wed', 'Fri'],
+              weekdays: ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'],
               totalCount: '{{count}} contributions in {{year}}',
             }}
             style={{
