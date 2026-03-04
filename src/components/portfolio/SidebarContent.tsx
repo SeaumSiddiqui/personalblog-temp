@@ -60,17 +60,27 @@ export const SidebarContent: React.FC<SidebarContentProps> = ({ isDarkMode }) =>
 
   return (
     <div className="relative w-full overflow-hidden mt-3">
+      <style>{`
+        .sidebar-transition {
+          transition: opacity 0.6s cubic-bezier(0.4, 0, 0.2, 1),
+                      transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+      `}</style>
+
       <div
-        className={`transition-all duration-700 ease-in-out transform ${
-          showStacks ? 'opacity-0 -translate-y-8 scale-100' : 'opacity-100 translate-y-0 scale-100'
-        }`}
-        style={{ position: showStacks ? 'absolute' : 'relative', width: '100%' }}
+        className="sidebar-transition will-change-transform"
+        style={{
+          position: showStacks ? 'absolute' : 'relative',
+          width: '100%',
+          opacity: showStacks ? 0 : 1,
+          transform: showStacks ? 'translateY(-12px) scale(0.98)' : 'translateY(0) scale(1)',
+        }}
       >
         <div className="grid grid-cols-3 gap-3">
           {stats.map((stat, index) => (
             <div
               key={index}
-              className={`p-3 rounded-lg transition-all duration-300 transform scale-100 ${
+              className={`p-3 rounded-lg transition-all duration-300 ${
                 isDarkMode
                   ? 'bg-black/60 border border-slate-800'
                   : 'bg-white/60 border border-slate-300'
@@ -101,17 +111,21 @@ export const SidebarContent: React.FC<SidebarContentProps> = ({ isDarkMode }) =>
       </div>
 
       <div
-        className={`transition-all duration-700 ease-in-out transform ${
-          showStacks ? 'opacity-100 translate-y-0 scale-100' : 'opacity-0 translate-y-8 scale-100'
-        }`}
-        style={{ position: showStacks ? 'relative' : 'absolute', width: '100%', top: 0 }}
+        className="sidebar-transition will-change-transform"
+        style={{
+          position: showStacks ? 'relative' : 'absolute',
+          width: '100%',
+          top: 0,
+          opacity: showStacks ? 1 : 0,
+          transform: showStacks ? 'translateY(0) scale(1)' : 'translateY(12px) scale(0.98)',
+        }}
       >
         <div className="grid grid-cols-3 gap-2">
           {techs.map((tech, index) => (
             <a
               key={index}
               href="#"
-              className={`group flex flex-col items-center gap-2 p-3 rounded-lg transition-all duration-300 transform scale-100 ${
+              className={`group flex flex-col items-center gap-2 p-3 rounded-lg transition-all duration-300 ${
                 isDarkMode
                   ? 'bg-black/60 border border-slate-800 hover:bg-black/80'
                   : 'bg-white/60 border border-slate-300 hover:bg-white/80'
