@@ -19,16 +19,20 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
       </h1>
 
       <h2 className={`text-sm sm:text-base font-mono font-medium uppercase tracking-wide transition-colors duration-300 ${
-        isDarkMode ? 'text-slate-400' : 'text-slate-500'
+        isDarkMode ? 'text-slate-400' : 'text-slate-600'
       }`}>
         Backend Engineer
       </h2>
 
-      <p className="max-w-sm text-sm leading-relaxed text-slate-400">
+      <p className={`max-w-sm text-sm leading-relaxed ${
+        isDarkMode ? 'text-slate-400' : 'text-slate-700'
+      }`}>
         I build scalable backend systems and RESTful APIs using Spring Boot and microservices architecture.
       </p>
 
-      <div className="flex items-center gap-2 text-xs font-mono text-slate-400">
+      <div className={`flex items-center gap-2 text-xs font-mono ${
+        isDarkMode ? 'text-slate-400' : 'text-slate-600'
+      }`}>
         <MapPin size={16} className="flex-shrink-0" />
         <span>Dhaka, Bangladesh</span>
       </div>

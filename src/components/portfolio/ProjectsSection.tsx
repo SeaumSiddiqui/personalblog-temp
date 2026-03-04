@@ -96,7 +96,9 @@ export const ProjectsSection: React.FC<ProjectsSectionProps> = ({ isDarkMode }) 
                 )}
               </h3>
 
-              <p className="mt-2 text-sm leading-relaxed text-slate-400">
+              <p className={`mt-2 text-sm leading-relaxed ${
+                isDarkMode ? 'text-slate-400' : 'text-slate-700'
+              }`}>
                 {project.description}
               </p>
 

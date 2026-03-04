@@ -83,7 +83,9 @@ export const ExperienceSection: React.FC<ExperienceSectionProps> = ({ isDarkMode
                 )}
               </h3>
 
-              <p className="mt-2 text-sm leading-relaxed text-slate-400">
+              <p className={`mt-2 text-sm leading-relaxed ${
+                isDarkMode ? 'text-slate-400' : 'text-slate-700'
+              }`}>
                 {exp.description}
               </p>
 
@@ -91,7 +93,9 @@ export const ExperienceSection: React.FC<ExperienceSectionProps> = ({ isDarkMode
                 {exp.achievements.map((achievement, achIndex) => (
                   <li
                     key={achIndex}
-                    className="text-sm leading-relaxed text-slate-400"
+                    className={`text-sm leading-relaxed ${
+                      isDarkMode ? 'text-slate-400' : 'text-slate-700'
+                    }`}
                   >
                     • {achievement}
                   </li>
