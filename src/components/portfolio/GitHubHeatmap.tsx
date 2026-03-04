@@ -13,7 +13,7 @@ export default function GitHubHeatmap() {
   const [data, setData] = useState<ContributionDay[]>([]);
   const [loading, setLoading] = useState(true);
 
-  const GITHUB_USERNAME = 'YOUR_GITHUB_USERNAME';
+  const GITHUB_USERNAME = 'SeaumSiddiqui';
 
   useEffect(() => {
     fetchGitHubContributions();
