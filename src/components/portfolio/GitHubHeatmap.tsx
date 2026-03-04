@@ -12,7 +12,6 @@ export default function GitHubHeatmap() {
   const { isDarkMode } = useTheme();
   const [data, setData] = useState<ContributionDay[]>([]);
   const [loading, setLoading] = useState(true);
-  const [totalContributions, setTotalContributions] = useState(0);
 
   const GITHUB_USERNAME = 'YOUR_GITHUB_USERNAME';
 
@@ -34,12 +33,10 @@ export default function GitHubHeatmap() {
       }));
 
       setData(contributions);
-      setTotalContributions(result.total[Object.keys(result.total)[0]]);
       setLoading(false);
     } catch (error) {
       console.error('Error fetching GitHub contributions:', error);
       setData(generateMockData());
-      setTotalContributions(1247);
       setLoading(false);
     }
   };
@@ -82,55 +79,62 @@ export default function GitHubHeatmap() {
   }
 
   const explicitTheme = {
-    light: ['#f0f0f0', '#ffc9c9', '#ff8787', '#ff6b6b', '#fa5252'],
-    dark: ['#1a1a1a', '#4a1f1f', '#7a2f2f', '#aa3f3f', '#da4f4f'],
+    light: [
+      'rgba(235, 237, 240, 0.4)',
+      'rgba(155, 233, 168, 0.4)',
+      'rgba(64, 196, 99, 0.5)',
+      'rgba(48, 161, 78, 0.6)',
+      'rgba(33, 110, 57, 0.7)'
+    ],
+    dark: [
+      'rgba(40, 40, 40, 0.3)',
+      'rgba(155, 233, 168, 0.2)',
+      'rgba(64, 196, 99, 0.3)',
+      'rgba(48, 161, 78, 0.4)',
+      'rgba(33, 110, 57, 0.5)'
+    ],
   };
 
   return (
     <div className="w-full">
-      <div className="mb-4">
-        <div className={`text-xs font-mono uppercase tracking-wider mb-2 ${
-          isDarkMode ? 'text-slate-400' : 'text-slate-600'
-        }`}>
-          Commits
-        </div>
-        <div className={`text-2xl font-mono font-bold ${
-          isDarkMode ? 'text-slate-100' : 'text-slate-900'
-        }`}>
-          {totalContributions.toLocaleString()}
-        </div>
-        <div className={`text-xs font-mono mt-1 ${
-          isDarkMode ? 'text-slate-500' : 'text-slate-500'
-        }`}>
-          contributions in the last year
+      <div className={`text-xs font-mono tracking-wide mb-4 ${
+        isDarkMode ? 'text-slate-400' : 'text-slate-600'
+      }`}>
+        — COMMITS
+      </div>
+
+      <div className="overflow-x-auto -mx-1">
+        <div style={{ minWidth: '700px' }}>
+          <ActivityCalendar
+            data={data}
+            theme={explicitTheme}
+            colorScheme={isDarkMode ? 'dark' : 'light'}
+            blockSize={9}
+            blockMargin={2.5}
+            blockRadius={2}
+            fontSize={9}
+            hideColorLegend={true}
+            hideMonthLabels={false}
+            hideTotalCount={true}
+            showWeekdayLabels={true}
+            labels={{
+              months: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
+              weekdays: ['Mon', 'Wed', 'Fri'],
+              totalCount: '{{count}} contributions in {{year}}',
+            }}
+            style={{
+              fontFamily: 'ui-monospace, monospace',
+              fontSize: '9px',
+              color: isDarkMode ? 'rgba(148, 163, 184, 0.6)' : 'rgba(71, 85, 105, 0.6)',
+            }}
+          />
         </div>
       </div>
 
-      <div className="overflow-x-auto">
-        <ActivityCalendar
-          data={data}
-          theme={explicitTheme}
-          colorScheme={isDarkMode ? 'dark' : 'light'}
-          blockSize={11}
-          blockMargin={3}
-          fontSize={12}
-          hideColorLegend={false}
-          hideMonthLabels={false}
-          hideTotalCount={true}
-          labels={{
-            totalCount: '{{count}} contributions in the last year',
-          }}
-          style={{
-            fontFamily: 'ui-monospace, monospace',
-            fontSize: '11px',
-          }}
-        />
-      </div>
-
-      <div className={`text-xs font-mono mt-3 text-right ${
+      <div className={`text-xs font-mono mt-4 text-center ${
         isDarkMode ? 'text-slate-500' : 'text-slate-500'
       }`}>
-        Commits by day
+        COMMITS BY DAY
       </div>
     </div>
   );
