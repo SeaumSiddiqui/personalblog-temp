@@ -62,8 +62,9 @@ export const SidebarContent: React.FC<SidebarContentProps> = ({ isDarkMode }) =>
     <div className="relative w-full overflow-hidden mt-3">
       <style>{`
         .sidebar-transition {
-          transition: opacity 0.6s cubic-bezier(0.4, 0, 0.2, 1),
-                      transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+          transition: opacity 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94),
+                      transform 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94),
+                      filter 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
         }
       `}</style>
 
@@ -73,7 +74,11 @@ export const SidebarContent: React.FC<SidebarContentProps> = ({ isDarkMode }) =>
           position: showStacks ? 'absolute' : 'relative',
           width: '100%',
           opacity: showStacks ? 0 : 1,
-          transform: showStacks ? 'translateY(-12px) scale(0.98)' : 'translateY(0) scale(1)',
+          transform: showStacks
+            ? 'translateY(-20px) scale(0.95)'
+            : 'translateY(0) scale(1)',
+          filter: showStacks ? 'blur(8px)' : 'blur(0px)',
+          pointerEvents: showStacks ? 'none' : 'auto',
         }}
       >
         <div className="grid grid-cols-3 gap-3">
@@ -117,7 +122,11 @@ export const SidebarContent: React.FC<SidebarContentProps> = ({ isDarkMode }) =>
           width: '100%',
           top: 0,
           opacity: showStacks ? 1 : 0,
-          transform: showStacks ? 'translateY(0) scale(1)' : 'translateY(12px) scale(0.98)',
+          transform: showStacks
+            ? 'translateY(0) scale(1)'
+            : 'translateY(20px) scale(0.95)',
+          filter: showStacks ? 'blur(0px)' : 'blur(8px)',
+          pointerEvents: showStacks ? 'auto' : 'none',
         }}
       >
         <div className="grid grid-cols-3 gap-2">
