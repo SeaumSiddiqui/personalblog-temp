@@ -41,8 +41,8 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
   }, []);
 
   return (
-    <div className="space-y-6">
-      <h1 className={`text-5xl sm:text-6xl lg:text-7xl font-primary font-black tracking-tighter leading-tight transition-colors duration-300 ${
+    <div className="space-y-4">
+      <h1 className={`text-5xl sm:text-6xl lg:text-7xl font-primary font-black tracking-tighter leading-none transition-colors duration-300 ${
         isDarkMode ? 'text-dark-text' : 'text-light-text'
       }`}>
         {nameWords.map((word, index) => (
@@ -63,7 +63,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
         ))}
       </h1>
 
-      <h2 className={`text-sm sm:text-base font-mono font-medium uppercase tracking-wide leading-relaxed transition-colors duration-300 ${
+      <h2 className={`text-sm sm:text-base font-mono font-medium uppercase tracking-wide transition-colors duration-300 ${
         isDarkMode ? 'text-slate-400' : 'text-slate-600'
       }`}>
         {roleText.split('').map((char, index) => (
@@ -86,13 +86,13 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
         ))}
       </h2>
 
-      <p className={`max-w-sm text-sm leading-loose ${
+      <p className={`max-w-sm text-sm leading-relaxed ${
         isDarkMode ? 'text-slate-400' : 'text-slate-700'
       }`}>
         I build scalable backend systems and RESTful APIs using Spring Boot and microservices architecture.
       </p>
 
-      <div className={`flex items-center gap-2 text-xs font-mono leading-relaxed ${
+      <div className={`flex items-center gap-2 text-xs font-mono ${
         isDarkMode ? 'text-slate-400' : 'text-slate-600'
       }`}>
         <svg

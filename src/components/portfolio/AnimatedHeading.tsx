@@ -42,7 +42,7 @@ export const AnimatedHeading: React.FC<AnimatedHeadingProps> = ({
   return (
     <h2
       ref={headingRef}
-      className={`text-sm font-heading font-semibold uppercase tracking-widest leading-relaxed transition-colors duration-300 ${
+      className={`text-sm font-heading font-semibold uppercase tracking-widest transition-colors duration-300 ${
         isDarkMode ? 'text-dark-text' : 'text-light-text'
       } ${className}`}
     >

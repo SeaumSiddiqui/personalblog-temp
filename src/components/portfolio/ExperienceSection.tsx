@@ -49,7 +49,7 @@ export const ExperienceSection: React.FC<ExperienceSectionProps> = ({ isDarkMode
           >
             <div className="absolute -inset-x-4 -inset-y-4 z-0 hidden rounded-lg transition motion-reduce:transition-none lg:-inset-x-6 lg:block lg:group-hover:bg-white/5 lg:group-hover:shadow-lg lg:group-hover:drop-shadow-lg" />
 
-            <header className="z-10 mb-2 mt-1 text-xs font-mono font-medium uppercase tracking-wide leading-relaxed text-slate-400 sm:col-span-2">
+            <header className="z-10 mb-2 mt-1 text-xs font-mono font-medium uppercase tracking-wide text-slate-400 sm:col-span-2">
               {exp.duration}
             </header>
 
@@ -62,7 +62,7 @@ export const ExperienceSection: React.FC<ExperienceSectionProps> = ({ isDarkMode
                     rel="noopener noreferrer"
                     className="group/link"
                   >
-                    <span className={`inline-flex items-baseline text-base font-heading font-semibold leading-relaxed transition-colors duration-300 group-hover:text-primary-500 ${
+                    <span className={`inline-flex items-baseline text-base font-heading font-semibold leading-tight transition-colors duration-300 group-hover:text-primary-500 ${
                       isDarkMode ? 'text-dark-text' : 'text-light-text'
                     }`}>
                       <span className="absolute -inset-x-4 -inset-y-2.5 hidden rounded md:-inset-x-6 md:-inset-y-4 lg:block" />
@@ -71,7 +71,7 @@ export const ExperienceSection: React.FC<ExperienceSectionProps> = ({ isDarkMode
                     </span>
                   </a>
                 ) : (
-                  <span className={`inline-flex items-baseline text-base font-heading font-semibold leading-relaxed transition-colors duration-300 group-hover:text-primary-500 ${
+                  <span className={`inline-flex items-baseline text-base font-heading font-semibold leading-tight transition-colors duration-300 group-hover:text-primary-500 ${
                     isDarkMode ? 'text-dark-text' : 'text-light-text'
                   }`}>
                     <span className="absolute -inset-x-4 -inset-y-2.5 hidden rounded md:-inset-x-6 md:-inset-y-4 lg:block" />
@@ -80,7 +80,7 @@ export const ExperienceSection: React.FC<ExperienceSectionProps> = ({ isDarkMode
                 )}
               </h3>
 
-              <p className={`mt-2 text-sm leading-loose ${
+              <p className={`mt-2 text-sm leading-normal ${
                 isDarkMode ? 'text-slate-400' : 'text-slate-700'
               }`}>
                 {exp.description}
@@ -90,7 +90,7 @@ export const ExperienceSection: React.FC<ExperienceSectionProps> = ({ isDarkMode
                 {exp.achievements.map((achievement, achIndex) => (
                   <li
                     key={achIndex}
-                    className={`text-sm leading-loose ${
+                    className={`text-sm leading-normal ${
                       isDarkMode ? 'text-slate-400' : 'text-slate-700'
                     }`}
                   >
@@ -123,7 +123,7 @@ export const ExperienceSection: React.FC<ExperienceSectionProps> = ({ isDarkMode
           href="/resume.pdf"
           target="_blank"
           rel="noopener noreferrer"
-          className={`group inline-flex items-center text-sm font-semibold leading-relaxed transition-colors duration-300 ${
+          className={`group inline-flex items-center text-sm font-semibold transition-colors duration-300 ${
             isDarkMode
               ? 'text-primary-400 hover:text-primary-300'
               : 'text-primary-600 hover:text-primary-700'

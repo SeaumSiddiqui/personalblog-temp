@@ -183,7 +183,7 @@ export const SidebarContent: React.FC<SidebarContentProps> = ({ isDarkMode }) =>
                   shouldAnimate={shouldAnimateCounters && cardsVisible.includes(index)}
                 />
               </div>
-              <div className={`text-xs font-mono font-medium leading-relaxed ${
+              <div className={`text-xs font-mono font-medium ${
                 isDarkMode ? 'text-slate-400' : 'text-slate-600'
               }`}>
                 {stat.label}
@@ -228,7 +228,7 @@ export const SidebarContent: React.FC<SidebarContentProps> = ({ isDarkMode }) =>
                 }`} />
               </div>
               <div className="flex items-center gap-1">
-                <div className={`text-xs font-mono font-medium text-center leading-relaxed ${
+                <div className={`text-xs font-mono font-medium text-center ${
                   isDarkMode ? 'text-slate-300' : 'text-slate-700'
                 }`}>
                   {tech.name}

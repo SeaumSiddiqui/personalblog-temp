@@ -76,7 +76,7 @@ export const ProjectsSection: React.FC<ProjectsSectionProps> = ({ isDarkMode }) 
                     rel="noopener noreferrer"
                     className="group/link"
                   >
-                    <span className={`inline-flex items-baseline text-base font-heading font-semibold leading-relaxed transition-colors duration-300 group-hover:text-primary-500 ${
+                    <span className={`inline-flex items-baseline text-base font-heading font-semibold leading-tight transition-colors duration-300 group-hover:text-primary-500 ${
                       isDarkMode ? 'text-dark-text' : 'text-light-text'
                     }`}>
                       <span className="absolute -inset-x-4 -inset-y-2.5 hidden rounded md:-inset-x-6 md:-inset-y-4 lg:block" />
@@ -85,7 +85,7 @@ export const ProjectsSection: React.FC<ProjectsSectionProps> = ({ isDarkMode }) 
                     </span>
                   </a>
                 ) : (
-                  <span className={`inline-flex items-baseline text-base font-heading font-semibold leading-relaxed transition-colors duration-300 group-hover:text-primary-500 ${
+                  <span className={`inline-flex items-baseline text-base font-heading font-semibold leading-tight transition-colors duration-300 group-hover:text-primary-500 ${
                     isDarkMode ? 'text-dark-text' : 'text-light-text'
                   }`}>
                     {project.title}
@@ -93,7 +93,7 @@ export const ProjectsSection: React.FC<ProjectsSectionProps> = ({ isDarkMode }) 
                 )}
               </h3>
 
-              <p className={`mt-2 text-sm leading-loose ${
+              <p className={`mt-2 text-sm leading-normal ${
                 isDarkMode ? 'text-slate-400' : 'text-slate-700'
               }`}>
                 {project.description}
@@ -121,7 +121,7 @@ export const ProjectsSection: React.FC<ProjectsSectionProps> = ({ isDarkMode }) 
       <div className="mt-12">
         <Link
           to="/projects"
-          className={`group inline-flex items-center text-sm font-semibold leading-relaxed transition-colors duration-300 ${
+          className={`group inline-flex items-center text-sm font-semibold transition-colors duration-300 ${
             isDarkMode
               ? 'text-primary-400 hover:text-primary-300'
               : 'text-primary-600 hover:text-primary-700'

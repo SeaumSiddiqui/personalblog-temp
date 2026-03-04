@@ -68,7 +68,7 @@ export const BlogSection: React.FC<BlogSectionProps> = ({ isDarkMode }) => {
               </div>
 
               <div className="z-10 sm:col-span-6 flex flex-col justify-center">
-                <header className="mb-1 text-xs font-mono font-medium uppercase tracking-wide leading-relaxed text-slate-400">
+                <header className="mb-1 text-xs font-mono font-medium uppercase tracking-wide text-slate-400">
                   {post.date}
                 </header>
                 <h3 className="font-semibold leading-snug">
@@ -78,7 +78,7 @@ export const BlogSection: React.FC<BlogSectionProps> = ({ isDarkMode }) => {
                     rel="noopener noreferrer"
                     className="group/link"
                   >
-                    <span className={`inline-flex items-baseline text-base font-heading font-semibold leading-relaxed transition-colors duration-300 group-hover:text-primary-500 ${
+                    <span className={`inline-flex items-baseline text-base font-heading font-semibold leading-tight transition-colors duration-300 group-hover:text-primary-500 ${
                       isDarkMode ? 'text-dark-text' : 'text-light-text'
                     }`}>
                       <span className="absolute -inset-x-3 -inset-y-2 hidden rounded md:-inset-x-4 md:-inset-y-3 lg:block" />
@@ -96,7 +96,7 @@ export const BlogSection: React.FC<BlogSectionProps> = ({ isDarkMode }) => {
         <div className="mt-6">
           <Link
             to="/blogs"
-            className={`group inline-flex items-center space-x-2 text-sm font-semibold leading-relaxed transition-colors duration-300 ${
+            className={`group inline-flex items-center space-x-2 text-sm font-semibold transition-colors duration-300 ${
               isDarkMode
                 ? 'text-primary-400 hover:text-primary-300'
                 : 'text-primary-600 hover:text-primary-700'
