@@ -76,7 +76,7 @@ export const ProjectsSection: React.FC<ProjectsSectionProps> = ({ isDarkMode }) 
                     rel="noopener noreferrer"
                     className="group/link"
                   >
-                    <span className={`inline-flex items-baseline text-lg font-serif italic leading-tight transition-colors duration-300 group-hover:text-primary-500 ${
+                    <span className={`inline-flex items-baseline text-base font-medium leading-tight transition-colors duration-300 group-hover:text-primary-500 ${
                       isDarkMode ? 'text-dark-text' : 'text-light-text'
                     }`}>
                       <span className="absolute -inset-x-4 -inset-y-2.5 hidden rounded md:-inset-x-6 md:-inset-y-4 lg:block" />
@@ -85,7 +85,7 @@ export const ProjectsSection: React.FC<ProjectsSectionProps> = ({ isDarkMode }) 
                     </span>
                   </a>
                 ) : (
-                  <span className={`inline-flex items-baseline text-lg font-serif italic leading-tight transition-colors duration-300 group-hover:text-primary-500 ${
+                  <span className={`inline-flex items-baseline text-base font-medium leading-tight transition-colors duration-300 group-hover:text-primary-500 ${
                     isDarkMode ? 'text-dark-text' : 'text-light-text'
                   }`}>
                     {project.title}
