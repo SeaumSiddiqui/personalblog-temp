@@ -1,6 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { ExternalLink, ArrowRight } from 'lucide-react';
+import { AnimatedHeading } from './AnimatedHeading';
 import qcharitybdThumbnail from '../../assets/thumbnails/projects/qcharitybd.png';
 import personalblogThumbnail from '../../assets/thumbnails/projects/personalblog.png';
 
@@ -37,11 +38,7 @@ export const ProjectsSection: React.FC<ProjectsSectionProps> = ({ isDarkMode }) 
   return (
     <section id="projects" className="mb-16 scroll-mt-16 md:mb-24 lg:mb-36 lg:scroll-mt-24">
       <div className="sticky top-0 z-20 -mx-6 mb-4 w-screen bg-opacity-75 px-6 py-5 backdrop-blur md:-mx-12 md:px-12 lg:sr-only lg:relative lg:top-auto lg:mx-auto lg:w-full lg:px-0 lg:py-0 lg:opacity-0">
-        <h2 className={`text-sm font-heading font-semibold uppercase tracking-widest transition-colors duration-300 ${
-          isDarkMode ? 'text-dark-text' : 'text-light-text'
-        }`}>
-          Projects
-        </h2>
+        <AnimatedHeading text="Projects" isDarkMode={isDarkMode} />
       </div>
 
       <div className="space-y-12">
@@ -79,7 +76,7 @@ export const ProjectsSection: React.FC<ProjectsSectionProps> = ({ isDarkMode }) 
                     rel="noopener noreferrer"
                     className="group/link"
                   >
-                    <span className={`inline-flex items-baseline text-base font-heading font-semibold leading-tight transition-colors duration-300 group-hover:text-primary-500 ${
+                    <span className={`inline-flex items-baseline text-base font-heading font-semibold leading-relaxed transition-colors duration-300 group-hover:text-primary-500 ${
                       isDarkMode ? 'text-dark-text' : 'text-light-text'
                     }`}>
                       <span className="absolute -inset-x-4 -inset-y-2.5 hidden rounded md:-inset-x-6 md:-inset-y-4 lg:block" />
@@ -88,7 +85,7 @@ export const ProjectsSection: React.FC<ProjectsSectionProps> = ({ isDarkMode }) 
                     </span>
                   </a>
                 ) : (
-                  <span className={`inline-flex items-baseline text-base font-heading font-semibold leading-tight transition-colors duration-300 group-hover:text-primary-500 ${
+                  <span className={`inline-flex items-baseline text-base font-heading font-semibold leading-relaxed transition-colors duration-300 group-hover:text-primary-500 ${
                     isDarkMode ? 'text-dark-text' : 'text-light-text'
                   }`}>
                     {project.title}
@@ -96,7 +93,7 @@ export const ProjectsSection: React.FC<ProjectsSectionProps> = ({ isDarkMode }) 
                 )}
               </h3>
 
-              <p className={`mt-2 text-sm leading-relaxed ${
+              <p className={`mt-2 text-sm leading-loose ${
                 isDarkMode ? 'text-slate-400' : 'text-slate-700'
               }`}>
                 {project.description}
@@ -124,7 +121,7 @@ export const ProjectsSection: React.FC<ProjectsSectionProps> = ({ isDarkMode }) 
       <div className="mt-12">
         <Link
           to="/projects"
-          className={`group inline-flex items-center text-sm font-semibold transition-colors duration-300 ${
+          className={`group inline-flex items-center text-sm font-semibold leading-relaxed transition-colors duration-300 ${
             isDarkMode
               ? 'text-primary-400 hover:text-primary-300'
               : 'text-primary-600 hover:text-primary-700'

@@ -68,7 +68,7 @@ export const PortfolioFooter: React.FC<PortfolioFooterProps> = ({ isDarkMode }) 
   return (
     <footer className="mt-24">
       <p
-        className={`text-sm text-right transition-colors duration-300 ${
+        className={`text-sm text-right leading-relaxed transition-colors duration-300 ${
           isDarkMode ? 'text-dark-text-secondary' : 'text-light-text-secondary'
         }`}
       >

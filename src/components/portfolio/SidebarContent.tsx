@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import { Briefcase, Users, Award } from 'lucide-react';
 import { ExternalLink } from 'lucide-react';
 import {
@@ -17,18 +17,59 @@ interface SidebarContentProps {
 
 interface Stat {
   label: string;
-  value: string;
+  value: number;
+  suffix: string;
 }
 
 interface Tech {
   name: string;
-  icon: React.ComponentType<any>;
+  icon: React.ComponentType<{ className?: string }>;
 }
 
 type SectionType = 'stats' | 'stacks' | 'github';
 
+const AnimatedCounter: React.FC<{ target: number; suffix: string; isDarkMode: boolean; shouldAnimate: boolean }> = ({
+  target,
+  suffix,
+  isDarkMode,
+  shouldAnimate
+}) => {
+  const [count, setCount] = useState(0);
+
+  useEffect(() => {
+    if (!shouldAnimate) return;
+
+    const duration = 1000;
+    const steps = 20;
+    const increment = target / steps;
+    const stepDuration = duration / steps;
+    let current = 0;
+
+    const timer = setInterval(() => {
+      current += increment;
+      if (current >= target) {
+        setCount(target);
+        clearInterval(timer);
+      } else {
+        setCount(Math.floor(current));
+      }
+    }, stepDuration);
+
+    return () => clearInterval(timer);
+  }, [target, shouldAnimate]);
+
+  return (
+    <span className={`text-xl font-mono font-bold ${isDarkMode ? 'text-slate-100' : 'text-slate-900'}`}>
+      {count}{suffix}
+    </span>
+  );
+};
+
 export const SidebarContent: React.FC<SidebarContentProps> = ({ isDarkMode }) => {
   const [activeSection, setActiveSection] = useState<SectionType>('stats');
+  const [cardsVisible, setCardsVisible] = useState<number[]>([]);
+  const [shouldAnimateCounters, setShouldAnimateCounters] = useState(false);
+  const animationTriggered = useRef(false);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -57,6 +98,22 @@ export const SidebarContent: React.FC<SidebarContentProps> = ({ isDarkMode }) =>
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
+  useEffect(() => {
+    if (animationTriggered.current) return;
+    animationTriggered.current = true;
+
+    const baseDelay = 2000;
+    [0, 1, 2].forEach((index) => {
+      setTimeout(() => {
+        setCardsVisible(prev => [...prev, index]);
+      }, baseDelay + index * 150);
+    });
+
+    setTimeout(() => {
+      setShouldAnimateCounters(true);
+    }, baseDelay + 300);
+  }, []);
+
   const techs: Tech[] = [
     { name: 'Java', icon: SiOpenjdk },
     { name: 'Spring Boot', icon: SiSpringboot },
@@ -67,9 +124,9 @@ export const SidebarContent: React.FC<SidebarContentProps> = ({ isDarkMode }) =>
   ];
 
   const stats: Stat[] = [
-    { label: 'Projects', value: '2+' },
-    { label: 'Clients', value: '1+' },
-    { label: 'Yrs Expertise', value: '0+' }
+    { label: 'Projects', value: 2, suffix: '+' },
+    { label: 'Clients', value: 1, suffix: '+' },
+    { label: 'Yrs Expertise', value: 0, suffix: '+' }
   ];
 
   return (
@@ -104,6 +161,12 @@ export const SidebarContent: React.FC<SidebarContentProps> = ({ isDarkMode }) =>
                   ? 'bg-black/60 border border-slate-800'
                   : 'bg-white/60 border border-slate-300'
               }`}
+              style={{
+                transform: cardsVisible.includes(index) ? 'translateY(0)' : 'translateY(30px)',
+                opacity: cardsVisible.includes(index) ? 1 : 0,
+                transition: `transform 0.6s cubic-bezier(0.34, 1.56, 0.64, 1), opacity 0.5s ease-out`,
+                transitionDelay: `${index * 100}ms`,
+              }}
             >
               <div className="flex items-center gap-2 mb-1">
                 <div className={`p-1 rounded ${
@@ -113,13 +176,14 @@ export const SidebarContent: React.FC<SidebarContentProps> = ({ isDarkMode }) =>
                   {index === 1 && <Users className={`w-3.5 h-3.5 ${isDarkMode ? 'text-primary-400' : 'text-primary-600'}`} />}
                   {index === 2 && <Award className={`w-3.5 h-3.5 ${isDarkMode ? 'text-primary-400' : 'text-primary-600'}`} />}
                 </div>
-                <div className={`text-xl font-mono font-bold ${
-                  isDarkMode ? 'text-slate-100' : 'text-slate-900'
-                }`}>
-                  {stat.value}
-                </div>
+                <AnimatedCounter
+                  target={stat.value}
+                  suffix={stat.suffix}
+                  isDarkMode={isDarkMode}
+                  shouldAnimate={shouldAnimateCounters && cardsVisible.includes(index)}
+                />
               </div>
-              <div className={`text-xs font-mono font-medium ${
+              <div className={`text-xs font-mono font-medium leading-relaxed ${
                 isDarkMode ? 'text-slate-400' : 'text-slate-600'
               }`}>
                 {stat.label}
@@ -164,7 +228,7 @@ export const SidebarContent: React.FC<SidebarContentProps> = ({ isDarkMode }) =>
                 }`} />
               </div>
               <div className="flex items-center gap-1">
-                <div className={`text-xs font-mono font-medium text-center ${
+                <div className={`text-xs font-mono font-medium text-center leading-relaxed ${
                   isDarkMode ? 'text-slate-300' : 'text-slate-700'
                 }`}>
                   {tech.name}

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 
 interface PortfolioNavigationProps {
   isDarkMode: boolean;
@@ -11,6 +11,9 @@ export const PortfolioNavigation: React.FC<PortfolioNavigationProps> = ({
   activeSection,
   scrollToSection
 }) => {
+  const [visibleItems, setVisibleItems] = useState<number[]>([]);
+  const animationTriggered = useRef(false);
+
   const navItems = [
     { id: 'about', label: 'About' },
     { id: 'experience', label: 'Experience' },
@@ -18,11 +21,31 @@ export const PortfolioNavigation: React.FC<PortfolioNavigationProps> = ({
     { id: 'blogs', label: 'Blog' }
   ];
 
+  useEffect(() => {
+    if (animationTriggered.current) return;
+    animationTriggered.current = true;
+
+    const baseDelay = 1500;
+    navItems.forEach((_, index) => {
+      setTimeout(() => {
+        setVisibleItems(prev => [...prev, index]);
+      }, baseDelay + index * 120);
+    });
+  }, []);
+
   return (
     <nav className="hidden lg:block">
-      <ul className="mt-16 space-y-3">
-        {navItems.map((item) => (
-          <li key={item.id}>
+      <ul className="mt-16 space-y-4">
+        {navItems.map((item, index) => (
+          <li
+            key={item.id}
+            style={{
+              transform: visibleItems.includes(index) ? 'translateX(0)' : 'translateX(-30px)',
+              opacity: visibleItems.includes(index) ? 1 : 0,
+              transition: `transform 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94), opacity 0.6s ease-out`,
+              transitionDelay: `${index * 50}ms`,
+            }}
+          >
             <button
               onClick={() => scrollToSection(item.id)}
               className="group flex items-center space-x-4"
@@ -37,7 +60,7 @@ export const PortfolioNavigation: React.FC<PortfolioNavigationProps> = ({
                 }`}
               />
               <span
-                className={`text-xs font-bold uppercase tracking-widest transition-colors duration-300 ${
+                className={`text-xs font-bold uppercase tracking-widest leading-relaxed transition-colors duration-300 ${
                   activeSection === item.id
                     ? 'text-primary-500'
                     : isDarkMode
