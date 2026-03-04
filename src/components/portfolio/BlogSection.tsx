@@ -81,7 +81,7 @@ export const BlogSection: React.FC<BlogSectionProps> = ({ isDarkMode }) => {
                     rel="noopener noreferrer"
                     className="group/link"
                   >
-                    <span className={`inline-flex items-baseline text-sm font-medium leading-tight transition-colors duration-300 group-hover:text-primary-500 ${
+                    <span className={`inline-flex items-baseline text-base sm:text-lg font-heading font-semibold leading-tight transition-colors duration-300 group-hover:text-primary-500 ${
                       isDarkMode ? 'text-dark-text' : 'text-light-text'
                     }`}>
                       <span className="absolute -inset-x-3 -inset-y-2 hidden rounded md:-inset-x-4 md:-inset-y-3 lg:block" />

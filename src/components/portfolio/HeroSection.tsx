@@ -18,17 +18,17 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
         Seaum Siddiqui
       </h1>
 
-      <h2 className={`text-xl sm:text-2xl font-heading font-semibold transition-colors duration-300 ${
+      <h2 className={`text-lg sm:text-xl font-heading font-semibold transition-colors duration-300 ${
         isDarkMode ? 'text-dark-text' : 'text-light-text'
       }`}>
         Backend Engineer
       </h2>
 
-      <p className="max-w-sm text-base leading-relaxed text-slate-400">
+      <p className="max-w-sm text-sm sm:text-base leading-relaxed text-slate-400">
         I build scalable backend systems and RESTful APIs using Spring Boot and microservices architecture.
       </p>
 
-      <div className="flex items-center gap-2 text-sm text-slate-400">
+      <div className="flex items-center gap-2 text-xs sm:text-sm text-slate-400">
         <MapPin size={16} className="flex-shrink-0" />
         <span>Dhaka, Bangladesh</span>
       </div>
