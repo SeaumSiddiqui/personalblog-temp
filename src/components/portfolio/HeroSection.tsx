@@ -49,7 +49,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
       roleWords.forEach((_, index) => {
         setTimeout(() => {
           setRoleVisible(prev => [...prev, index]);
-        }, index * 80);
+        }, index * 150);
       });
 
       if (onNameAnimationComplete) {
@@ -91,11 +91,10 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
             className="inline-block overflow-hidden mr-2"
           >
             <span
-              className="inline-block"
+              className="inline-block transition-all duration-500 ease-out"
               style={{
-                transform: roleVisible.includes(index) ? 'translateY(0) scale(1)' : 'translateY(100%) scale(0.8)',
+                transform: roleVisible.includes(index) ? 'translateY(0)' : 'translateY(100%)',
                 opacity: roleVisible.includes(index) ? 1 : 0,
-                transition: 'transform 0.25s cubic-bezier(0.34, 1.56, 0.64, 1), opacity 0.2s ease-out',
               }}
             >
               {word}
