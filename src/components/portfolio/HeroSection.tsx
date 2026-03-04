@@ -60,7 +60,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
 
   return (
     <div className="space-y-4">
-      <h1 className={`text-5xl sm:text-6xl lg:text-7xl font-primary font-bold tracking-tight leading-none transition-colors duration-300 ${
+      <h1 className={`text-5xl sm:text-6xl lg:text-7xl font-heading font-bold tracking-tight leading-none transition-colors duration-300 ${
         isDarkMode ? 'text-dark-text' : 'text-light-text'
       }`}>
         {NAME_WORDS.map((word, index) => (

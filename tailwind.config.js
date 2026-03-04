@@ -6,7 +6,7 @@ export default {
     extend: {
       fontFamily: {
         'primary': ['Inter', 'sans-serif'],
-        'heading': ['Plus Jakarta Sans', 'sans-serif'],
+        'heading': ['Outfit', 'sans-serif'],
         'mono': ['JetBrains Mono', 'monospace'],
         'serif': ['Playfair Display', 'serif'],
       },
