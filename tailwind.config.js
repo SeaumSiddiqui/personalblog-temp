@@ -6,7 +6,7 @@ export default {
     extend: {
       fontFamily: {
         'primary': ['Inter', 'sans-serif'],
-        'heading': ['Outfit', 'sans-serif'],
+        'heading': ['Magnat Text', 'sans-serif'],
         'mono': ['JetBrains Mono', 'monospace'],
         'serif': ['Playfair Display', 'serif'],
       },
