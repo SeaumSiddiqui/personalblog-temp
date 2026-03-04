@@ -24,7 +24,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
         Backend Engineer
       </h2>
 
-      <p className={`max-w-sm text-sm leading-loose ${
+      <p className={`max-w-sm text-sm leading-relaxed ${
         isDarkMode ? 'text-slate-400' : 'text-slate-700'
       }`}>
         I build scalable backend systems and RESTful APIs using Spring Boot and microservices architecture.

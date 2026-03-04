@@ -11,6 +11,7 @@ import { ProfileImage } from '../components/portfolio/ProfileImage';
 import { ProjectsSection } from '../components/portfolio/ProjectsSection';
 import { ExperienceSection } from '../components/portfolio/ExperienceSection';
 import { BlogSection } from '../components/portfolio/BlogSection';
+import { ContactModal } from '../components/portfolio/ContactModal';
 import { PortfolioFooter } from '../components/portfolio/PortfolioFooter';
 import { ScrollControls } from '../components/portfolio/ScrollControls';
 
@@ -162,6 +163,12 @@ export const Portfolio: React.FC = () => {
           isDarkMode={isDarkMode}
           showScrollTop={showScrollTop}
           scrollToTop={scrollToTop}
+        />
+
+        <ContactModal
+          isDarkMode={isDarkMode}
+          isOpen={isContactModalOpen}
+          onClose={closeContactModal}
         />
       </div>
     </div>
