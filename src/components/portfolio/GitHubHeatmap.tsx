@@ -1,11 +1,9 @@
-import { useEffect, useState } from 'react';
-import { ActivityCalendar } from 'react-activity-calendar';
+import { useEffect, useState, useMemo } from 'react';
 import { useTheme } from '../../hooks/useTheme';
 
 interface ContributionDay {
   date: string;
   count: number;
-  level: 0 | 1 | 2 | 3 | 4;
 }
 
 export default function GitHubHeatmap() {
@@ -32,12 +30,10 @@ export default function GitHubHeatmap() {
       const result = await response.json();
 
       if (result && result.contributions && Array.isArray(result.contributions)) {
-        const contributions = result.contributions.map((day: any) => ({
+        const contributions = result.contributions.map((day: { date: string; count: number }) => ({
           date: day.date,
           count: day.count,
-          level: day.level as 0 | 1 | 2 | 3 | 4,
         }));
-
         setData(contributions);
       } else {
         setData(generateMockData());
@@ -51,99 +47,214 @@ export default function GitHubHeatmap() {
   };
 
   const generateMockData = (): ContributionDay[] => {
-    const data: ContributionDay[] = [];
+    const mockData: ContributionDay[] = [];
     const today = new Date();
 
     for (let i = 365; i >= 0; i--) {
       const date = new Date(today);
       date.setDate(date.getDate() - i);
-
-      const randomCount = Math.random() > 0.3 ? Math.floor(Math.random() * 15) : 0;
-      let level: 0 | 1 | 2 | 3 | 4 = 0;
-
-      if (randomCount === 0) level = 0;
-      else if (randomCount <= 3) level = 1;
-      else if (randomCount <= 6) level = 2;
-      else if (randomCount <= 9) level = 3;
-      else level = 4;
-
-      data.push({
+      const randomCount = Math.random() > 0.7 ? Math.floor(Math.random() * 10) : 0;
+      mockData.push({
         date: date.toISOString().split('T')[0],
         count: randomCount,
-        level,
       });
     }
-
-    return data;
+    return mockData;
   };
+
+  const { weeks, monthLabels, yearLabels } = useMemo(() => {
+    if (data.length === 0) return { weeks: [], monthLabels: [], yearLabels: [] };
+
+    const weeksArr: (ContributionDay | null)[][] = [];
+    const monthLabelsArr: { month: string; weekIndex: number }[] = [];
+    const yearLabelsArr: { year: string; weekIndex: number }[] = [];
+
+    let currentWeek: (ContributionDay | null)[] = [];
+    let lastMonth = -1;
+    let lastYear = -1;
+
+    const firstDate = new Date(data[0].date);
+    const startDayOfWeek = firstDate.getDay();
+    for (let i = 0; i < startDayOfWeek; i++) {
+      currentWeek.push(null);
+    }
+
+    data.forEach((day, index) => {
+      const date = new Date(day.date);
+      const month = date.getMonth();
+      const year = date.getFullYear();
+
+      if (year !== lastYear) {
+        yearLabelsArr.push({ year: year.toString(), weekIndex: weeksArr.length });
+        lastYear = year;
+      }
+
+      if (month !== lastMonth) {
+        const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+        monthLabelsArr.push({ month: months[month], weekIndex: weeksArr.length });
+        lastMonth = month;
+      }
+
+      currentWeek.push(day);
+
+      if (currentWeek.length === 7) {
+        weeksArr.push(currentWeek);
+        currentWeek = [];
+      }
+
+      if (index === data.length - 1 && currentWeek.length > 0) {
+        while (currentWeek.length < 7) {
+          currentWeek.push(null);
+        }
+        weeksArr.push(currentWeek);
+      }
+    });
+
+    return { weeks: weeksArr, monthLabels: monthLabelsArr, yearLabels: yearLabelsArr };
+  }, [data]);
 
   if (loading) {
     return (
-      <div className="flex items-center justify-center py-8">
-        <div className={`animate-spin rounded-full h-8 w-8 border-b-2 ${
-          isDarkMode ? 'border-primary-400' : 'border-primary-600'
+      <div className="flex items-center justify-center py-4">
+        <div className={`animate-spin rounded-full h-5 w-5 border-b-2 ${
+          isDarkMode ? 'border-slate-400' : 'border-slate-600'
         }`} />
       </div>
     );
   }
 
-  const explicitTheme = {
-    light: [
-      'rgba(235, 237, 240, 0.4)',
-      'rgba(155, 233, 168, 0.4)',
-      'rgba(64, 196, 99, 0.5)',
-      'rgba(48, 161, 78, 0.6)',
-      'rgba(33, 110, 57, 0.7)'
-    ],
-    dark: [
-      'rgba(40, 40, 40, 0.3)',
-      'rgba(155, 233, 168, 0.2)',
-      'rgba(64, 196, 99, 0.3)',
-      'rgba(48, 161, 78, 0.4)',
-      'rgba(33, 110, 57, 0.5)'
-    ],
-  };
+  const cellSize = 8;
+  const cellGap = 2;
+  const weekdayLabelWidth = 22;
+  const yearLabelHeight = 12;
+  const monthLabelHeight = 12;
+
+  const totalWidth = weekdayLabelWidth + weeks.length * (cellSize + cellGap);
+  const totalHeight = yearLabelHeight + monthLabelHeight + 7 * (cellSize + cellGap) + 4;
+
+  const emptyFill = isDarkMode ? 'rgba(51, 65, 85, 0.2)' : 'rgba(148, 163, 184, 0.15)';
+  const emptyStroke = isDarkMode ? 'rgba(100, 116, 139, 0.4)' : 'rgba(148, 163, 184, 0.5)';
+  const fillStroke = isDarkMode ? 'rgba(163, 180, 90, 0.8)' : 'rgba(120, 140, 60, 0.7)';
+  const textColor = isDarkMode ? 'rgba(148, 163, 184, 0.5)' : 'rgba(100, 116, 139, 0.5)';
 
   return (
     <div className="w-full">
-      <div className={`text-xs font-mono tracking-wide mb-4 ${
-        isDarkMode ? 'text-slate-400' : 'text-slate-600'
+      <div className={`text-[10px] font-mono tracking-widest mb-2 ${
+        isDarkMode ? 'text-slate-500' : 'text-slate-400'
       }`}>
         — COMMITS
       </div>
 
-      <div className="overflow-x-auto -mx-1">
-        <div style={{ minWidth: '700px' }}>
-          <ActivityCalendar
-            data={data}
-            theme={explicitTheme}
-            colorScheme={isDarkMode ? 'dark' : 'light'}
-            blockSize={9}
-            blockMargin={2.5}
-            blockRadius={2}
-            fontSize={9}
-            hideColorLegend={true}
-            hideMonthLabels={false}
-            hideTotalCount={true}
-            showWeekdayLabels={true}
-            labels={{
-              months: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
-              weekdays: ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'],
-              totalCount: '{{count}} contributions in {{year}}',
-            }}
-            style={{
-              fontFamily: 'ui-monospace, monospace',
-              fontSize: '9px',
-              color: isDarkMode ? 'rgba(148, 163, 184, 0.6)' : 'rgba(71, 85, 105, 0.6)',
-            }}
-          />
-        </div>
-      </div>
+      <div className="overflow-x-auto scrollbar-hide">
+        <svg
+          width={totalWidth}
+          height={totalHeight}
+          className="block"
+          style={{ minWidth: totalWidth }}
+        >
+          <defs>
+            <pattern
+              id="hatch"
+              patternUnits="userSpaceOnUse"
+              width="3"
+              height="3"
+              patternTransform="rotate(45)"
+            >
+              <line
+                x1="0"
+                y1="0"
+                x2="0"
+                y2="3"
+                stroke={fillStroke}
+                strokeWidth="1.2"
+              />
+            </pattern>
+          </defs>
 
-      <div className={`text-xs font-mono mt-4 text-center ${
-        isDarkMode ? 'text-slate-500' : 'text-slate-500'
-      }`}>
-        COMMITS BY DAY
+          {yearLabels.map((label, i) => {
+            const nextYear = yearLabels[i + 1];
+            const endWeek = nextYear ? nextYear.weekIndex : weeks.length;
+            const startX = weekdayLabelWidth + label.weekIndex * (cellSize + cellGap);
+            const endX = weekdayLabelWidth + endWeek * (cellSize + cellGap);
+            const x = startX + (endX - startX) / 2;
+
+            return (
+              <text
+                key={`year-${label.year}`}
+                x={x}
+                y={8}
+                fontSize="8"
+                fontFamily="ui-monospace, monospace"
+                fill={textColor}
+                textAnchor="middle"
+              >
+                {label.year}
+              </text>
+            );
+          })}
+
+          {monthLabels.map((label, i) => {
+            const nextMonth = monthLabels[i + 1];
+            const endWeek = nextMonth ? nextMonth.weekIndex : weeks.length;
+            const startX = weekdayLabelWidth + label.weekIndex * (cellSize + cellGap);
+            const endX = weekdayLabelWidth + endWeek * (cellSize + cellGap);
+            const x = startX + (endX - startX) / 2;
+
+            return (
+              <text
+                key={`month-${i}`}
+                x={x}
+                y={yearLabelHeight + 9}
+                fontSize="7"
+                fontFamily="ui-monospace, monospace"
+                fill={textColor}
+                textAnchor="middle"
+              >
+                {label.month}
+              </text>
+            );
+          })}
+
+          {[1, 3, 5].map((dayIdx) => (
+            <text
+              key={`weekday-${dayIdx}`}
+              x={weekdayLabelWidth - 4}
+              y={yearLabelHeight + monthLabelHeight + dayIdx * (cellSize + cellGap) + cellSize - 1}
+              fontSize="7"
+              fontFamily="ui-monospace, monospace"
+              fill={textColor}
+              textAnchor="end"
+            >
+              {dayIdx === 1 ? 'Mon' : dayIdx === 3 ? 'Wed' : 'Fri'}
+            </text>
+          ))}
+
+          {weeks.map((week, weekIndex) => (
+            week.map((day, dayIndex) => {
+              if (day === null) return null;
+
+              const x = weekdayLabelWidth + weekIndex * (cellSize + cellGap);
+              const y = yearLabelHeight + monthLabelHeight + dayIndex * (cellSize + cellGap);
+              const hasCommits = day.count > 0;
+
+              return (
+                <rect
+                  key={`${weekIndex}-${dayIndex}`}
+                  x={x}
+                  y={y}
+                  width={cellSize}
+                  height={cellSize}
+                  rx={1.5}
+                  ry={1.5}
+                  fill={hasCommits ? 'url(#hatch)' : emptyFill}
+                  stroke={hasCommits ? fillStroke : emptyStroke}
+                  strokeWidth={0.8}
+                  strokeDasharray={hasCommits ? '0' : '1.5 1'}
+                />
+              );
+            })
+          ))}
+        </svg>
       </div>
     </div>
   );
