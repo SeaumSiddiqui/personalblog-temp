@@ -16,8 +16,8 @@ export const ProfileImage: React.FC<ProfileImageProps> = ({ isDarkMode }) => {
     const timer = setTimeout(() => {
       setIsLoaded(true);
       setIsAnimating(true);
-      setTimeout(() => setIsAnimating(false), 800);
-    }, 1200);
+      setTimeout(() => setIsAnimating(false), 400);
+    }, 50);
 
     return () => clearTimeout(timer);
   }, []);
@@ -41,9 +41,9 @@ export const ProfileImage: React.FC<ProfileImageProps> = ({ isDarkMode }) => {
       <div
         className="relative w-80 h-72"
         style={{
-          transform: isLoaded ? 'scale(1) rotate(0deg)' : 'scale(0.3) rotate(-15deg)',
+          transform: isLoaded ? 'scale(1) rotate(0deg)' : 'scale(0.5) rotate(-10deg)',
           opacity: isLoaded ? 1 : 0,
-          transition: 'transform 0.8s cubic-bezier(0.34, 1.56, 0.64, 1), opacity 0.6s ease-out',
+          transition: 'transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1), opacity 0.3s ease-out',
         }}
       >
         <div
