@@ -5,7 +5,7 @@
 @font-face {
   font-family: 'Magnat Text';
   src: url('/fonts/MagnatText-Bold.woff') format('woff');
-  font-weight: 700;
+  font-weight: 100 900;
   font-style: normal;
   font-display: swap;
 }
@@ -36,7 +36,7 @@
   }
 
   h1 {
-    @apply font-primary;
+    @apply font-heading;
   }
 
   h2, h3, h4, h5, h6 {
