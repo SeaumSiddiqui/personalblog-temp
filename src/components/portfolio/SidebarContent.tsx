@@ -9,6 +9,7 @@ import {
   SiGithub,
   SiApachemaven
 } from 'react-icons/si';
+import GitHubHeatmap from './GitHubHeatmap';
 
 interface SidebarContentProps {
   isDarkMode: boolean;
@@ -24,16 +25,29 @@ interface Tech {
   icon: React.ComponentType<any>;
 }
 
+type SectionType = 'stats' | 'stacks' | 'github';
+
 export const SidebarContent: React.FC<SidebarContentProps> = ({ isDarkMode }) => {
-  const [showStacks, setShowStacks] = useState(false);
+  const [activeSection, setActiveSection] = useState<SectionType>('stats');
 
   useEffect(() => {
     const handleScroll = () => {
+      const experienceSection = document.getElementById('experience');
       const projectsSection = document.getElementById('projects');
-      if (projectsSection) {
-        const rect = projectsSection.getBoundingClientRect();
-        const isVisible = rect.top <= window.innerHeight / 2 && rect.bottom >= 0;
-        setShowStacks(isVisible);
+
+      if (!experienceSection || !projectsSection) return;
+
+      const experienceRect = experienceSection.getBoundingClientRect();
+      const projectsRect = projectsSection.getBoundingClientRect();
+
+      const viewportMiddle = window.innerHeight / 2;
+
+      if (projectsRect.top <= viewportMiddle && projectsRect.bottom >= 0) {
+        setActiveSection('github');
+      } else if (experienceRect.top <= viewportMiddle && experienceRect.bottom >= 0) {
+        setActiveSection('stacks');
+      } else {
+        setActiveSection('stats');
       }
     };
 
@@ -71,14 +85,14 @@ export const SidebarContent: React.FC<SidebarContentProps> = ({ isDarkMode }) =>
       <div
         className="sidebar-transition will-change-transform"
         style={{
-          position: showStacks ? 'absolute' : 'relative',
+          position: activeSection === 'stats' ? 'relative' : 'absolute',
           width: '100%',
-          opacity: showStacks ? 0 : 1,
-          transform: showStacks
-            ? 'translateY(-20px) scale(0.95)'
-            : 'translateY(0) scale(1)',
-          filter: showStacks ? 'blur(8px)' : 'blur(0px)',
-          pointerEvents: showStacks ? 'none' : 'auto',
+          opacity: activeSection === 'stats' ? 1 : 0,
+          transform: activeSection === 'stats'
+            ? 'translateY(0) scale(1)'
+            : 'translateY(-20px) scale(0.95)',
+          filter: activeSection === 'stats' ? 'blur(0px)' : 'blur(8px)',
+          pointerEvents: activeSection === 'stats' ? 'auto' : 'none',
         }}
       >
         <div className="grid grid-cols-3 gap-3">
@@ -118,15 +132,17 @@ export const SidebarContent: React.FC<SidebarContentProps> = ({ isDarkMode }) =>
       <div
         className="sidebar-transition will-change-transform"
         style={{
-          position: showStacks ? 'relative' : 'absolute',
+          position: activeSection === 'stacks' ? 'relative' : 'absolute',
           width: '100%',
           top: 0,
-          opacity: showStacks ? 1 : 0,
-          transform: showStacks
+          opacity: activeSection === 'stacks' ? 1 : 0,
+          transform: activeSection === 'stacks'
             ? 'translateY(0) scale(1)'
-            : 'translateY(20px) scale(0.95)',
-          filter: showStacks ? 'blur(0px)' : 'blur(8px)',
-          pointerEvents: showStacks ? 'auto' : 'none',
+            : activeSection === 'stats'
+              ? 'translateY(20px) scale(0.95)'
+              : 'translateY(-20px) scale(0.95)',
+          filter: activeSection === 'stacks' ? 'blur(0px)' : 'blur(8px)',
+          pointerEvents: activeSection === 'stacks' ? 'auto' : 'none',
         }}
       >
         <div className="grid grid-cols-3 gap-2">
@@ -159,6 +175,29 @@ export const SidebarContent: React.FC<SidebarContentProps> = ({ isDarkMode }) =>
               </div>
             </a>
           ))}
+        </div>
+      </div>
+
+      <div
+        className="sidebar-transition will-change-transform"
+        style={{
+          position: activeSection === 'github' ? 'relative' : 'absolute',
+          width: '100%',
+          top: 0,
+          opacity: activeSection === 'github' ? 1 : 0,
+          transform: activeSection === 'github'
+            ? 'translateY(0) scale(1)'
+            : 'translateY(20px) scale(0.95)',
+          filter: activeSection === 'github' ? 'blur(0px)' : 'blur(8px)',
+          pointerEvents: activeSection === 'github' ? 'auto' : 'none',
+        }}
+      >
+        <div className={`p-4 rounded-lg ${
+          isDarkMode
+            ? 'bg-black/60 border border-slate-800'
+            : 'bg-white/60 border border-slate-300'
+        }`}>
+          <GitHubHeatmap />
         </div>
       </div>
     </div>
