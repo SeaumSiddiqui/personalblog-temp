@@ -15,7 +15,7 @@ interface Project {
 
 interface ProjectsSectionProps {
   isDarkMode: boolean;
-  cardRefs?: React.RefObject<(HTMLDivElement | null)[]>;
+  cardRefs?: React.MutableRefObject<(HTMLDivElement | null)[]>;
 }
 
 export const ProjectsSection: React.FC<ProjectsSectionProps> = ({ isDarkMode, cardRefs }) => {

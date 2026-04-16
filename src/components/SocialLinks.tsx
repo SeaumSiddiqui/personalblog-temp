@@ -7,7 +7,7 @@ interface SocialLinksProps {
   size?: 'small' | 'medium' | 'large';
   animate?: boolean;
   startAnimation?: boolean;
-  socialItemRefs?: React.RefObject<(HTMLAnchorElement | null)[]>;
+  socialItemRefs?: React.MutableRefObject<(HTMLAnchorElement | null)[]>;
 }
 
 export const SocialLinks: React.FC<SocialLinksProps> = ({

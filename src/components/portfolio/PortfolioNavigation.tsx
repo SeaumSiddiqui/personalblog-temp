@@ -4,7 +4,7 @@ interface PortfolioNavigationProps {
   isDarkMode: boolean;
   activeSection: string;
   scrollToSection: (sectionId: string) => void;
-  navItemRefs?: React.RefObject<(HTMLLIElement | null)[]>;
+  navItemRefs?: React.MutableRefObject<(HTMLLIElement | null)[]>;
 }
 
 export const PortfolioNavigation: React.FC<PortfolioNavigationProps> = ({

@@ -13,7 +13,7 @@ import GitHubHeatmap from './GitHubHeatmap';
 
 interface SidebarContentProps {
   isDarkMode: boolean;
-  sidebarRef?: React.RefObject<HTMLDivElement | null>;
+  sidebarRef?: React.MutableRefObject<HTMLDivElement | null>;
 }
 
 interface Stat {
@@ -120,7 +120,7 @@ export const SidebarContent: React.FC<SidebarContentProps> = ({ isDarkMode, side
   ];
 
   return (
-    <div ref={sidebarRef} className="relative w-full overflow-hidden mt-3">
+    <div ref={(el) => { if (sidebarRef) sidebarRef.current = el; }} className="relative w-full overflow-hidden mt-3">
       <style>{`
         .sidebar-transition {
           transition: opacity 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94),

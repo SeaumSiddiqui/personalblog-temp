@@ -4,7 +4,7 @@ import profileImageLight from '../../assets/profile-image-light.webp';
 
 interface ProfileImageProps {
   isDarkMode: boolean;
-  imageRef?: React.RefObject<HTMLDivElement | null>;
+  imageRef?: React.MutableRefObject<HTMLDivElement | null>;
 }
 
 export const ProfileImage: React.FC<ProfileImageProps> = ({ isDarkMode, imageRef }) => {
@@ -29,7 +29,7 @@ export const ProfileImage: React.FC<ProfileImageProps> = ({ isDarkMode, imageRef
   return (
     <div className="mb-16 flex justify-center">
       <div
-        ref={imageRef}
+        ref={(el) => { if (imageRef) imageRef.current = el; }}
         className="relative w-80 h-72"
         style={{ visibility: 'hidden' }}
       >

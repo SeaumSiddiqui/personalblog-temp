@@ -14,7 +14,7 @@ interface Experience {
 
 interface ExperienceSectionProps {
   isDarkMode: boolean;
-  cardRefs?: React.RefObject<(HTMLDivElement | null)[]>;
+  cardRefs?: React.MutableRefObject<(HTMLDivElement | null)[]>;
 }
 
 export const ExperienceSection: React.FC<ExperienceSectionProps> = ({ isDarkMode, cardRefs }) => {

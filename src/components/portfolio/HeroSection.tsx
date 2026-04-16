@@ -4,11 +4,11 @@ interface HeroSectionProps {
   isDarkMode: boolean;
   scrollToSection: (sectionId: string) => void;
   openContactModal: () => void;
-  nameRef?: React.RefObject<HTMLHeadingElement | null>;
-  roleRef?: React.RefObject<HTMLHeadingElement | null>;
-  descriptionRef?: React.RefObject<HTMLParagraphElement | null>;
-  locationIconRef?: React.RefObject<SVGSVGElement | null>;
-  locationTextRef?: React.RefObject<HTMLSpanElement | null>;
+  nameRef?: React.MutableRefObject<HTMLHeadingElement | null>;
+  roleRef?: React.MutableRefObject<HTMLHeadingElement | null>;
+  descriptionRef?: React.MutableRefObject<HTMLParagraphElement | null>;
+  locationIconRef?: React.MutableRefObject<SVGSVGElement | null>;
+  locationTextRef?: React.MutableRefObject<HTMLSpanElement | null>;
 }
 
 const NAME_WORDS = ['Seaum', 'Siddiqui'];
@@ -26,7 +26,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
   return (
     <div className="space-y-4">
       <h1
-        ref={nameRef}
+        ref={(el) => { if (nameRef) nameRef.current = el; }}
         className={`text-5xl sm:text-6xl lg:text-7xl font-heading font-bold tracking-tight leading-none transition-colors duration-300 ${
           isDarkMode ? 'text-dark-text' : 'text-light-text'
         }`}
@@ -43,7 +43,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
       </h1>
 
       <h2
-        ref={roleRef}
+        ref={(el) => { if (roleRef) roleRef.current = el; }}
         className={`text-sm sm:text-base font-mono font-medium uppercase tracking-wide transition-colors duration-300 ${
           isDarkMode ? 'text-slate-400' : 'text-slate-600'
         }`}
@@ -60,7 +60,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
       </h2>
 
       <p
-        ref={descriptionRef}
+        ref={(el) => { if (descriptionRef) descriptionRef.current = el; }}
         className={`max-w-sm text-sm leading-relaxed ${
           isDarkMode ? 'text-slate-400' : 'text-slate-700'
         }`}
@@ -76,7 +76,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
       }`}>
         <div className="overflow-hidden" style={{ perspective: '400px' }}>
           <svg
-            ref={locationIconRef}
+            ref={(el) => { if (locationIconRef) locationIconRef.current = el; }}
             viewBox="0 0 24 24"
             fill="none"
             stroke="currentColor"
@@ -92,7 +92,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
         </div>
         <div className="overflow-hidden">
           <span
-            ref={locationTextRef}
+            ref={(el) => { if (locationTextRef) locationTextRef.current = el; }}
             style={{ visibility: 'hidden', display: 'inline-block' }}
           >
             Dhaka, Bangladesh

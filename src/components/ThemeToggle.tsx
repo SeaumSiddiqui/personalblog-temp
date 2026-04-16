@@ -4,13 +4,13 @@ import { Sun, Moon } from 'lucide-react';
 interface ThemeToggleProps {
   isDarkMode: boolean;
   onToggle: () => void;
-  toggleRef?: React.RefObject<HTMLDivElement | null>;
+  toggleRef?: React.MutableRefObject<HTMLDivElement | null>;
 }
 
 export const ThemeToggle: React.FC<ThemeToggleProps> = ({ isDarkMode, onToggle, toggleRef }) => {
   return (
     <div
-      ref={toggleRef}
+      ref={(el) => { if (toggleRef) toggleRef.current = el; }}
       className="relative"
       style={{ visibility: 'hidden' }}
     >
