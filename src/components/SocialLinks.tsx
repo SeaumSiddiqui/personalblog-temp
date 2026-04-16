@@ -83,7 +83,7 @@ export const SocialLinks: React.FC<SocialLinksProps> = ({
             }
             ${social.color}
           `}
-          style={animate ? { visibility: 'hidden' } : undefined}
+          style={animate ? { visibility: 'hidden', opacity: 0 } : undefined}
           title={social.label}
         >
           <social.icon className={`${iconSizes[size]} transition-colors duration-300 ${

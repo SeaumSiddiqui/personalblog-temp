@@ -32,7 +32,7 @@ export const PortfolioNavigation: React.FC<PortfolioNavigationProps> = ({
               }
             }}
             className="relative"
-            style={{ visibility: 'hidden' }}
+            style={{ visibility: 'hidden', opacity: 0 }}
           >
             <button
               onClick={() => scrollToSection(item.id)}

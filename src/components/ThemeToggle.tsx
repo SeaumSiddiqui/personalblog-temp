@@ -12,7 +12,7 @@ export const ThemeToggle: React.FC<ThemeToggleProps> = ({ isDarkMode, onToggle, 
     <div
       ref={(el) => { if (toggleRef) toggleRef.current = el; }}
       className="relative"
-      style={{ visibility: 'hidden' }}
+      style={{ visibility: 'hidden', opacity: 0 }}
     >
       <div
         className={`

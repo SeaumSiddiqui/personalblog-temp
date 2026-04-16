@@ -30,7 +30,7 @@ export function usePortfolioAnimation(refs: PortfolioAnimationRefs, ready: boole
     if (!ready || hasRun.current) return;
     hasRun.current = true;
 
-    const ease = 'power4.out';
+    const heroEase = 'power4.out';
 
     document.body.style.pointerEvents = 'none';
 
@@ -48,20 +48,23 @@ export function usePortfolioAnimation(refs: PortfolioAnimationRefs, ready: boole
 
     const tl = gsap.timeline({
       paused: true,
-      defaults: { ease },
+      defaults: { ease: heroEase },
       onComplete: () => {
         document.body.style.pointerEvents = 'auto';
       },
     });
 
+    // --- STEP 1: Hero Section ---
+
     const nameWords = refs.nameContainer.current?.querySelectorAll('.gsap-name-word');
     if (nameWords && nameWords.length > 0) {
       tl.fromTo(
         nameWords,
-        { clipPath: 'inset(0 100% 0 0)', visibility: 'hidden', x: -20, willChange: 'clip-path, ' + WC },
+        { clipPath: 'inset(0 100% 0 0)', visibility: 'hidden', opacity: 0, x: -20, willChange: 'clip-path, ' + WC },
         {
           clipPath: 'inset(0 0% 0 0)',
           visibility: 'visible',
+          opacity: 1,
           x: 0,
           duration: 1.2,
           stagger: 0.25,
@@ -79,7 +82,7 @@ export function usePortfolioAnimation(refs: PortfolioAnimationRefs, ready: boole
           visibility: 'visible',
           opacity: 1,
           duration: 1.0,
-          ease: 'back.out(1.4)',
+          ease: 'power2.out',
         },
         '-=0.7'
       );
@@ -127,7 +130,7 @@ export function usePortfolioAnimation(refs: PortfolioAnimationRefs, ready: boole
           visibility: 'visible',
           opacity: 1,
           duration: 0.6,
-          ease: 'back.out(1.4)',
+          ease: 'power2.out',
         }
       );
 
@@ -154,10 +157,12 @@ export function usePortfolioAnimation(refs: PortfolioAnimationRefs, ready: boole
 
     tl.call(startFloat);
 
+    // --- STEP 2: Menus & Socials simultaneously ---
+
     const navEls = refs.navItems.current?.filter(Boolean) as HTMLLIElement[];
     const socialEls = refs.socialItems.current?.filter(Boolean) as HTMLAnchorElement[];
 
-    tl.add('sidebars');
+    tl.add('menusAndSocials');
 
     if (navEls && navEls.length > 0) {
       tl.fromTo(
@@ -168,9 +173,9 @@ export function usePortfolioAnimation(refs: PortfolioAnimationRefs, ready: boole
           visibility: 'visible',
           opacity: 1,
           duration: 0.8,
-          stagger: 0.2,
+          stagger: 0.1,
         },
-        'sidebars'
+        'menusAndSocials'
       );
     }
 
@@ -183,9 +188,9 @@ export function usePortfolioAnimation(refs: PortfolioAnimationRefs, ready: boole
           visibility: 'visible',
           opacity: 1,
           duration: 0.8,
-          stagger: 0.2,
+          stagger: 0.1,
         },
-        'sidebars'
+        'menusAndSocials'
       );
     }
 
@@ -199,26 +204,29 @@ export function usePortfolioAnimation(refs: PortfolioAnimationRefs, ready: boole
           opacity: 1,
           duration: 0.8,
         },
-        'sidebars'
+        'menusAndSocials'
       );
     }
 
+    // --- STEP 3: Grand Finale - Cards after menus/socials finish ---
+
+    tl.add('cards');
+
     if (refs.sidebarContent.current) {
-      const cards = refs.sidebarContent.current.querySelectorAll('.gsap-stat-card');
-      if (cards.length > 0) {
+      const statCards = refs.sidebarContent.current.querySelectorAll('.gsap-stat-card');
+      if (statCards.length > 0) {
         tl.fromTo(
-          cards,
-          { y: 80, opacity: 0, visibility: 'hidden', willChange: WC },
+          statCards,
+          { y: 60, visibility: 'hidden', opacity: 0, willChange: WC },
           {
             y: 0,
-            opacity: 1,
             visibility: 'visible',
-            duration: 1.2,
+            opacity: 1,
+            duration: 1.0,
             stagger: 0.1,
-            ease: 'power1.out',
-            immediateRender: false,
+            ease: 'power2.out',
           },
-          '-=0.5'
+          'cards'
         );
       }
     }
@@ -227,17 +235,16 @@ export function usePortfolioAnimation(refs: PortfolioAnimationRefs, ready: boole
     if (expEls && expEls.length > 0) {
       tl.fromTo(
         expEls,
-        { y: 80, opacity: 0, visibility: 'hidden', willChange: WC },
+        { y: 100, visibility: 'hidden', opacity: 0, willChange: WC },
         {
           y: 0,
-          opacity: 1,
           visibility: 'visible',
-          duration: 1.2,
+          opacity: 1,
+          duration: 1.0,
           stagger: 0.1,
-          ease: 'power1.out',
-          immediateRender: false,
+          ease: 'power2.out',
         },
-        '-=0.4'
+        'cards'
       );
     }
 
@@ -245,17 +252,16 @@ export function usePortfolioAnimation(refs: PortfolioAnimationRefs, ready: boole
     if (projEls && projEls.length > 0) {
       tl.fromTo(
         projEls,
-        { y: 80, opacity: 0, visibility: 'hidden', willChange: WC },
+        { y: 100, visibility: 'hidden', opacity: 0, willChange: WC },
         {
           y: 0,
-          opacity: 1,
           visibility: 'visible',
-          duration: 1.2,
+          opacity: 1,
+          duration: 1.0,
           stagger: 0.1,
-          ease: 'power1.out',
-          immediateRender: false,
+          ease: 'power2.out',
         },
-        '-=0.3'
+        'cards'
       );
     }
 

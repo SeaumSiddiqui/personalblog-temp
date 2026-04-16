@@ -151,7 +151,7 @@ export const SidebarContent: React.FC<SidebarContentProps> = ({ isDarkMode, side
                   ? 'bg-black/60 border border-slate-800'
                   : 'bg-white/60 border border-slate-300'
               }`}
-              style={{ visibility: 'hidden' }}
+              style={{ visibility: 'hidden', opacity: 0 }}
             >
               <div className="flex items-center gap-2 mb-1">
                 <div className={`p-1 rounded ${

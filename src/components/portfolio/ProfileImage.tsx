@@ -31,7 +31,7 @@ export const ProfileImage: React.FC<ProfileImageProps> = ({ isDarkMode, imageRef
       <div
         ref={(el) => { if (imageRef) imageRef.current = el; }}
         className="relative w-80 h-72"
-        style={{ visibility: 'hidden' }}
+        style={{ visibility: 'hidden', opacity: 0 }}
       >
         <div
           className={`absolute inset-0 rounded-2xl transition-opacity duration-500 ${
