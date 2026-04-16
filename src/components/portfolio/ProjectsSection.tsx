@@ -15,9 +15,10 @@ interface Project {
 
 interface ProjectsSectionProps {
   isDarkMode: boolean;
+  cardRefs?: React.RefObject<(HTMLDivElement | null)[]>;
 }
 
-export const ProjectsSection: React.FC<ProjectsSectionProps> = ({ isDarkMode }) => {
+export const ProjectsSection: React.FC<ProjectsSectionProps> = ({ isDarkMode, cardRefs }) => {
   const projects: Project[] = [
     {
       title: 'QCharity BD Portal',
@@ -45,7 +46,13 @@ export const ProjectsSection: React.FC<ProjectsSectionProps> = ({ isDarkMode }) 
         {projects.map((project, index) => (
           <div
             key={index}
+            ref={(el) => {
+              if (cardRefs?.current) {
+                cardRefs.current[index] = el;
+              }
+            }}
             className="group relative grid gap-4 pb-1 transition-all sm:grid-cols-8 sm:gap-8 md:gap-4 lg:hover:!opacity-100 lg:group-hover/list:opacity-50"
+            style={{ visibility: 'hidden' }}
           >
             {project.link && (
               <a

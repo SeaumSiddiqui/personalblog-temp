@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useRef } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Briefcase, Users, Award } from 'lucide-react';
 import { ExternalLink } from 'lucide-react';
 import {
@@ -13,7 +13,7 @@ import GitHubHeatmap from './GitHubHeatmap';
 
 interface SidebarContentProps {
   isDarkMode: boolean;
-  startAnimation?: boolean;
+  sidebarRef?: React.RefObject<HTMLDivElement | null>;
 }
 
 interface Stat {
@@ -66,11 +66,9 @@ const AnimatedCounter: React.FC<{ target: number; suffix: string; isDarkMode: bo
   );
 };
 
-export const SidebarContent: React.FC<SidebarContentProps> = ({ isDarkMode, startAnimation = false }) => {
+export const SidebarContent: React.FC<SidebarContentProps> = ({ isDarkMode, sidebarRef }) => {
   const [activeSection, setActiveSection] = useState<SectionType>('stats');
-  const [cardsVisible, setCardsVisible] = useState<number[]>([]);
   const [shouldAnimateCounters, setShouldAnimateCounters] = useState(false);
-  const animationTriggered = useRef(false);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -100,19 +98,11 @@ export const SidebarContent: React.FC<SidebarContentProps> = ({ isDarkMode, star
   }, []);
 
   useEffect(() => {
-    if (!startAnimation || animationTriggered.current) return;
-    animationTriggered.current = true;
-
-    [0, 1, 2].forEach((index) => {
-      setTimeout(() => {
-        setCardsVisible(prev => [...prev, index]);
-      }, index * 150);
-    });
-
-    setTimeout(() => {
+    const timer = setTimeout(() => {
       setShouldAnimateCounters(true);
-    }, 300);
-  }, [startAnimation]);
+    }, 1800);
+    return () => clearTimeout(timer);
+  }, []);
 
   const techs: Tech[] = [
     { name: 'Java', icon: SiOpenjdk },
@@ -130,7 +120,7 @@ export const SidebarContent: React.FC<SidebarContentProps> = ({ isDarkMode, star
   ];
 
   return (
-    <div className="relative w-full overflow-hidden mt-3">
+    <div ref={sidebarRef} className="relative w-full overflow-hidden mt-3">
       <style>{`
         .sidebar-transition {
           transition: opacity 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94),
@@ -156,17 +146,12 @@ export const SidebarContent: React.FC<SidebarContentProps> = ({ isDarkMode, star
           {stats.map((stat, index) => (
             <div
               key={index}
-              className={`p-3 rounded-lg transition-all duration-300 ${
+              className={`gsap-stat-card p-3 rounded-lg transition-all duration-300 ${
                 isDarkMode
                   ? 'bg-black/60 border border-slate-800'
                   : 'bg-white/60 border border-slate-300'
               }`}
-              style={{
-                transform: cardsVisible.includes(index) ? 'translateY(0)' : 'translateY(30px)',
-                opacity: cardsVisible.includes(index) ? 1 : 0,
-                transition: `transform 0.6s cubic-bezier(0.34, 1.56, 0.64, 1), opacity 0.5s ease-out`,
-                transitionDelay: `${index * 100}ms`,
-              }}
+              style={{ visibility: 'hidden' }}
             >
               <div className="flex items-center gap-2 mb-1">
                 <div className={`p-1 rounded ${
@@ -180,7 +165,7 @@ export const SidebarContent: React.FC<SidebarContentProps> = ({ isDarkMode, star
                   target={stat.value}
                   suffix={stat.suffix}
                   isDarkMode={isDarkMode}
-                  shouldAnimate={shouldAnimateCounters && cardsVisible.includes(index)}
+                  shouldAnimate={shouldAnimateCounters}
                 />
               </div>
               <div className={`text-xs font-mono font-medium ${

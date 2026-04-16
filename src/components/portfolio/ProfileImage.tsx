@@ -1,26 +1,16 @@
-import React, { useEffect, useState, useRef } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import profileImageDark from '../../assets/profile-image-dark.webp';
 import profileImageLight from '../../assets/profile-image-light.webp';
 
 interface ProfileImageProps {
   isDarkMode: boolean;
+  imageRef?: React.RefObject<HTMLDivElement | null>;
 }
 
-export const ProfileImage: React.FC<ProfileImageProps> = ({ isDarkMode }) => {
-  const [isLoaded, setIsLoaded] = useState(false);
+export const ProfileImage: React.FC<ProfileImageProps> = ({ isDarkMode, imageRef }) => {
   const [isAnimating, setIsAnimating] = useState(false);
   const prevTheme = useRef<boolean | null>(null);
   const initialMount = useRef(true);
-
-  useEffect(() => {
-    const timer = setTimeout(() => {
-      setIsLoaded(true);
-      setIsAnimating(true);
-      setTimeout(() => setIsAnimating(false), 400);
-    }, 50);
-
-    return () => clearTimeout(timer);
-  }, []);
 
   useEffect(() => {
     if (initialMount.current) {
@@ -39,12 +29,9 @@ export const ProfileImage: React.FC<ProfileImageProps> = ({ isDarkMode }) => {
   return (
     <div className="mb-16 flex justify-center">
       <div
+        ref={imageRef}
         className="relative w-80 h-72"
-        style={{
-          transform: isLoaded ? 'scale(1) rotate(0deg)' : 'scale(0.5) rotate(-10deg)',
-          opacity: isLoaded ? 1 : 0,
-          transition: 'transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1), opacity 0.3s ease-out',
-        }}
+        style={{ visibility: 'hidden' }}
       >
         <div
           className={`absolute inset-0 rounded-2xl transition-opacity duration-500 ${

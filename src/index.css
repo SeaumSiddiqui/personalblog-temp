@@ -206,9 +206,3 @@ html {
   -webkit-backdrop-filter: blur(10px);
 }
 
-/* Smooth transitions for all interactive elements */
-* {
-  transition-property: transform, opacity, background-color, border-color, color, fill, stroke;
-  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
-  transition-duration: 300ms;
-}

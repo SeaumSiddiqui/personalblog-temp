@@ -1,6 +1,7 @@
-import React, { useState, useEffect, useCallback } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { useTheme } from '../hooks/useTheme';
 import { useAuth } from '../hooks/useAuth';
+import { usePortfolioAnimation } from '../hooks/usePortfolioAnimation';
 import { ThemeToggle } from '../components/ThemeToggle';
 import { SocialLinks } from '../components/SocialLinks';
 import { LoadingSpinner } from '../components/LoadingSpinner';
@@ -22,15 +23,41 @@ export const Portfolio: React.FC = () => {
   const [showScrollTop, setShowScrollTop] = useState(false);
   const [isContactModalOpen, setIsContactModalOpen] = useState(false);
   const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
+  const [mounted, setMounted] = useState(false);
 
-  const [nameAnimationComplete, setNameAnimationComplete] = useState(false);
-  const [startCardsAnimation, setStartCardsAnimation] = useState(false);
+  const nameRef = useRef<HTMLHeadingElement>(null);
+  const roleRef = useRef<HTMLHeadingElement>(null);
+  const descriptionRef = useRef<HTMLParagraphElement>(null);
+  const locationIconRef = useRef<SVGSVGElement>(null);
+  const locationTextRef = useRef<HTMLSpanElement>(null);
+  const profileImageRef = useRef<HTMLDivElement>(null);
+  const navItemRefs = useRef<(HTMLLIElement | null)[]>([]);
+  const socialItemRefs = useRef<(HTMLAnchorElement | null)[]>([]);
+  const themeToggleRef = useRef<HTMLDivElement>(null);
+  const sidebarContentRef = useRef<HTMLDivElement>(null);
+  const experienceCardRefs = useRef<(HTMLDivElement | null)[]>([]);
+  const projectCardRefs = useRef<(HTMLDivElement | null)[]>([]);
 
-  const handleNameAnimationComplete = useCallback(() => {
-    setNameAnimationComplete(true);
-    setTimeout(() => {
-      setStartCardsAnimation(true);
-    }, 600);
+  usePortfolioAnimation(
+    {
+      nameContainer: nameRef,
+      roleContainer: roleRef,
+      descriptionRef: descriptionRef,
+      locationIcon: locationIconRef,
+      locationText: locationTextRef,
+      profileImage: profileImageRef,
+      navItems: navItemRefs,
+      socialItems: socialItemRefs,
+      themeToggle: themeToggleRef,
+      sidebarContent: sidebarContentRef,
+      experienceCards: experienceCardRefs,
+      projectCards: projectCardRefs,
+    },
+    mounted && !authLoading
+  );
+
+  useEffect(() => {
+    setMounted(true);
   }, []);
 
   useEffect(() => {
@@ -127,9 +154,13 @@ export const Portfolio: React.FC = () => {
             layout="vertical"
             size="medium"
             animate={true}
-            startAnimation={nameAnimationComplete}
+            socialItemRefs={socialItemRefs}
           />
-          <ThemeToggle isDarkMode={isDarkMode} onToggle={toggleTheme} />
+          <ThemeToggle
+            isDarkMode={isDarkMode}
+            onToggle={toggleTheme}
+            toggleRef={themeToggleRef}
+          />
         </div>
 
         <div className="lg:ml-0">
@@ -141,32 +172,45 @@ export const Portfolio: React.FC = () => {
                     isDarkMode={isDarkMode}
                     scrollToSection={scrollToSection}
                     openContactModal={openContactModal}
-                    onNameAnimationComplete={handleNameAnimationComplete}
+                    nameRef={nameRef}
+                    roleRef={roleRef}
+                    descriptionRef={descriptionRef}
+                    locationIconRef={locationIconRef}
+                    locationTextRef={locationTextRef}
                   />
 
                   <PortfolioNavigation
                     isDarkMode={isDarkMode}
                     activeSection={activeSection}
                     scrollToSection={scrollToSection}
-                    startAnimation={nameAnimationComplete}
+                    navItemRefs={navItemRefs}
                   />
                 </div>
 
                 <div className="hidden lg:block">
                   <SidebarContent
                     isDarkMode={isDarkMode}
-                    startAnimation={startCardsAnimation}
+                    sidebarRef={sidebarContentRef}
                   />
                 </div>
               </header>
 
               <main className="pt-24 lg:w-1/2 lg:py-24">
                 <div id="about">
-                  <ProfileImage isDarkMode={isDarkMode} />
+                  <ProfileImage
+                    isDarkMode={isDarkMode}
+                    imageRef={profileImageRef}
+                  />
                 </div>
-                <ExperienceSection isDarkMode={isDarkMode} />
+                <ExperienceSection
+                  isDarkMode={isDarkMode}
+                  cardRefs={experienceCardRefs}
+                />
                 <div className="mb-16" />
-                <ProjectsSection isDarkMode={isDarkMode} />
+                <ProjectsSection
+                  isDarkMode={isDarkMode}
+                  cardRefs={projectCardRefs}
+                />
                 <div className="mb-16" />
                 <BlogSection isDarkMode={isDarkMode} />
 

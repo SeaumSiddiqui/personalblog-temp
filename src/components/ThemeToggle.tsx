@@ -1,37 +1,18 @@
-import React, { useEffect, useState, useRef } from 'react';
+import React from 'react';
 import { Sun, Moon } from 'lucide-react';
 
 interface ThemeToggleProps {
   isDarkMode: boolean;
   onToggle: () => void;
-  animate?: boolean;
+  toggleRef?: React.RefObject<HTMLDivElement | null>;
 }
 
-export const ThemeToggle: React.FC<ThemeToggleProps> = ({ isDarkMode, onToggle, animate = true }) => {
-  const [isVisible, setIsVisible] = useState(!animate);
-  const animationTriggered = useRef(false);
-
-  useEffect(() => {
-    if (!animate || animationTriggered.current) return;
-    animationTriggered.current = true;
-
-    setTimeout(() => {
-      setIsVisible(true);
-    }, 2700);
-  }, [animate]);
-
+export const ThemeToggle: React.FC<ThemeToggleProps> = ({ isDarkMode, onToggle, toggleRef }) => {
   return (
     <div
+      ref={toggleRef}
       className="relative"
-      style={{
-        transform: animate
-          ? isVisible
-            ? 'translateX(0) scale(1)'
-            : 'translateX(30px) scale(0.8)'
-          : 'translateX(0) scale(1)',
-        opacity: animate ? (isVisible ? 1 : 0) : 1,
-        transition: 'transform 0.5s cubic-bezier(0.34, 1.56, 0.64, 1), opacity 0.4s ease-out',
-      }}
+      style={{ visibility: 'hidden' }}
     >
       <div
         className={`

@@ -14,9 +14,10 @@ interface Experience {
 
 interface ExperienceSectionProps {
   isDarkMode: boolean;
+  cardRefs?: React.RefObject<(HTMLDivElement | null)[]>;
 }
 
-export const ExperienceSection: React.FC<ExperienceSectionProps> = ({ isDarkMode }) => {
+export const ExperienceSection: React.FC<ExperienceSectionProps> = ({ isDarkMode, cardRefs }) => {
   const experiences: Experience[] = [
     {
       company: 'QCharity BD',
@@ -45,7 +46,13 @@ export const ExperienceSection: React.FC<ExperienceSectionProps> = ({ isDarkMode
         {experiences.map((exp, index) => (
           <div
             key={index}
-            className={`group relative grid gap-4 pb-1 transition-all sm:grid-cols-8 sm:gap-8 md:gap-4 lg:hover:!opacity-100 lg:group-hover/list:opacity-50`}
+            ref={(el) => {
+              if (cardRefs?.current) {
+                cardRefs.current[index] = el;
+              }
+            }}
+            className="group relative grid gap-4 pb-1 transition-all sm:grid-cols-8 sm:gap-8 md:gap-4 lg:hover:!opacity-100 lg:group-hover/list:opacity-50"
+            style={{ visibility: 'hidden' }}
           >
             <div className="absolute -inset-x-4 -inset-y-4 z-0 hidden rounded-lg transition motion-reduce:transition-none lg:-inset-x-6 lg:block lg:group-hover:bg-white/5 lg:group-hover:shadow-lg lg:group-hover:drop-shadow-lg" />
 

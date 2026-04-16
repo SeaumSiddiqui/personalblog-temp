@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useRef } from 'react';
+import React from 'react';
 import { useTheme } from '../hooks/useTheme';
 import { Github, Linkedin, Mail, Twitter } from 'lucide-react';
 
@@ -7,17 +7,16 @@ interface SocialLinksProps {
   size?: 'small' | 'medium' | 'large';
   animate?: boolean;
   startAnimation?: boolean;
+  socialItemRefs?: React.RefObject<(HTMLAnchorElement | null)[]>;
 }
 
 export const SocialLinks: React.FC<SocialLinksProps> = ({
   layout = 'vertical',
   size = 'medium',
   animate = true,
-  startAnimation = false
+  socialItemRefs,
 }) => {
   const { isDarkMode } = useTheme();
-  const [visibleItems, setVisibleItems] = useState<number[]>([]);
-  const animationTriggered = useRef(false);
 
   const socialLinks = [
     {
@@ -46,24 +45,6 @@ export const SocialLinks: React.FC<SocialLinksProps> = ({
     }
   ];
 
-  useEffect(() => {
-    if (!animate) {
-      setVisibleItems([0, 1, 2, 3]);
-      return;
-    }
-
-    if (!startAnimation || animationTriggered.current) return;
-    animationTriggered.current = true;
-
-    const reversedIndices = [...socialLinks.keys()].reverse();
-
-    reversedIndices.forEach((index, i) => {
-      setTimeout(() => {
-        setVisibleItems(prev => [...prev, index]);
-      }, i * 100);
-    });
-  }, [animate, startAnimation]);
-
   const sizeClasses = {
     small: 'w-8 h-8',
     medium: 'w-12 h-12',
@@ -85,6 +66,11 @@ export const SocialLinks: React.FC<SocialLinksProps> = ({
       {socialLinks.map((social, index) => (
         <a
           key={index}
+          ref={(el) => {
+            if (socialItemRefs?.current) {
+              socialItemRefs.current[index] = el;
+            }
+          }}
           href={social.href}
           target="_blank"
           rel="noopener noreferrer"
@@ -97,15 +83,7 @@ export const SocialLinks: React.FC<SocialLinksProps> = ({
             }
             ${social.color}
           `}
-          style={{
-            transform: animate
-              ? visibleItems.includes(index)
-                ? 'translateX(0) scale(1)'
-                : 'translateX(30px) scale(0.8)'
-              : 'translateX(0) scale(1)',
-            opacity: animate ? (visibleItems.includes(index) ? 1 : 0) : 1,
-            transition: 'transform 0.5s cubic-bezier(0.34, 1.56, 0.64, 1), opacity 0.4s ease-out',
-          }}
+          style={animate ? { visibility: 'hidden' } : undefined}
           title={social.label}
         >
           <social.icon className={`${iconSizes[size]} transition-colors duration-300 ${
