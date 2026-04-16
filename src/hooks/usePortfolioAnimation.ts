@@ -149,7 +149,7 @@ export function usePortfolioAnimation(refs: PortfolioAnimationRefs, ready: boole
           opacity: 1,
           duration: 0.8,
         },
-        '>+=0.3'
+        '>'
       );
     }
 
@@ -158,7 +158,7 @@ export function usePortfolioAnimation(refs: PortfolioAnimationRefs, ready: boole
     const navEls = refs.navItems.current?.filter(Boolean) as HTMLLIElement[];
     const socialEls = refs.socialItems.current?.filter(Boolean) as HTMLAnchorElement[];
 
-    tl.add('menus', '+=0.1');
+    tl.add('sidebars', '+=0.1');
 
     if (navEls && navEls.length > 0) {
       tl.fromTo(
@@ -171,7 +171,7 @@ export function usePortfolioAnimation(refs: PortfolioAnimationRefs, ready: boole
           duration: 0.8,
           stagger: 0.2,
         },
-        'menus'
+        'sidebars'
       );
     }
 
@@ -186,7 +186,7 @@ export function usePortfolioAnimation(refs: PortfolioAnimationRefs, ready: boole
           duration: 0.8,
           stagger: 0.2,
         },
-        'menus'
+        'sidebars'
       );
     }
 
@@ -200,7 +200,7 @@ export function usePortfolioAnimation(refs: PortfolioAnimationRefs, ready: boole
           opacity: 1,
           duration: 0.8,
         },
-        `menus+=${(Math.max(socialEls?.length || 0, 0)) * 0.2}`
+        'sidebars'
       );
     }
 
@@ -209,18 +209,13 @@ export function usePortfolioAnimation(refs: PortfolioAnimationRefs, ready: boole
       if (cards.length > 0) {
         tl.fromTo(
           cards,
-          { y: 50, opacity: 0, visibility: 'hidden', filter: 'blur(5px)', willChange: WCF },
+          { y: 60, opacity: 0, visibility: 'hidden', willChange: WC },
           {
             y: 0,
             opacity: 1,
             visibility: 'visible',
-            filter: 'blur(0px)',
             duration: 0.9,
-            stagger: {
-              amount: 0.6,
-              grid: [2, 3],
-              from: 'start',
-            },
+            stagger: 0.15,
             ease: 'back.out(1.2)',
           },
           '-=0.5'
@@ -232,13 +227,13 @@ export function usePortfolioAnimation(refs: PortfolioAnimationRefs, ready: boole
     if (expEls && expEls.length > 0) {
       tl.fromTo(
         expEls,
-        { y: 100, opacity: 0.1, visibility: 'hidden', filter: 'blur(10px)', willChange: WCF },
+        { y: 100, opacity: 0, visibility: 'hidden', filter: 'blur(10px)', willChange: WCF },
         {
           y: 0,
           opacity: 1,
           visibility: 'visible',
           filter: 'blur(0px)',
-          duration: 1.2,
+          duration: 1.5,
           stagger: 0.25,
         },
         '-=0.4'
@@ -249,13 +244,13 @@ export function usePortfolioAnimation(refs: PortfolioAnimationRefs, ready: boole
     if (projEls && projEls.length > 0) {
       tl.fromTo(
         projEls,
-        { y: 100, opacity: 0.1, visibility: 'hidden', filter: 'blur(10px)', willChange: WCF },
+        { y: 100, opacity: 0, visibility: 'hidden', filter: 'blur(10px)', willChange: WCF },
         {
           y: 0,
           opacity: 1,
           visibility: 'visible',
           filter: 'blur(0px)',
-          duration: 1.2,
+          duration: 1.5,
           stagger: 0.25,
         },
         '-=0.3'

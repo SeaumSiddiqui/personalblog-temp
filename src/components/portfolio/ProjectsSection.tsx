@@ -52,7 +52,7 @@ export const ProjectsSection: React.FC<ProjectsSectionProps> = ({ isDarkMode, ca
               }
             }}
             className="group relative grid gap-4 pb-1 transition-all sm:grid-cols-8 sm:gap-8 md:gap-4 lg:hover:!opacity-100 lg:group-hover/list:opacity-50"
-            style={{ visibility: 'hidden' }}
+            style={{ visibility: 'hidden', opacity: 0 }}
           >
             {project.link && (
               <a
