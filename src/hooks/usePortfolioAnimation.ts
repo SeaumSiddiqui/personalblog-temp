@@ -157,7 +157,7 @@ export function usePortfolioAnimation(refs: PortfolioAnimationRefs, ready: boole
     const navEls = refs.navItems.current?.filter(Boolean) as HTMLLIElement[];
     const socialEls = refs.socialItems.current?.filter(Boolean) as HTMLAnchorElement[];
 
-    tl.add('sidebarSync', '+=0.1');
+    tl.add('sidebars');
 
     if (navEls && navEls.length > 0) {
       tl.fromTo(
@@ -170,7 +170,7 @@ export function usePortfolioAnimation(refs: PortfolioAnimationRefs, ready: boole
           duration: 0.8,
           stagger: 0.2,
         },
-        'sidebarSync'
+        'sidebars'
       );
     }
 
@@ -185,7 +185,7 @@ export function usePortfolioAnimation(refs: PortfolioAnimationRefs, ready: boole
           duration: 0.8,
           stagger: 0.2,
         },
-        'sidebarSync'
+        'sidebars'
       );
     }
 
@@ -199,7 +199,7 @@ export function usePortfolioAnimation(refs: PortfolioAnimationRefs, ready: boole
           opacity: 1,
           duration: 0.8,
         },
-        'sidebarSync'
+        'sidebars'
       );
     }
 
@@ -208,14 +208,14 @@ export function usePortfolioAnimation(refs: PortfolioAnimationRefs, ready: boole
       if (cards.length > 0) {
         tl.fromTo(
           cards,
-          { y: 60, opacity: 0, visibility: 'hidden', willChange: WC },
+          { y: 80, opacity: 0, visibility: 'hidden', willChange: WC },
           {
             y: 0,
             opacity: 1,
             visibility: 'visible',
-            duration: 0.9,
+            duration: 1.2,
             stagger: 0.1,
-            ease: 'power2.out',
+            ease: 'power1.out',
             immediateRender: false,
           },
           '-=0.5'
@@ -227,12 +227,12 @@ export function usePortfolioAnimation(refs: PortfolioAnimationRefs, ready: boole
     if (expEls && expEls.length > 0) {
       tl.fromTo(
         expEls,
-        { y: 100, opacity: 0, visibility: 'hidden', willChange: WC },
+        { y: 80, opacity: 0, visibility: 'hidden', willChange: WC },
         {
           y: 0,
           opacity: 1,
           visibility: 'visible',
-          duration: 1.5,
+          duration: 1.2,
           stagger: 0.1,
           ease: 'power1.out',
           immediateRender: false,
@@ -245,12 +245,12 @@ export function usePortfolioAnimation(refs: PortfolioAnimationRefs, ready: boole
     if (projEls && projEls.length > 0) {
       tl.fromTo(
         projEls,
-        { y: 100, opacity: 0, visibility: 'hidden', willChange: WC },
+        { y: 80, opacity: 0, visibility: 'hidden', willChange: WC },
         {
           y: 0,
           opacity: 1,
           visibility: 'visible',
-          duration: 1.5,
+          duration: 1.2,
           stagger: 0.1,
           ease: 'power1.out',
           immediateRender: false,
