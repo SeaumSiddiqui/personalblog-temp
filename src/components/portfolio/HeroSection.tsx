@@ -106,9 +106,12 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
       <p className={`max-w-sm text-sm leading-relaxed ${
         isDarkMode ? 'text-slate-400' : 'text-slate-700'
       }`}>
-        I build scalable backend systems and RESTful APIs using Spring Boot and microservices architecture.
+        I build scalable backend systems and RESTful APIs
+        <br />
+        using <span className={isDarkMode ? 'text-slate-200 font-medium' : 'text-slate-900 font-medium'}>Java, Spring Boot</span> and <span className={isDarkMode ? 'text-slate-200 font-medium' : 'text-slate-900 font-medium'}>microservices architecture</span>.   
       </p>
-
+      
+      
       <div className={`flex items-center gap-2 text-xs font-mono ${
         isDarkMode ? 'text-slate-400' : 'text-slate-600'
       }`}>
