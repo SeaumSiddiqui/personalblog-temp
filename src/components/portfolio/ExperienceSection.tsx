@@ -6,7 +6,7 @@ interface Experience {
   company: string;
   position: string;
   duration: string;
-  description: string;Please refactor the usePortfolioAnimation hook with these specific adjustments to fixing the movement physics and synchronization:1. Force Linear Card Movement:The Fix: Change the ease for sidebarContent (stat cards), experienceCards, and projectCards from 'back.out(1.2)' to 'power2.out' or 'expo.out'.Reason: The 'back' ease is what causes the 'pull back' effect you described. Using power2.out will ensure a smooth, professional travel from bottom-to-top without any jerking or slowing down mid-way.Remove Staggers from individual cards: Ensure the project and experience cards use a simple stagger: 0.1 so they follow each other smoothly.2. Strict Simultaneous Sidebar & Socials:Logic: The Navigation Menu and the Social Icons must be locked together.GSAP Fix: 1. Create a label: tl.add('sidebarsSync').2. Start the navEls animation at 'sidebarsSync'.3. Start the socialEls animation at 'sidebarsSync'.4. Start the themeToggle animation at 'sidebarsSync'.Important: Remove any calculations like menus+=${...} that are currently offsetting the theme toggle or socials. They must all use the exact same label string to ensure they start and end at the same time.3. Location Text Delay:Ensure the locationText has a position parameter of '>0.3' so it strictly waits for the icon's 360-spin to finish before it slides out.4. Final Code Clean-up:Ensure will-change: transform, opacity is strictly applied to all these elements to prevent the 'stutter' you mentioned.
+  description: string;
   achievements: string[];
   technologies: string[];
   link?: string;

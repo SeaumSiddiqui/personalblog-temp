@@ -149,7 +149,7 @@ export function usePortfolioAnimation(refs: PortfolioAnimationRefs, ready: boole
           opacity: 1,
           duration: 0.8,
         },
-        '>'
+        '>0.3'
       );
     }
 
@@ -158,7 +158,7 @@ export function usePortfolioAnimation(refs: PortfolioAnimationRefs, ready: boole
     const navEls = refs.navItems.current?.filter(Boolean) as HTMLLIElement[];
     const socialEls = refs.socialItems.current?.filter(Boolean) as HTMLAnchorElement[];
 
-    tl.add('sidebars', '+=0.1');
+    tl.add('sidebarsSync');
 
     if (navEls && navEls.length > 0) {
       tl.fromTo(
@@ -171,7 +171,7 @@ export function usePortfolioAnimation(refs: PortfolioAnimationRefs, ready: boole
           duration: 0.8,
           stagger: 0.2,
         },
-        'sidebars'
+        'sidebarsSync'
       );
     }
 
@@ -186,7 +186,7 @@ export function usePortfolioAnimation(refs: PortfolioAnimationRefs, ready: boole
           duration: 0.8,
           stagger: 0.2,
         },
-        'sidebars'
+        'sidebarsSync'
       );
     }
 
@@ -200,7 +200,7 @@ export function usePortfolioAnimation(refs: PortfolioAnimationRefs, ready: boole
           opacity: 1,
           duration: 0.8,
         },
-        'sidebars'
+        'sidebarsSync'
       );
     }
 
@@ -215,8 +215,8 @@ export function usePortfolioAnimation(refs: PortfolioAnimationRefs, ready: boole
             opacity: 1,
             visibility: 'visible',
             duration: 0.9,
-            stagger: 0.15,
-            ease: 'back.out(1.2)',
+            stagger: 0.1,
+            ease: 'power2.out',
           },
           '-=0.5'
         );
@@ -234,7 +234,8 @@ export function usePortfolioAnimation(refs: PortfolioAnimationRefs, ready: boole
           visibility: 'visible',
           filter: 'blur(0px)',
           duration: 1.5,
-          stagger: 0.25,
+          stagger: 0.1,
+          ease: 'expo.out',
         },
         '-=0.4'
       );
@@ -251,7 +252,8 @@ export function usePortfolioAnimation(refs: PortfolioAnimationRefs, ready: boole
           visibility: 'visible',
           filter: 'blur(0px)',
           duration: 1.5,
-          stagger: 0.25,
+          stagger: 0.1,
+          ease: 'expo.out',
         },
         '-=0.3'
       );
