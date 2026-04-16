@@ -25,6 +25,7 @@ export const Portfolio: React.FC = () => {
   const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
   const [mounted, setMounted] = useState(false);
 
+  const mainWrapperRef = useRef<HTMLDivElement>(null);
   const nameRef = useRef<HTMLHeadingElement>(null);
   const roleRef = useRef<HTMLHeadingElement>(null);
   const descriptionRef = useRef<HTMLParagraphElement>(null);
@@ -40,6 +41,7 @@ export const Portfolio: React.FC = () => {
 
   usePortfolioAnimation(
     {
+      mainWrapper: mainWrapperRef,
       nameContainer: nameRef,
       roleContainer: roleRef,
       descriptionRef: descriptionRef,
@@ -132,7 +134,9 @@ export const Portfolio: React.FC = () => {
   }
 
   return (
-    <div className={`min-h-screen transition-colors duration-300 ${
+    <div
+      ref={mainWrapperRef}
+      className={`min-h-screen transition-colors duration-300 ${
       isDarkMode
         ? 'bg-dark-bg'
         : 'bg-light-bg'
