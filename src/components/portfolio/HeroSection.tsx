@@ -74,7 +74,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
       <div className={`flex items-center gap-2 text-xs font-mono ${
         isDarkMode ? 'text-slate-400' : 'text-slate-600'
       }`}>
-        <div className="overflow-hidden" style={{ perspective: '400px' }}>
+        <div className="overflow-visible p-1" style={{ perspective: '400px' }}>
           <svg
             ref={(el) => { if (locationIconRef) locationIconRef.current = el; }}
             viewBox="0 0 24 24"
@@ -84,7 +84,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
             strokeLinecap="round"
             strokeLinejoin="round"
             className="w-4 h-4 flex-shrink-0"
-            style={{ visibility: 'hidden' }}
+            style={{ visibility: 'hidden', willChange: 'transform' }}
           >
             <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z" />
             <circle cx="12" cy="10" r="3" />

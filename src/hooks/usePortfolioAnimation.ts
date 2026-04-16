@@ -18,243 +18,233 @@ export interface PortfolioAnimationRefs {
 
 export function usePortfolioAnimation(refs: PortfolioAnimationRefs, ready: boolean) {
   const hasRun = useRef(false);
+  const floatTween = useRef<gsap.core.Tween | null>(null);
 
   useEffect(() => {
     if (!ready || hasRun.current) return;
     hasRun.current = true;
 
-    const tl = gsap.timeline({ defaults: { ease: 'expo.out' } });
+    const ease = 'power4.out';
+    const tl = gsap.timeline({ defaults: { ease } });
 
-    // Phase 1: Brand Identity - clip-path reveal left-to-right
     const nameWords = refs.nameContainer.current?.querySelectorAll('.gsap-name-word');
     if (nameWords && nameWords.length > 0) {
       tl.fromTo(
         nameWords,
-        { clipPath: 'inset(0 100% 0 0)', visibility: 'hidden', x: -30 },
+        { clipPath: 'inset(0 100% 0 0)', visibility: 'hidden', x: -20, willChange: 'clip-path, transform' },
         {
           clipPath: 'inset(0 0% 0 0)',
           visibility: 'visible',
           x: 0,
-          duration: 0.7,
-          stagger: 0.15,
+          duration: 1.2,
+          stagger: 0.25,
+          ease,
         },
         0
       );
     }
 
-    // Phase 2: Hero Image - center pop with back.out
     if (refs.profileImage.current) {
       tl.fromTo(
         refs.profileImage.current,
-        { scale: 0, visibility: 'hidden' },
+        { scale: 0, visibility: 'hidden', opacity: 0 },
         {
           scale: 1,
           visibility: 'visible',
-          duration: 0.6,
-          ease: 'back.out(1.7)',
+          opacity: 1,
+          duration: 1.0,
+          ease: 'back.out(1.4)',
         },
-        0.3
+        '-=0.7'
       );
     }
 
-    // Phase 3: Location icon pop + spin
-    if (refs.locationIcon.current) {
-      tl.fromTo(
-        refs.locationIcon.current,
-        { y: 20, scale: 0, visibility: 'hidden' },
-        {
-          y: 0,
-          scale: 1,
-          visibility: 'visible',
-          duration: 0.4,
-          ease: 'back.out(1.7)',
-        },
-        0.7
-      );
-
-      tl.to(
-        refs.locationIcon.current,
-        {
-          rotationY: 360,
-          duration: 0.6,
-          ease: 'power2.inOut',
-        },
-        0.95
-      );
-
-      tl.to(
-        refs.locationIcon.current,
-        {
-          keyframes: [
-            { y: -3, duration: 1.5, ease: 'sine.inOut' },
-            { y: 0, duration: 1.5, ease: 'sine.inOut' },
-          ],
-          repeat: -1,
-        },
-        '+=0'
-      );
-    }
-
-    // Phase 3 continued: Location text slides out from behind icon
-    if (refs.locationText.current) {
-      tl.fromTo(
-        refs.locationText.current,
-        { x: -20, visibility: 'hidden' },
-        {
-          x: 0,
-          visibility: 'visible',
-          duration: 0.4,
-          ease: 'expo.out',
-        },
-        1.2
-      );
-    }
-
-    // Role words fade up
     if (refs.roleContainer.current) {
       const roleWords = refs.roleContainer.current.querySelectorAll('.gsap-role-word');
       if (roleWords.length > 0) {
         tl.fromTo(
           roleWords,
-          { y: 20, visibility: 'hidden' },
+          { y: 25, visibility: 'hidden', opacity: 0 },
           {
             y: 0,
             visibility: 'visible',
-            duration: 0.5,
-            stagger: 0.1,
-            ease: 'expo.out',
+            opacity: 1,
+            duration: 0.9,
+            stagger: 0.2,
+            ease,
           },
-          0.8
+          '-=0.6'
         );
       }
     }
 
-    // Description fade up
     if (refs.descriptionRef.current) {
       tl.fromTo(
         refs.descriptionRef.current,
-        { y: 15, visibility: 'hidden' },
+        { y: 20, visibility: 'hidden', opacity: 0 },
         {
           y: 0,
           visibility: 'visible',
-          duration: 0.5,
-          ease: 'expo.out',
+          opacity: 1,
+          duration: 0.9,
+          ease,
         },
-        1.0
+        '-=0.5'
       );
     }
 
-    // Phase 4: Nav items stagger left-to-right
+    const locationLabel = 'location';
+    if (refs.locationIcon.current) {
+      tl.addLabel(locationLabel)
+        .fromTo(
+          refs.locationIcon.current,
+          { y: 20, rotationY: 0, scale: 0, visibility: 'hidden', opacity: 0 },
+          {
+            y: 0,
+            rotationY: 360,
+            scale: 1,
+            visibility: 'visible',
+            opacity: 1,
+            duration: 1.0,
+            ease: 'back.out(1.4)',
+          },
+          locationLabel
+        );
+    }
+
+    if (refs.locationText.current) {
+      tl.fromTo(
+        refs.locationText.current,
+        { x: -25, visibility: 'hidden', opacity: 0 },
+        {
+          x: 0,
+          visibility: 'visible',
+          opacity: 1,
+          duration: 0.8,
+          ease,
+        },
+        `${locationLabel}+=0.3`
+      );
+    }
+
     const navEls = refs.navItems.current?.filter(Boolean) as HTMLLIElement[];
+    const socialEls = refs.socialItems.current?.filter(Boolean) as HTMLAnchorElement[];
+
+    const syncLabel = 'navSocialSync';
+    tl.addLabel(syncLabel, '-=0.4');
+
     if (navEls && navEls.length > 0) {
       tl.fromTo(
         navEls,
-        { x: -40, visibility: 'hidden' },
+        { x: -50, visibility: 'hidden', opacity: 0 },
         {
           x: 0,
           visibility: 'visible',
-          duration: 0.5,
-          stagger: 0.08,
-          ease: 'expo.out',
+          opacity: 1,
+          duration: 0.8,
+          stagger: 0.2,
+          ease,
         },
-        1.1
+        syncLabel
       );
     }
 
-    // Phase 4: Social icons stagger right-to-left (top to bottom)
-    const socialEls = refs.socialItems.current?.filter(Boolean) as HTMLAnchorElement[];
     if (socialEls && socialEls.length > 0) {
       tl.fromTo(
         socialEls,
-        { x: 40, visibility: 'hidden' },
+        { x: 100, visibility: 'hidden', opacity: 0 },
         {
           x: 0,
           visibility: 'visible',
-          duration: 0.5,
-          stagger: 0.08,
-          ease: 'expo.out',
+          opacity: 1,
+          duration: 0.8,
+          stagger: 0.2,
+          ease,
         },
-        1.1
+        syncLabel
       );
     }
 
-    // Theme toggle after socials
     if (refs.themeToggle.current) {
       tl.fromTo(
         refs.themeToggle.current,
-        { x: 40, visibility: 'hidden' },
+        { x: 100, visibility: 'hidden', opacity: 0 },
         {
           x: 0,
           visibility: 'visible',
-          duration: 0.5,
-          ease: 'expo.out',
+          opacity: 1,
+          duration: 0.8,
+          ease,
         },
-        1.1 + (socialEls?.length || 0) * 0.08
+        `${syncLabel}+=${(Math.max(socialEls?.length || 0, 0)) * 0.2}`
       );
     }
 
-    // Phase 5: Sidebar stat cards - depth-based reveal
     if (refs.sidebarContent.current) {
       const cards = refs.sidebarContent.current.querySelectorAll('.gsap-stat-card');
       if (cards.length > 0) {
         tl.fromTo(
           cards,
-          { y: 40, scale: 0.9, visibility: 'hidden' },
+          { y: 50, opacity: 0, visibility: 'hidden' },
           {
             y: 0,
-            scale: 1,
+            opacity: 1,
             visibility: 'visible',
-            duration: 0.5,
-            stagger: 0.08,
-            ease: 'back.out(1.7)',
+            duration: 0.9,
+            stagger: 0.15,
+            ease: 'back.out(1.2)',
           },
-          1.4
+          '-=0.5'
         );
       }
     }
 
-    // Phase 5: Experience cards - bottom-to-top unstacking
-    const expEls = refs.experienceCards.current?.filter(Boolean) as HTMLDivElement[];
-    if (expEls && expEls.length > 0) {
-      expEls.forEach((el, i) => {
-        gsap.set(el, { zIndex: expEls.length - i });
+    const animateCards = (els: HTMLDivElement[] | null, offset: string) => {
+      if (!els || els.length === 0) return;
+      els.forEach((el, i) => {
+        gsap.set(el, { zIndex: els.length - i });
       });
       tl.fromTo(
-        expEls,
-        { y: 60, visibility: 'hidden' },
+        els,
+        { y: 60, opacity: 0, visibility: 'hidden' },
         {
           y: 0,
+          opacity: 1,
           visibility: 'visible',
-          duration: 0.6,
-          stagger: 0.12,
-          ease: 'expo.out',
+          duration: 1.0,
+          stagger: {
+            each: 0.2,
+            from: 'start',
+          },
+          ease,
         },
-        1.5
+        offset
       );
-    }
+    };
 
-    // Phase 5: Project cards - bottom-to-top unstacking
+    const expEls = refs.experienceCards.current?.filter(Boolean) as HTMLDivElement[];
+    animateCards(expEls, '-=0.4');
+
     const projEls = refs.projectCards.current?.filter(Boolean) as HTMLDivElement[];
-    if (projEls && projEls.length > 0) {
-      projEls.forEach((el, i) => {
-        gsap.set(el, { zIndex: projEls.length - i });
-      });
-      tl.fromTo(
-        projEls,
-        { y: 60, visibility: 'hidden' },
-        {
-          y: 0,
-          visibility: 'visible',
-          duration: 0.6,
-          stagger: 0.12,
-          ease: 'expo.out',
-        },
-        1.6
-      );
-    }
+    animateCards(projEls, '-=0.3');
+
+    tl.then(() => {
+      if (refs.locationIcon.current) {
+        floatTween.current = gsap.to(refs.locationIcon.current, {
+          y: -5,
+          duration: 1.5,
+          repeat: -1,
+          yoyo: true,
+          ease: 'sine.inOut',
+        });
+      }
+    });
 
     return () => {
       tl.kill();
+      if (floatTween.current) {
+        floatTween.current.kill();
+      }
     };
   }, [ready, refs]);
 }
