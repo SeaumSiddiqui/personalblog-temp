@@ -1,5 +1,8 @@
-import { useEffect, useRef } from 'react';
+import { useRef } from 'react';
 import gsap from 'gsap';
+import { useGSAP } from '@gsap/react';
+
+gsap.registerPlugin(useGSAP);
 
 export interface PortfolioAnimationRefs {
   mainWrapper: React.RefObject<HTMLDivElement | null>;
@@ -18,37 +21,37 @@ export interface PortfolioAnimationRefs {
 }
 
 const WC = 'transform, opacity';
+const WCF = 'transform, opacity, filter';
 
 export function usePortfolioAnimation(refs: PortfolioAnimationRefs, ready: boolean) {
-  const hasRun = useRef(false);
   const floatTween = useRef<gsap.core.Tween | null>(null);
+  const hasRun = useRef(false);
 
-  useEffect(() => {
+  useGSAP(() => {
     if (!ready || hasRun.current) return;
     hasRun.current = true;
 
     const ease = 'power4.out';
 
-    if (refs.mainWrapper.current) {
-      refs.mainWrapper.current.style.pointerEvents = 'none';
-    }
+    document.body.style.pointerEvents = 'none';
+
+    const startFloat = () => {
+      if (refs.locationIcon.current) {
+        floatTween.current = gsap.to(refs.locationIcon.current, {
+          y: -5,
+          duration: 1.5,
+          repeat: -1,
+          yoyo: true,
+          ease: 'sine.inOut',
+        });
+      }
+    };
 
     const tl = gsap.timeline({
+      paused: true,
       defaults: { ease },
       onComplete: () => {
-        if (refs.mainWrapper.current) {
-          refs.mainWrapper.current.style.pointerEvents = 'auto';
-        }
-
-        if (refs.locationIcon.current) {
-          floatTween.current = gsap.to(refs.locationIcon.current, {
-            y: -5,
-            duration: 1.5,
-            repeat: -1,
-            yoyo: true,
-            ease: 'sine.inOut',
-          });
-        }
+        document.body.style.pointerEvents = 'auto';
       },
     });
 
@@ -63,7 +66,6 @@ export function usePortfolioAnimation(refs: PortfolioAnimationRefs, ready: boole
           x: 0,
           duration: 1.2,
           stagger: 0.25,
-          ease,
         },
         0
       );
@@ -96,7 +98,6 @@ export function usePortfolioAnimation(refs: PortfolioAnimationRefs, ready: boole
             opacity: 1,
             duration: 0.9,
             stagger: 0.2,
-            ease,
           },
           '-=0.6'
         );
@@ -112,16 +113,12 @@ export function usePortfolioAnimation(refs: PortfolioAnimationRefs, ready: boole
           visibility: 'visible',
           opacity: 1,
           duration: 0.9,
-          ease,
         },
         '-=0.5'
       );
     }
 
-    const locIconLabel = 'locIcon';
     if (refs.locationIcon.current) {
-      tl.addLabel(locIconLabel);
-
       tl.fromTo(
         refs.locationIcon.current,
         { y: 20, scale: 0, visibility: 'hidden', opacity: 0, willChange: WC },
@@ -132,19 +129,14 @@ export function usePortfolioAnimation(refs: PortfolioAnimationRefs, ready: boole
           opacity: 1,
           duration: 0.6,
           ease: 'back.out(1.4)',
-        },
-        locIconLabel
+        }
       );
 
-      tl.to(
-        refs.locationIcon.current,
-        {
-          rotationY: 360,
-          duration: 0.7,
-          ease: 'power2.inOut',
-        },
-        '>'
-      );
+      tl.to(refs.locationIcon.current, {
+        rotationY: 360,
+        duration: 0.7,
+        ease: 'power2.inOut',
+      }, '>');
     }
 
     if (refs.locationText.current) {
@@ -156,17 +148,17 @@ export function usePortfolioAnimation(refs: PortfolioAnimationRefs, ready: boole
           visibility: 'visible',
           opacity: 1,
           duration: 0.8,
-          ease,
         },
-        '>+=0.2'
+        '>+=0.3'
       );
     }
+
+    tl.call(startFloat);
 
     const navEls = refs.navItems.current?.filter(Boolean) as HTMLLIElement[];
     const socialEls = refs.socialItems.current?.filter(Boolean) as HTMLAnchorElement[];
 
-    const menuStart = 'menuStart';
-    tl.addLabel(menuStart, '-=0.3');
+    tl.add('menus', '+=0.1');
 
     if (navEls && navEls.length > 0) {
       tl.fromTo(
@@ -178,9 +170,8 @@ export function usePortfolioAnimation(refs: PortfolioAnimationRefs, ready: boole
           opacity: 1,
           duration: 0.8,
           stagger: 0.2,
-          ease,
         },
-        menuStart
+        'menus'
       );
     }
 
@@ -194,9 +185,8 @@ export function usePortfolioAnimation(refs: PortfolioAnimationRefs, ready: boole
           opacity: 1,
           duration: 0.8,
           stagger: 0.2,
-          ease,
         },
-        menuStart
+        'menus'
       );
     }
 
@@ -209,38 +199,28 @@ export function usePortfolioAnimation(refs: PortfolioAnimationRefs, ready: boole
           visibility: 'visible',
           opacity: 1,
           duration: 0.8,
-          ease,
         },
-        `${menuStart}+=${(Math.max(socialEls?.length || 0, 0)) * 0.2}`
+        `menus+=${(Math.max(socialEls?.length || 0, 0)) * 0.2}`
       );
     }
 
     if (refs.sidebarContent.current) {
       const cards = refs.sidebarContent.current.querySelectorAll('.gsap-stat-card');
       if (cards.length > 0) {
-        const cols = 3;
-        const cardArr = Array.from(cards);
-        const reordered: Element[] = [];
-        const rows = Math.ceil(cardArr.length / cols);
-        for (let r = rows - 1; r >= 0; r--) {
-          for (let c = 0; c < cols; c++) {
-            const idx = r * cols + c;
-            if (idx < cardArr.length) {
-              reordered.push(cardArr[idx]);
-            }
-          }
-        }
-
         tl.fromTo(
-          reordered,
-          { y: 50, opacity: 0, visibility: 'hidden', filter: 'blur(5px)', willChange: WC + ', filter' },
+          cards,
+          { y: 50, opacity: 0, visibility: 'hidden', filter: 'blur(5px)', willChange: WCF },
           {
             y: 0,
             opacity: 1,
             visibility: 'visible',
             filter: 'blur(0px)',
             duration: 0.9,
-            stagger: 0.12,
+            stagger: {
+              amount: 0.6,
+              grid: [2, 3],
+              from: 'start',
+            },
             ease: 'back.out(1.2)',
           },
           '-=0.5'
@@ -248,45 +228,48 @@ export function usePortfolioAnimation(refs: PortfolioAnimationRefs, ready: boole
       }
     }
 
-    const animateContentCards = (els: HTMLDivElement[] | null, offset: string) => {
-      if (!els || els.length === 0) return;
-      const reversed = [...els].reverse();
-      reversed.forEach((el, i) => {
-        gsap.set(el, { zIndex: reversed.length - i });
-      });
+    const expEls = refs.experienceCards.current?.filter(Boolean) as HTMLDivElement[];
+    if (expEls && expEls.length > 0) {
       tl.fromTo(
-        reversed,
-        { y: 70, opacity: 0.1, visibility: 'hidden', filter: 'blur(5px)', willChange: WC + ', filter' },
+        expEls,
+        { y: 100, opacity: 0.1, visibility: 'hidden', filter: 'blur(10px)', willChange: WCF },
         {
           y: 0,
           opacity: 1,
           visibility: 'visible',
           filter: 'blur(0px)',
           duration: 1.2,
-          stagger: {
-            each: 0.25,
-            from: 'start',
-          },
-          ease,
+          stagger: 0.25,
         },
-        offset
+        '-=0.4'
       );
-    };
-
-    const expEls = refs.experienceCards.current?.filter(Boolean) as HTMLDivElement[];
-    animateContentCards(expEls, '-=0.4');
+    }
 
     const projEls = refs.projectCards.current?.filter(Boolean) as HTMLDivElement[];
-    animateContentCards(projEls, '-=0.3');
+    if (projEls && projEls.length > 0) {
+      tl.fromTo(
+        projEls,
+        { y: 100, opacity: 0.1, visibility: 'hidden', filter: 'blur(10px)', willChange: WCF },
+        {
+          y: 0,
+          opacity: 1,
+          visibility: 'visible',
+          filter: 'blur(0px)',
+          duration: 1.2,
+          stagger: 0.25,
+        },
+        '-=0.3'
+      );
+    }
+
+    tl.play();
 
     return () => {
       tl.kill();
       if (floatTween.current) {
         floatTween.current.kill();
       }
-      if (refs.mainWrapper.current) {
-        refs.mainWrapper.current.style.pointerEvents = 'auto';
-      }
+      document.body.style.pointerEvents = 'auto';
     };
-  }, [ready, refs]);
+  }, { dependencies: [ready], scope: refs.mainWrapper });
 }
